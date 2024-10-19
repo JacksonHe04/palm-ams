@@ -1,3 +1,7 @@
+# Application/urls.py
+"""
+路由管理器，根据网址匹配到对应的视图函数
+"""
 from django.contrib import admin
 from django.urls import path
 from Apply import views

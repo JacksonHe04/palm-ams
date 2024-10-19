@@ -1,26 +1,33 @@
+# Apply/views.py
+"""
+定义了两个视图函数 index 和 palm，用于处理用户的请求
+"""
 from django.shortcuts import render
 from .models import PalmApplicant
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from ApplicationSystem.settings import MEDIA_ROOT  #导入上传文件保存路径 或 from django.conf import settings
+from ApplicationSystem.settings import MEDIA_ROOT  # 导入上传文件保存路径 或 from django.conf import settings
 from django.utils import timezone
 import pytz
 import os
 
 
+# index 函数渲染并返回 EnrollmentWebsite.html 页面
 def index(request):
     return render(request, 'EnrollmentWebsite.html')
 
 
+# palm 函数将用户输入的数据保存到数据库并上传用户的照片文件
 def palm(request):
-    #首先判断request的方式
+    # 如果请求方法为 POST
+    # 则将数据保存到 PalmApplicant 模型中并重定向到指定 URL
     if request.method == "POST":
         applicant = PalmApplicant()
-        #通过request的get()函数，获得提交的值
+        # 通过request的get()函数，获得提交的值
         tz = pytz.timezone('Asia/Shanghai')
         now_time = timezone.now().astimezone(tz=tz)
         applicant.submit_time = now_time.strftime("%Y.%m.%d %H.%M:%S")
-        applicant.name_input = request.POST.get('name_input', '')  #当属性值不存在，则赋空值
+        applicant.name_input = request.POST.get('name_input', '')  # 当属性值不存在，则赋空值
         applicant.sex_input = request.POST.get('sex_input', '')
         applicant.birthday = request.POST.get('birthday', '')
         applicant.province = request.POST.get('province', '')
@@ -78,4 +85,6 @@ def palm(request):
         applicant.save()
         return HttpResponseRedirect("http://palm.seu.edu.cn")
 
+    # 如果是 GET 请求
+    # 则渲染并返回 EnrollmentWebsite.html 页面
     return render(request, 'EnrollmentWebsite.html')

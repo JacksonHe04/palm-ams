@@ -1,3 +1,8 @@
+# Apply/admin.py
+"""
+1. 显示申请者填写的字段
+2. 提供导出选中数据到Excel文件的功能。
+"""
 from django.contrib import admin
 from Apply.models import PalmApplicant
 from django.http import StreamingHttpResponse
@@ -7,7 +12,6 @@ import xlwt
 import os
 from io import BytesIO
 
-# Register your models here.
 
 class testAdmin(admin.ModelAdmin):
     list_display = ('name_input','sex_input','birthday','province','city','district','undergraduate_university_input')
@@ -31,5 +35,6 @@ class testAdmin(admin.ModelAdmin):
         return response
 
     export_excel.short_description = "导出Excel文件"
+
 
 admin.site.register(PalmApplicant,testAdmin)

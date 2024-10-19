@@ -1,10 +1,6 @@
+# ApplicationSystem/asgi.py
 """
-ASGI config for ApplicationSystem project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
+这个文件东西是老的，但是没什么用，好吧？
 """
 
 import os
