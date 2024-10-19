@@ -9,5 +9,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apply/',views.palm),
     path('testdb/', testdb.testdb),
-    path('',views.index),
+    path('', views.index),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
