@@ -1,5 +1,8 @@
-#!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+# manage.py
+"""
+Django项目启动器
+当你要启动项目时，只需在终端输入：python manage.py runserver
+"""
 import os
 import sys
 

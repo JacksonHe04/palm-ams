@@ -28,108 +28,126 @@
 ## 任务分工与开发计划
 
 1. **页面美化**：
-    - 对现有的前端页面进行优化，采用更现代化的设计，提高用户体验。
-    - 使用`Vue.js`框架进行前后端分离，实现更流畅的交互。
+   - 对现有的前端页面进行优化，采用更现代化的设计，提高用户体验。
+   - 使用`Vue.js`框架进行前后端分离，实现更流畅的交互。
 
 2. **功能增减**：
-    - 添加新的表单字段，以便申请者可以提供更多的个人信息。
-    - 后台添加简历和面试评分管理功能，实现申请者评分的自动化。
+   - 添加新的表单字段，以便申请者可以提供更多的个人信息。
+   - 后台添加简历和面试评分管理功能，实现申请者评分的自动化。
 
 3. **算法打分机制**：
-    - 后期将引入算法对申请者的简历和面试进行自动评分。评分机制的算法将在后端实现，结果将展示在后台页面中。
-
-## 运行项目
-
-以下是项目的基本运行步骤：
+   - 后期将引入算法对申请者的简历和面试进行自动评分。评分机制的算法将在后端实现，结果将展示在后台页面中。
 
 ---
 
-1. **克隆仓库**：
-   ```bash
-   git clone https://github.com/jacksonhe04/PalmAdmissionsSystem.git
-   cd PalmAdmissionsSystem
-   ```
-   
-2. **安装MySQL并进行数据库初始化**：
+## Intro Meeting at 19:00 on 2024-10-20 in Mei Canteen
 
-   1. 下载并安装MySQL：[MySQL官方安装指南](https://dev.mysql.com/downloads/installer/)。
+### 1. 项目简介
+- **项目目标**：更新东南大学PALM实验室招生系统，主要任务包括页面美化、功能增减以及算法归一化打分机制。
+- **项目架构**：基于Django框架，前端使用Vue.js，后端处理数据库与业务逻辑。
 
-   2. 安装完成后，使用默认账号`root`，设置密码为`123456`。
+#### 通过项目可以学到的内容
+- JetBrains 编辑器基本操作
+- Git 版本管理与 GitHub 多人协作
+- 常用的终端命令行指令
+- Python 基本语法
+- 主流 Python 框架 Django
+- 前端三件套 HTML + CSS + JavaScript
+- 前端主流框架 Vue.js
+- 主流数据库管理工具 MySQL
+- 常用的数据处理与机器学习 Python 库
+- Web 项目的打包、部署与上线
+- 基于语雀文档管理的团队协作
 
-   3. 启动MySQL服务，并通过命令行登录MySQL：
-      ```bash
-      mysql -u root -p
-      ```
-      输入密码`123456`。
+### 2. 操作指导
 
-   4. 创建项目所需的数据库：
-      ```sql
-      CREATE DATABASE PalmAdmissionsSystem;
-      ```
+根据README.md提供的指示，以下是项目运行的基本步骤：
 
-   5. 打开PyCharm，选择**Database**工具窗口，点击左上角的"+"号，选择**Data Source -> MySQL**。
+1. **注册JetBrains账号**
+   - 注册：[JetBrains账号注册](https://account.jetbrains.com/)
+   - 认证学生身份：[JetBrains学生身份认证](https://www.jetbrains.com/community/education/#students/)
+   - 通过东南大学邮箱确认学生认证信息：[邮箱确认](https://mail.seu.edu.cn/)
 
-   6. 在弹出的配置窗口中，输入以下内容：
+2. **安装MySQL并进行数据库初始化**
+   - 下载并安装MySQL：[MySQL官方安装指南](https://downloads.mysql.com/archives/installer/)
+   - 参考教程：[MySQL安装教程](https://blog.csdn.net/m0_71422677/article/details/136007088)
+   - 设置默认账号`root`和密码`123456`，通过命令行启动MySQL服务并登录：
+     ```bash
+     mysql -u root -p
+     ```
+     输入密码`123456`。
 
+   - 创建项目数据库：
+     ```sql
+     CREATE DATABASE palm_apply;
+     ```
+
+3. **克隆项目仓库并配置数据库**
+   - 克隆仓库：
+     ```bash
+     git clone https://github.com/jacksonhe04/PalmAdmissionsSystem.git
+     ```
+
+   - 打开PyCharm，选择**Database**工具窗口，配置MySQL连接：
       - **Host**: `localhost`
       - **Port**: `3306`
       - **User**: `root`
       - **Password**: `123456`
-      - **Database**: `PalmAdmissionsSystem`
+      - **Database**: `palm_apply`
 
-      点击**Test Connection**测试连接，成功后点击**OK**保存配置。
+4. **安装Python与Anaconda**
+   - 下载Python 3.12：[Python下载](https://www.anaconda.com/download/success)
+   - 安装PyCharm专业版：[PyCharm下载](https://www.jetbrains.com/pycharm/download/)
 
-3. **安装Python解释器**：
-   - 访问Python官方网站 [python.org](https://www.python.org/)。
-   - 导航至下载页面，选择适合您操作系统的最新版本进行下载。
-   - 安装过程中，请确保勾选“Add Python to PATH”选项，以便于在命令行中直接使用Python。
+5. **配置项目环境并安装依赖**
+   - 在项目目录下安装依赖：
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-4. **在PyCharm中配置Python解释器**：
-   - 打开PyCharm，进入 `File` > `Settings`（或者在Mac上 `PyCharm` > `Preferences`）。
-   - 在左侧菜单中选择 `Project: <项目名称>` > `Python Interpreter`。
-   - 点击右上角的齿轮图标，选择 `Add`。
-   - 选择 `Existing environment`，然后点击右侧的 `...` 按钮浏览并选择您的Python解释器路径。
-   - 确认选择后，点击 `OK` 完成配置。
+6. **进行数据库迁移**
+   - 确保MySQL已配置好，执行数据库迁移：
+     ```bash
+     python manage.py migrate
+     ```
 
-5. **安装依赖**：
-   ```bash
-   pip install -r requirements.txt
-   ```
+7. **启动项目服务器**
+   - 启动开发服务器：
+     ```bash
+     python manage.py runserver
+     ```
 
-6. **运行数据库迁移**：
-   执行数据库迁移命令，初始化数据库：
-   ```bash
-   python manage.py migrate
-   ```
+   - 如果出现缺失包提示，安装相关包：
+     ```bash
+     pip install <包名>
+     ```
 
-7. **运行服务器**：
-   启动Django开发服务器：
-   ```bash
-   python manage.py runserver
-   ```
-   如果终端报错提示缺少某些包，请根据终端提示使用以下命令安装缺失的包：
-   ```bash
-   pip install <包名>
-   ```
+8. **下载与配置语雀**
+   - [下载语雀](https://www.yuque.com/download)并认证学生身份：[语雀学生认证](https://www.yuque.com/about/welfare)
 
-8. **访问项目**：
-   在浏览器中访问`http://127.0.0.1:8000`即可查看前台页面。
+9. **使用语雀进行项目协作**
+   - 登录语雀桌面版，加入项目知识库。
+
+### 3. 任务分工讨论
+- **A 软工作**：汇报、PPT、文档工作，参与每个环节，但无需承担纯代码工作。
+- **B 前端Vue重构**：重构前台页面并优化UI设计，建立Vite框架和Vue路由。
+- **C 前端新增功能**：新增如简历上传按钮，后台管理的新功能，需与B合作。
+- **D 基于Django的后端开发**：为新增功能提供后端接口，需与B、C合作。
+
+### 4. 确定会议频率
+- 确定每周会议频率与交流方式。
+
+### 5. 开发计划
+
+**第一阶段（截至11月2日）**
+- 建立`vue + vite`框架
+- 重构单个HTML页面为Vue 3
+- 完成前台页面美化及表单调整
 
 ---
 
 ## 未来工作
 
-- 使用Vue.js重构系统的前端页面和JavaScript数据交互
-- 深度重构Django后端以优化后台数据管理流程。
-- 实现申请者简历和面试的自动评分系统。
-- 提高系统的安全性和性能，支持更多的申请者并发访问。
-
-## 开发建议
-
-由于团队中大部分成员对`Django`框架并不熟悉，建议：
-- 使用[Django官方文档](https://docs.djangoproject.com/zh-hans/5.1/)作为学习资源。
-- 何锦诚同学可以为其他成员提供Django框架和数据库的使用指导，帮助他们尽快上手开发。
-
----
-
-此README文件为团队内部参考，目的是帮助所有成员明确开发目标，了解项目结构并开始协作开发。如果有任何问题，请及时与组长或技术负责人沟通。
+- Vue.js重构前端页面
+- 优化Django后端，提升后台数据管理
+- 实现自动评分系统
