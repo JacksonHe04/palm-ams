@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <p id="website-title">东南大学PALM实验室申请系统</p>
+    <form
+            class="form-horizontal"
+            method="post"
+            role="form"
+            enctype="multipart/form-data"
+            onsubmit="return formSubmit()"
+            action=""
+    >
+        {% csrf_token %}
+        <p
+                style="
+          font-family: SimHei, serif;
+          font-size: x-large;
+          font-weight: bold;
+        "
+        >
+            个人基本信息
+        </p>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="form-group">
+                    <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
+                    >姓 名 <span style="color: red">* </span></label
+                    >
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="name_input"
+                                required
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
+                    >性 别 <span style="color: red">* </span></label
+                    >
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <select class="form-control" name="sex_input" id="form_sex">
+                            <option value="请选择">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label
+                            class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
+                            style="white-space: nowrap"
+                    >出生年月 <span style="color: red">* </span></label
+                    >
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class="input-group date" id="datetimepicker1">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    name="birthday"
+                                    required
+                            />
+                            <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div data-toggle="distpicker">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
+                        >籍 贯 <span style="color: red">* </span></label
+                        >
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label class="sr-only" for="province1">Province</label>
+                            <select
+                                    class="form-control"
+                                    name="province"
+                                    id="province1"
+                            ></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label class="sr-only" for="city1">City</label>
+                            <select class="form-control" name="city" id="city1"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label class="sr-only" for="district1">District</label>
+                            <select
+                                    class="form-control"
+                                    name="district"
+                                    id="district1"
+                            ></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <div class="form-group">
+                    <img id="preview" style="width: 2.5cm; height: 3.5cm" />
+                </div>
+            </div>
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >1寸证件照(小于300KB) <span style="color: red">* </span></label
+            >
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >本科学校 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="undergraduate_university_input"
+                        list="undergraduate-university-input"
+                        required
+                />
+                <datalist id="undergraduate-university-input" style="display: none">
+                    <option value="北京大学">北京大学</option>
+                    <option value="中国人民大学">中国人民大学</option>
+                    <option value="清华大学">清华大学</option>
+                    <option value="北京航空航天大学">北京航空航天大学</option>
+                    <option value="北京理工大学">北京理工大学</option>
+                    <option value="中国农业大学">中国农业大学</option>
+                    <option value="北京师范大学">北京师范大学</option>
+                    <option value="中央民族大学">中央民族大学</option>
+                    <option value="南开大学">南开大学</option>
+                    <option value="天津大学">天津大学</option>
+                    <option value="大连理工大学">大连理工大学</option>
+                    <option value="吉林大学">吉林大学</option>
+                    <option value="哈尔滨工业大学">哈尔滨工业大学</option>
+                    <option value="复旦大学">复旦大学</option>
+                    <option value="同济大学">同济大学</option>
+                    <option value="上海交通大学">上海交通大学</option>
+                    <option value="华东师范大学">华东师范大学</option>
+                    <option value="南京大学">南京大学</option>
+                    <option value="东南大学">东南大学</option>
+                    <option value="浙江大学">浙江大学</option>
+                    <option value="中国科学技术大学">中国科学技术大学</option>
+                    <option value="厦门大学">厦门大学</option>
+                    <option value="山东大学">山东大学</option>
+                    <option value="中国海洋大学">中国海洋大学</option>
+                    <option value="武汉大学">武汉大学</option>
+                    <option value="华中科技大学">华中科技大学</option>
+                    <option value="中南大学">中南大学</option>
+                    <option value="中山大学">中山大学</option>
+                    <option value="华南理工大学">华南理工大学</option>
+                    <option value="四川大学">四川大学</option>
+                    <option value="重庆大学">重庆大学</option>
+                    <option value="电子科技大学">电子科技大学</option>
+                    <option value="西安交通大学">西安交通大学</option>
+                    <option value="西北工业大学">西北工业大学</option>
+                    <option value="兰州大学">兰州大学</option>
+                    <option value="中国人民解放军国防科技大学"></option>
+                    <option value="东北大学">东北大学</option>
+                    <option value="郑州大学">郑州大学</option>
+                    <option value="湖南大学">湖南大学</option>
+                    <option value="云南大学">云南大学</option>
+                    <option value="西北农林科技大学">西北农林科技大学</option>
+                    <option value="新疆大学">新疆大学</option>
+                    <option value="北京邮电大学">北京邮电大学</option>
+                    <option value="北京交通大学">北京交通大学</option>
+                    <option value="西安电子科技大学">西安电子科技大学</option>
+                    <option value="解放军信息工程大学"></option>
+                    <option value="北京工业大学">北京工业大学</option>
+                    <option value="北京科技大学">北京科技大学</option>
+                    <option value="哈尔滨工程大学">哈尔滨工程大学</option>
+                    <option value="南京航空航天大学">南京航空航天大学</option>
+                    <option value="南京理工大学">南京理工大学</option>
+                    <option value="杭州电子科技大学">杭州电子科技大学</option>
+                    <option value="合肥工业大学">合肥工业大学</option>
+                    <option value="西南交通大学">西南交通大学</option>
+                    <option value="重庆邮电大学">重庆邮电大学</option>
+                    <option value="解放军理工大学">解放军理工大学</option>
+                    <option value="天津理工大学">天津理工大学</option>
+                    <option value="山西大学">山西大学</option>
+                    <option value="大连海事大学">大连海事大学</option>
+                    <option value="长春理工大学">长春理工大学</option>
+                    <option value="哈尔滨理工大学"></option>
+                    <option value="燕山大学">燕山大学</option>
+                    <option value="华东理工大学">华东理工大学</option>
+                    <option value="上海大学">上海大学</option>
+                    <option value="苏州大学">苏州大学</option>
+                    <option value="中国矿业大学">中国矿业大学</option>
+                    <option value="河海大学">河海大学</option>
+                    <option value="江苏大学">江苏大学</option>
+                    <option value="南京信息工程大学">南京信息工程大学</option>
+                    <option value="浙江工业大学">浙江工业大学</option>
+                    <option value="安徽大学">安徽大学</option>
+                    <option value="中国地质大学">中国地质大学</option>
+                    <option value="武汉理工大学">武汉理工大学</option>
+                    <option value="暨南大学">暨南大学</option>
+                    <option value="深圳大学">深圳大学</option>
+                    <option value="西南大学">西南大学</option>
+                    <option value="火箭军工程大学">火箭军工程大学</option>
+                    <option value="西北大学">西北大学</option>
+                    <option value="南京邮电大学">南京邮电大学</option>
+                    <option value="江南大学">江南大学</option>
+                </datalist>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+            >专 业 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="major_input"
+                        list="major-input"
+                        required
+                />
+                <datalist id="major-input" style="display: none">
+                    <option value="计算机科学与技术">计算机科学与技术</option>
+                    <option value="软件工程">软件工程</option>
+                    <option value="网络工程">网络工程</option>
+                    <option value="网络空间安全">网络空间安全</option>
+                    <option value="信息安全">信息安全</option>
+                    <option value="数据科学与大数据技术">数据科学与大数据技术</option>
+                    <option value="物联网工程">物联网工程</option>
+                    <option value="智能科学与技术">智能科学与技术</option>
+                    <option value="人工智能">人工智能</option>
+                    <option value="数学与应用数学">数学与应用数学</option>
+                    <option value="统计学">统计学</option>
+                    <option value="应用统计学">应用统计学</option>
+                    <option value="信息与计算科学">信息与计算科学</option>
+                    <option value="通信工程">通信工程</option>
+                    <option value="信息工程">信息工程</option>
+                    <option value="电子信息工程">电子信息工程</option>
+                    <option value="电子科学与技术">电子科学与技术</option>
+                    <option value="电子信息科学与技术">电子信息科学与技术</option>
+                    <option value="自动化">自动化</option>
+                    <option value="机器人工程">机器人工程</option>
+                    <option value="数字媒体技术">数字媒体技术</option>
+                    <option value="数学类（强基）">数学类（强基）</option>
+                </datalist>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="form-group">
+                    <input type="file" accept="image/*" name="photo" id="photo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >硕士学校&ensp;&thinsp;</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="master_university_input"
+                        list="master-university-input"
+                        placeholder="本科生不填写此项"
+                />
+                <datalist id="master-university-input" style="display: none">
+                    <option value="北京大学">北京大学</option>
+                    <option value="中国人民大学">中国人民大学</option>
+                    <option value="清华大学">清华大学</option>
+                    <option value="北京航空航天大学">北京航空航天大学</option>
+                    <option value="北京理工大学">北京理工大学</option>
+                    <option value="中国农业大学">中国农业大学</option>
+                    <option value="北京师范大学">北京师范大学</option>
+                    <option value="中央民族大学">中央民族大学</option>
+                    <option value="南开大学">南开大学</option>
+                    <option value="天津大学">天津大学</option>
+                    <option value="大连理工大学">大连理工大学</option>
+                    <option value="吉林大学">吉林大学</option>
+                    <option value="哈尔滨工业大学">哈尔滨工业大学</option>
+                    <option value="复旦大学">复旦大学</option>
+                    <option value="同济大学">同济大学</option>
+                    <option value="上海交通大学">上海交通大学</option>
+                    <option value="华东师范大学">华东师范大学</option>
+                    <option value="南京大学">南京大学</option>
+                    <option value="东南大学">东南大学</option>
+                    <option value="浙江大学">浙江大学</option>
+                    <option value="中国科学技术大学">中国科学技术大学</option>
+                    <option value="厦门大学">厦门大学</option>
+                    <option value="山东大学">山东大学</option>
+                    <option value="中国海洋大学">中国海洋大学</option>
+                    <option value="武汉大学">武汉大学</option>
+                    <option value="华中科技大学">华中科技大学</option>
+                    <option value="中南大学">中南大学</option>
+                    <option value="中山大学">中山大学</option>
+                    <option value="华南理工大学">华南理工大学</option>
+                    <option value="四川大学">四川大学</option>
+                    <option value="重庆大学">重庆大学</option>
+                    <option value="电子科技大学">电子科技大学</option>
+                    <option value="西安交通大学">西安交通大学</option>
+                    <option value="西北工业大学">西北工业大学</option>
+                    <option value="兰州大学">兰州大学</option>
+                    <option value="中国人民解放军国防科技大学"></option>
+                    <option value="东北大学">东北大学</option>
+                    <option value="郑州大学">郑州大学</option>
+                    <option value="湖南大学">湖南大学</option>
+                    <option value="云南大学">云南大学</option>
+                    <option value="西北农林科技大学">西北农林科技大学</option>
+                    <option value="新疆大学">新疆大学</option>
+                    <option value="北京邮电大学">北京邮电大学</option>
+                    <option value="北京交通大学">北京交通大学</option>
+                    <option value="西安电子科技大学">西安电子科技大学</option>
+                    <option value="解放军信息工程大学"></option>
+                    <option value="北京工业大学">北京工业大学</option>
+                    <option value="北京科技大学">北京科技大学</option>
+                    <option value="哈尔滨工程大学">哈尔滨工程大学</option>
+                    <option value="南京航空航天大学">南京航空航天大学</option>
+                    <option value="南京理工大学">南京理工大学</option>
+                    <option value="杭州电子科技大学">杭州电子科技大学</option>
+                    <option value="合肥工业大学">合肥工业大学</option>
+                    <option value="西南交通大学">西南交通大学</option>
+                    <option value="重庆邮电大学">重庆邮电大学</option>
+                    <option value="解放军理工大学">解放军理工大学</option>
+                    <option value="天津理工大学">天津理工大学</option>
+                    <option value="山西大学">山西大学</option>
+                    <option value="大连海事大学">大连海事大学</option>
+                    <option value="长春理工大学">长春理工大学</option>
+                    <option value="哈尔滨理工大学"></option>
+                    <option value="燕山大学">燕山大学</option>
+                    <option value="华东理工大学">华东理工大学</option>
+                    <option value="上海大学">上海大学</option>
+                    <option value="苏州大学">苏州大学</option>
+                    <option value="中国矿业大学">中国矿业大学</option>
+                    <option value="河海大学">河海大学</option>
+                    <option value="江苏大学">江苏大学</option>
+                    <option value="南京信息工程大学">南京信息工程大学</option>
+                    <option value="浙江工业大学">浙江工业大学</option>
+                    <option value="安徽大学">安徽大学</option>
+                    <option value="中国地质大学">中国地质大学</option>
+                    <option value="武汉理工大学">武汉理工大学</option>
+                    <option value="暨南大学">暨南大学</option>
+                    <option value="深圳大学">深圳大学</option>
+                    <option value="西南大学">西南大学</option>
+                    <option value="火箭军工程大学">火箭军工程大学</option>
+                    <option value="西北大学">西北大学</option>
+                    <option value="南京邮电大学">南京邮电大学</option>
+                    <option value="江南大学">江南大学</option>
+                </datalist>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >硕士导师&ensp;&thinsp;</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="mastertutor_input"
+                        placeholder="本科生不填写此项"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >专业人数 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="number"
+                        class="form-control"
+                        name="gradepeople_input"
+                        min="1"
+                        required
+                />
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+            >排 名 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="number"
+                        class="form-control"
+                        name="grade_input"
+                        min="1"
+                        required
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >手机号码 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="phonenumber_input"
+                        id="form_phonenumber"
+                        required
+                />
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >电子邮箱 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="email_input"
+                        id="form_email"
+                        required
+                />
+            </div>
+        </div>
+
+        <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
+            意向选择
+        </p>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >报名类型 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <select
+                        class="form-control"
+                        name="registrationtype_input"
+                        id="form_registrationtype"
+                        required
+                >
+                    <option value="请选择">请选择</option>
+                    <option value="硕士">硕士</option>
+                    <option value="博士">博士</option>
+                    <option value="直博">直博</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >第一志愿 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <select
+                        class="form-control"
+                        name="tutor_input_first"
+                        id="form_tutor_first"
+                        required
+                >
+                    <option value="请选择">请选择</option>
+                    <option value="耿新">耿新(博导)</option>
+                    <option value="张敏灵">张敏灵(博导)</option>
+                    <option value="周德宇">周德宇(博导)</option>
+                    <option value="薛晖">薛晖(博导)</option>
+                    <option value="张宇">张宇(博导)</option>
+                    <option value="魏秀参">魏秀参(博导)</option>
+                    <option value="闫亚萍">闫亚萍</option>
+                    <option value="贾育衡">贾育衡(博导)</option>
+                    <option value="周毅">周毅(博导)</option>
+                    <option value="陈浩">陈浩(博导)</option>
+                    <option value="宋沫飞">宋沫飞(博导)</option>
+                    <option value="李竹颖">李竹颖</option>
+                    <option value="杨旭">杨旭(博导)</option>
+                    <option value="魏通">魏通(博导)</option>
+                    <option value="时霄">时霄</option>
+                    <option value="祁磊">祁磊</option>
+                    <option value="徐宁">徐宁</option>
+                    <option value="王洪松">王洪松</option>
+                    <option value="乔伊果">乔伊果</option>
+                    <option value="方鹏飞">方鹏飞</option>
+                    <option value="吕佳祺">吕佳祺</option>
+                    <option value="王靖">王靖</option>
+                    <option value="石楚涵">石楚涵</option>
+                </select>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >第二志愿 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <select
+                        class="form-control"
+                        name="tutor_input_second"
+                        id="form_tutor_second"
+                        required
+                >
+                    <option value="请选择">请选择</option>
+                    <option value="耿新">耿新(博导)</option>
+                    <option value="张敏灵">张敏灵(博导)</option>
+                    <option value="周德宇">周德宇(博导)</option>
+                    <option value="薛晖">薛晖(博导)</option>
+                    <option value="张宇">张宇(博导)</option>
+                    <option value="魏秀参">魏秀参(博导)</option>
+                    <option value="闫亚萍">闫亚萍</option>
+                    <option value="贾育衡">贾育衡(博导)</option>
+                    <option value="周毅">周毅(博导)</option>
+                    <option value="陈浩">陈浩(博导)</option>
+                    <option value="宋沫飞">宋沫飞(博导)</option>
+                    <option value="李竹颖">李竹颖</option>
+                    <option value="杨旭">杨旭(博导)</option>
+                    <option value="魏通">魏通(博导)</option>
+                    <option value="时霄">时霄</option>
+                    <option value="祁磊">祁磊</option>
+                    <option value="徐宁">徐宁</option>
+                    <option value="王洪松">王洪松</option>
+                    <option value="乔伊果">乔伊果</option>
+                    <option value="方鹏飞">方鹏飞</option>
+                    <option value="吕佳祺">吕佳祺</option>
+                    <option value="王靖">王靖</option>
+                    <option value="石楚涵">石楚涵</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >第三志愿 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <select
+                        class="form-control"
+                        name="tutor_input_third"
+                        id="form_tutor_third"
+                        required
+                >
+                    <option value="请选择">请选择</option>
+                    <option value="耿新">耿新(博导)</option>
+                    <option value="张敏灵">张敏灵(博导)</option>
+                    <option value="周德宇">周德宇(博导)</option>
+                    <option value="薛晖">薛晖(博导)</option>
+                    <option value="张宇">张宇(博导)</option>
+                    <option value="魏秀参">魏秀参(博导)</option>
+                    <option value="闫亚萍">闫亚萍</option>
+                    <option value="贾育衡">贾育衡(博导)</option>
+                    <option value="周毅">周毅(博导)</option>
+                    <option value="陈浩">陈浩(博导)</option>
+                    <option value="宋沫飞">宋沫飞(博导)</option>
+                    <option value="李竹颖">李竹颖</option>
+                    <option value="杨旭">杨旭(博导)</option>
+                    <option value="魏通">魏通(博导)</option>
+                    <option value="时霄">时霄</option>
+                    <option value="祁磊">祁磊</option>
+                    <option value="徐宁">徐宁</option>
+                    <option value="王洪松">王洪松</option>
+                    <option value="乔伊果">乔伊果</option>
+                    <option value="方鹏飞">方鹏飞</option>
+                    <option value="吕佳祺">吕佳祺</option>
+                    <option value="王靖">王靖</option>
+                    <option value="石楚涵">石楚涵</option>
+                </select>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >服从调剂 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <select
+                        class="form-control"
+                        name="ajustment_input"
+                        id="form_ajustment"
+                        required
+                >
+                    <option value="请选择">请选择</option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+                <span class="help-block">如果意向导师无法接收，调剂到其他导师</span>
+            </div>
+        </div>
+
+        <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
+            论文发表
+        </p>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >发表时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-paper1">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_paper1"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >期刊/会议名</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="journal_name1"
+                        placeholder="无"
+                />
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >论文名称</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="paper_name1"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >发表时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-paper2">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_paper2"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >期刊/会议名</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="journal_name2"
+                        placeholder="无"
+                />
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >论文名称</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="paper_name2"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >发表时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-paper3">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_paper3"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >期刊/会议名</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="journal_name3"
+                        placeholder="无"
+                />
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >论文名称</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="paper_name3"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
+            奖项荣誉
+        </p>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >获奖时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-award1">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_award1"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项类别</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_grade1"
+                        list="award-grade1"
+                        placeholder="无"
+                />
+                <datalist id="award-grade1" style="display: none">
+                    <option value="国家级">国家级</option>
+                    <option value="省级">省级</option>
+                    <option value="市级">市级</option>
+                    <option value="校级">校级</option>
+                    <option value="院级">院级</option>
+                </datalist>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项名称等级</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_name1"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >获奖时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-award2">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_award2"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项类别</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_grade2"
+                        list="award-grade2"
+                        placeholder="无"
+                />
+                <datalist id="award-grade2" style="display: none">
+                    <option value="国家级">国家级</option>
+                    <option value="省级">省级</option>
+                    <option value="市级">市级</option>
+                    <option value="校级">校级</option>
+                    <option value="院级">院级</option>
+                </datalist>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项名称等级</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_name2"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >获奖时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-award3">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_award3"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项类别</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_grade3"
+                        list="award-grade3"
+                        placeholder="无"
+                />
+                <datalist id="award-grade3" style="display: none">
+                    <option value="国家级">国家级</option>
+                    <option value="省级">省级</option>
+                    <option value="市级">市级</option>
+                    <option value="校级">校级</option>
+                    <option value="院级">院级</option>
+                </datalist>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项名称等级</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_name3"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >获奖时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-award4">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_award4"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项类别</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_grade4"
+                        list="award-grade4"
+                        placeholder="无"
+                />
+                <datalist id="award-grade4" style="display: none">
+                    <option value="国家级">国家级</option>
+                    <option value="省级">省级</option>
+                    <option value="市级">市级</option>
+                    <option value="校级">校级</option>
+                    <option value="院级">院级</option>
+                </datalist>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项名称等级</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_name4"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >获奖时间</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="input-group date" id="datetimepicker-award5">
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="time_award5"
+                            placeholder="无"
+                    />
+                    <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                </div>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项类别</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_grade5"
+                        list="award-grade5"
+                        placeholder="无"
+                />
+                <datalist id="award-grade5" style="display: none">
+                    <option value="国家级">国家级</option>
+                    <option value="省级">省级</option>
+                    <option value="市级">市级</option>
+                    <option value="校级">校级</option>
+                    <option value="院级">院级</option>
+                </datalist>
+            </div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >奖项名称等级</label
+            >
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="award_name5"
+                        placeholder="无"
+                />
+            </div>
+        </div>
+
+        <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
+            个人陈述与研究计划
+        </p>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >个人陈述 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <textarea
+                  class="form-control"
+                  rows="10"
+                  name="statement_input"
+                  maxlength="500"
+                  placeholder="个人陈述(不超过500字)"
+                  required
+          ></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+
+            <label
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+                    style="white-space: nowrap"
+            >研究计划 <span style="color: red">* </span></label
+            >
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <textarea
+                  class="form-control"
+                  rows="10"
+                  name="researchplan_input"
+                  maxlength="500"
+                  placeholder="研究计划(不超过500字)"
+                  required
+          ></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label"
+                    style="font-size: xx-small; color: red; text-align: center"
+            >填写完报名系统后，请将申请材料压缩发送至邮箱palmwebsite@163.com，申请材料要求见实验室网站招生页面</label
+            >
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5"></div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="submit" class="btn btn-default">提交</button>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="reset" class="btn btn-default">清空</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
