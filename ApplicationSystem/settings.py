@@ -51,7 +51,11 @@ ROOT_URLCONF = 'ApplicationSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        # 多写几个模板目录，比如palm_front目录
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+            , os.path.join(BASE_DIR, 'palm_front')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
