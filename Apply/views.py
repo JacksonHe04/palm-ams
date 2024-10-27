@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from ApplicationSystem.settings import MEDIA_ROOT  # 导入上传文件保存路径 或 from django.conf import settings
 from django.utils import timezone
+from django.shortcuts import redirect
 import pytz
 import os
 
@@ -15,6 +16,11 @@ import os
 # index 函数渲染并返回 EnrollmentWebsite.html 页面
 def index(request):
     return render(request, 'EnrollmentWebsite.html')
+
+
+def indexVue(request):
+    url = 'http://localhost:5173'  # 替换为你想要的链接地址
+    return redirect(url)
 
 
 # palm 函数将用户输入的数据保存到数据库并上传用户的照片文件

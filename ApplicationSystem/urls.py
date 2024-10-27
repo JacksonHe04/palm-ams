@@ -14,4 +14,5 @@ urlpatterns = [
     path('apply/',views.palm),
     path('testdb/', testdb.testdb),
     path('', views.index),
+    path('vue/', views.indexVue)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
