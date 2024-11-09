@@ -11,7 +11,6 @@
         onsubmit="return formSubmit()"
         action=""
     >
-      {% csrf_token %}
       <p
           style="
           font-family: SimHei, serif;
@@ -1175,11 +1174,16 @@
   padding: 10px;
 }
 
+.form-control {
+  border-radius: 15px;
+}
+
 .container {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   width: 1200px;
   padding: 30px;
   margin: 50px auto;
+  border-radius: 50px;
 
   opacity: 0.8;
   filter: Alpha(opacity=50);

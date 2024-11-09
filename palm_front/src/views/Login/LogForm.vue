@@ -1,5 +1,5 @@
 <script setup></script>
 
-<template>hello</template>
+<template>LogForm</template>
 
 <style scoped></style>

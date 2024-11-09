@@ -1,21 +1,13 @@
+// @/router/index.js 路由管理文件
 // createRouter：创建router实例对象
 // createWebHistory：创建history模式的路由
-
 import { createRouter, createWebHistory } from 'vue-router'
-// import Login from '@/views/Login/index.vue'
-import Layout from '../components/Hello.vue'
-import Home from '../components/Home.vue'
-// import MedicalDatabase from '@/views/MedicalDataBase/index.vue'
-// import NLP from '@/views/NLP/index.vue'
-// import SubCategory from '@/views/SubCategory/index.vue'
-// import Detail from '@/views/Detail/index.vue'
-// import CartList from '@/views/CartList/index.vue'
-// import Checkout from '@/views/Checkout/index.vue'
-// import Pay from '@/views/Pay/index.vue'
-// import PayBack from '@/views/Pay/PayBack.vue'
-// import Member from '@/views/Member/index.vue'
-// import UserInfo from '@/views/Member/components/UserInfo.vue'
-// import UserOrder from '@/views/Member/components/UserOrder.vue'
+import Login from '@/views/Login/index.vue'
+import Layout from '@/views/Layout/index.vue'
+import Home from '@/views/Home/index.vue'
+import Admin from '@/views/Admin/index.vue'
+import Apply from '@/views/Apply/index.vue'
+import About from '@/views/About/index.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,69 +20,29 @@ const router = createRouter({
                 {
                     path: '',
                     component: Home,
-                    meta: { title: '首页' }
+                    meta: { title: '欢迎来到PALM实验室' }
                 },
-                // {
-                //     path: 'MedicalDatabase',
-                //     component: MedicalDatabase,
-                //     meta: { title: '医疗数据库' }
-                // },
-                // {
-                //     path: 'nlp',
-                //     component: NLP,
-                //     meta: { title: 'NLP算法处理' }
-                // },
-                // {
-                //     path: 'login',
-                //     component: Login,
-                //     meta: { title: '登录超级医生' }
-                // }
-                //         {
-                //             path: 'category/sub/:id',
-                //             component: SubCategory,
-                //             meta: { title: '子分类' }
-                //         },
-                //         {
-                //             path: 'detail/:id',
-                //             component: Detail,
-                //             meta: { title: '图书详情' }
-                //         },
-                //         {
-                //             path: 'cartlist',
-                //             component: CartList,
-                //             meta: { title: '购物车' }
-                //         },
-                //         {
-                //             path: 'checkout',
-                //             component: Checkout,
-                //             meta: { title: '图书结算' }
-                //         },
-                //         {
-                //             path: 'pay',
-                //             component: Pay,
-                //             meta: { title: '支付页' }
-                //         },
-                //         {
-                //             path: 'paycallback',
-                //             component: PayBack,
-                //             meta: { title: '支付返回' }
-                //         },
-                //         {
-                //             path: 'member',
-                //             component: Member,
-                //             children: [
-                //                 {
-                //                     path: '',
-                //                     component: UserInfo,
-                //                     meta: { title: '用户信息' }
-                //                 },
-                //                 {
-                //                     path: 'order',
-                //                     component: UserOrder,
-                //                     meta: { title: '订单列表' }
-                //                 }
-                //             ]
-                //         }
+                {
+                    path: '/apply',
+                    component: Apply,
+                    meta: { title: '申请PALM实验室' }
+                },
+                {
+                    path: '/login',
+                    component: Login,
+                    meta: { title: '登录PALM实验室' }
+                },
+                {
+                    path: '/admin',
+                    component: Admin,
+                    meta: { title: 'PALM实验室后台管理' }
+                },
+                {
+                    path: '/about',
+                    component: About,
+                    meta: { title: '关于开发者' }
+                },
+
             ]
         },
 

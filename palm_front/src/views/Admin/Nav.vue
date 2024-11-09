@@ -3,7 +3,7 @@
 </script>
 
 <template>
-我是Home
+Nav
 </template>
 
 <style scoped>

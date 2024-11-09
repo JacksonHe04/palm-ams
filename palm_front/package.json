@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "particles.js": "^2.0.0",
     "vue": "^3.5.10",
     "vue-router": "^4.4.5"
   },

@@ -1,19 +1,9 @@
-<script setup>
-import Hello from "./components/Hello.vue";
-import ApplyView from "./components/ApplyView.vue";
-import SimpleButton from "./components/SimpleButton.vue";
-
-// import comTest from "./components/comTest.vue";
-</script>
-
 <template>
-  <div id="app">
-    <ApplyView />
-    <SimpleButton />
-  </div>
+  <RouterView />
 </template>
 
-<style scoped>#app {
+<style scoped>
+#app {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
