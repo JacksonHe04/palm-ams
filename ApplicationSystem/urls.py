@@ -11,8 +11,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('apply/',views.palm),
+
+    path('', views.process_form),
+    path('apply_old/', views.process_form_old),
+
+    # path('', views.index),
+    path('old/', views.index_old),
+
     path('testdb/', testdb.testdb),
-    path('', views.index),
-    path('vue/', views.indexVue)
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

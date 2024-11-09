@@ -1,18 +1,84 @@
-<script setup></script>
+<script setup>
+function formSubmit() {
+  var sex = document.getElementById("form_sex").value;
+  if (sex === "请选择") {
+    alert("请输入性别！");
+    return false;
+  }
 
+  var reg_phone = /^1\d{10}$/;
+  var phonenumber = document.getElementById("form_phonenumber").value;
+  if (!reg_phone.test(phonenumber)) {
+    alert("手机号格式不正确！");
+    return false;
+  }
+
+  var reg_email = new RegExp(
+    "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$",
+  );
+  var email = document.getElementById("form_email").value;
+  if (!reg_email.test(email)) {
+    alert("邮箱格式不正确！");
+    return false;
+  }
+
+  var registrationtype = document.getElementById("form_registrationtype").value;
+  if (registrationtype === "请选择") {
+    alert("请选择报名类型！");
+    return false;
+  }
+
+  var tutor_first = document.getElementById("form_tutor_first").value;
+  var tutor_second = document.getElementById("form_tutor_second").value;
+  var tutor_third = document.getElementById("form_tutor_third").value;
+  if (
+    tutor_first === "请选择" ||
+    tutor_second === "请选择" ||
+    tutor_third === "请选择"
+  ) {
+    alert("请选择志愿导师！");
+    return false;
+  }
+  if (
+    tutor_first === tutor_second ||
+    tutor_first === tutor_third ||
+    tutor_second === tutor_third
+  ) {
+    alert("志愿导师不能重复！");
+    return false;
+  }
+
+  var ajustment = document.getElementById("form_ajustment").value;
+  if (ajustment === "请选择") {
+    alert("请选择是否服从调剂！");
+    return false;
+  }
+
+  var fileDom = document.getElementById("photo");
+  var file = fileDom.files[0];
+  if (!file || file.type.indexOf("image/") < 0) {
+    alert("请上传个人证件照");
+    return false;
+  }
+
+  alert("感谢您报名PALM实验室！后续请关注邮件通知！");
+  return true;
+}
+</script>
 <template>
   <div class="container">
     <p id="website-title">东南大学PALM实验室申请系统</p>
     <form
-        class="form-horizontal"
-        method="post"
-        role="form"
-        enctype="multipart/form-data"
-        onsubmit="return formSubmit()"
-        action=""
+      class="form-horizontal"
+      method="post"
+      role="form"
+      enctype="multipart/form-data"
+      onsubmit="return formSubmit()"
+      action=""
     >
+      {% csrf_token %}
       <p
-          style="
+        style="
           font-family: SimHei, serif;
           font-size: x-large;
           font-weight: bold;
@@ -27,21 +93,21 @@
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <div class="form-group">
             <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-            >姓 名 <span style="color: red">* </span></label
+              >姓 名 <span style="color: red">* </span></label
             >
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <input
-                  type="text"
-                  class="form-control"
-                  name="name_input"
-                  required
+                type="text"
+                class="form-control"
+                name="name_input"
+                required
               />
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-            >性 别 <span style="color: red">* </span></label
+              >性 别 <span style="color: red">* </span></label
             >
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <select class="form-control" name="sex_input" id="form_sex">
@@ -54,17 +120,17 @@
 
           <div class="form-group">
             <label
-                class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-                style="white-space: nowrap"
-            >出生年月 <span style="color: red">* </span></label
+              class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
+              style="white-space: nowrap"
+              >出生年月 <span style="color: red">* </span></label
             >
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <div class="input-group date" id="datetimepicker1">
                 <input
-                    type="text"
-                    class="form-control"
-                    name="birthday"
-                    required
+                  type="text"
+                  class="form-control"
+                  name="birthday"
+                  required
                 />
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
@@ -80,14 +146,14 @@
           <div data-toggle="distpicker">
             <div class="form-group">
               <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-              >籍 贯 <span style="color: red">* </span></label
+                >籍 贯 <span style="color: red">* </span></label
               >
               <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                 <label class="sr-only" for="province1">Province</label>
                 <select
-                    class="form-control"
-                    name="province"
-                    id="province1"
+                  class="form-control"
+                  name="province"
+                  id="province1"
                 ></select>
               </div>
             </div>
@@ -105,9 +171,9 @@
               <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                 <label class="sr-only" for="district1">District</label>
                 <select
-                    class="form-control"
-                    name="district"
-                    id="district1"
+                  class="form-control"
+                  name="district"
+                  id="district1"
                 ></select>
               </div>
             </div>
@@ -122,9 +188,9 @@
           </div>
         </div>
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >1寸证件照(小于300KB) <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >1寸证件照(小于300KB) <span style="color: red">* </span></label
         >
       </div>
 
@@ -132,17 +198,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >本科学校 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >本科学校 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="undergraduate_university_input"
-              list="undergraduate-university-input"
-              required
+            type="text"
+            class="form-control"
+            name="undergraduate_university_input"
+            list="undergraduate-university-input"
+            required
           />
           <datalist id="undergraduate-university-input" style="display: none">
             <option value="北京大学">北京大学</option>
@@ -231,15 +297,15 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        >专 业 <span style="color: red">* </span></label
+          >专 业 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="major_input"
-              list="major-input"
-              required
+            type="text"
+            class="form-control"
+            name="major_input"
+            list="major-input"
+            required
           />
           <datalist id="major-input" style="display: none">
             <option value="计算机科学与技术">计算机科学与技术</option>
@@ -280,17 +346,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >硕士学校&ensp;&thinsp;</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >硕士学校&ensp;&thinsp;</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="master_university_input"
-              list="master-university-input"
-              placeholder="本科生不填写此项"
+            type="text"
+            class="form-control"
+            name="master_university_input"
+            list="master-university-input"
+            placeholder="本科生不填写此项"
           />
           <datalist id="master-university-input" style="display: none">
             <option value="北京大学">北京大学</option>
@@ -379,16 +445,16 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >硕士导师&ensp;&thinsp;</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >硕士导师&ensp;&thinsp;</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="mastertutor_input"
-              placeholder="本科生不填写此项"
+            type="text"
+            class="form-control"
+            name="mastertutor_input"
+            placeholder="本科生不填写此项"
           />
         </div>
       </div>
@@ -397,32 +463,32 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >专业人数 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >专业人数 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="number"
-              class="form-control"
-              name="gradepeople_input"
-              min="1"
-              required
+            type="number"
+            class="form-control"
+            name="gradepeople_input"
+            min="1"
+            required
           />
         </div>
 
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        >排 名 <span style="color: red">* </span></label
+          >排 名 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="number"
-              class="form-control"
-              name="grade_input"
-              min="1"
-              required
+            type="number"
+            class="form-control"
+            name="grade_input"
+            min="1"
+            required
           />
         </div>
       </div>
@@ -431,34 +497,34 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >手机号码 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >手机号码 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="phonenumber_input"
-              id="form_phonenumber"
-              required
+            type="text"
+            class="form-control"
+            name="phonenumber_input"
+            id="form_phonenumber"
+            required
           />
         </div>
 
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >电子邮箱 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >电子邮箱 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="email_input"
-              id="form_email"
-              required
+            type="text"
+            class="form-control"
+            name="email_input"
+            id="form_email"
+            required
           />
         </div>
       </div>
@@ -471,16 +537,16 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >报名类型 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >报名类型 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <select
-              class="form-control"
-              name="registrationtype_input"
-              id="form_registrationtype"
-              required
+            class="form-control"
+            name="registrationtype_input"
+            id="form_registrationtype"
+            required
           >
             <option value="请选择">请选择</option>
             <option value="硕士">硕士</option>
@@ -494,16 +560,16 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >第一志愿 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >第一志愿 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <select
-              class="form-control"
-              name="tutor_input_first"
-              id="form_tutor_first"
-              required
+            class="form-control"
+            name="tutor_input_first"
+            id="form_tutor_first"
+            required
           >
             <option value="请选择">请选择</option>
             <option value="耿新">耿新(博导)</option>
@@ -535,16 +601,16 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >第二志愿 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >第二志愿 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <select
-              class="form-control"
-              name="tutor_input_second"
-              id="form_tutor_second"
-              required
+            class="form-control"
+            name="tutor_input_second"
+            id="form_tutor_second"
+            required
           >
             <option value="请选择">请选择</option>
             <option value="耿新">耿新(博导)</option>
@@ -578,16 +644,16 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >第三志愿 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >第三志愿 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <select
-              class="form-control"
-              name="tutor_input_third"
-              id="form_tutor_third"
-              required
+            class="form-control"
+            name="tutor_input_third"
+            id="form_tutor_third"
+            required
           >
             <option value="请选择">请选择</option>
             <option value="耿新">耿新(博导)</option>
@@ -619,16 +685,16 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >服从调剂 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >服从调剂 <span style="color: red">* </span></label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <select
-              class="form-control"
-              name="ajustment_input"
-              id="form_ajustment"
-              required
+            class="form-control"
+            name="ajustment_input"
+            id="form_ajustment"
+            required
           >
             <option value="请选择">请选择</option>
             <option value="是">是</option>
@@ -646,17 +712,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >发表时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >发表时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-paper1">
             <input
-                type="text"
-                class="form-control"
-                name="time_paper1"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_paper1"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -665,30 +731,30 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >期刊/会议名</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >期刊/会议名</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="journal_name1"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="journal_name1"
+            placeholder="无"
           />
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >论文名称</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >论文名称</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="paper_name1"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="paper_name1"
+            placeholder="无"
           />
         </div>
       </div>
@@ -697,17 +763,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >发表时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >发表时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-paper2">
             <input
-                type="text"
-                class="form-control"
-                name="time_paper2"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_paper2"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -716,30 +782,30 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >期刊/会议名</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >期刊/会议名</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="journal_name2"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="journal_name2"
+            placeholder="无"
           />
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >论文名称</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >论文名称</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="paper_name2"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="paper_name2"
+            placeholder="无"
           />
         </div>
       </div>
@@ -748,17 +814,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >发表时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >发表时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-paper3">
             <input
-                type="text"
-                class="form-control"
-                name="time_paper3"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_paper3"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -767,30 +833,30 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >期刊/会议名</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >期刊/会议名</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="journal_name3"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="journal_name3"
+            placeholder="无"
           />
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >论文名称</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >论文名称</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="paper_name3"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="paper_name3"
+            placeholder="无"
           />
         </div>
       </div>
@@ -803,17 +869,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >获奖时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >获奖时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-award1">
             <input
-                type="text"
-                class="form-control"
-                name="time_award1"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_award1"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -822,17 +888,17 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项类别</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项类别</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="award_grade1"
-              list="award-grade1"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_grade1"
+            list="award-grade1"
+            placeholder="无"
           />
           <datalist id="award-grade1" style="display: none">
             <option value="国家级">国家级</option>
@@ -844,16 +910,16 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项名称等级</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项名称等级</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="award_name1"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_name1"
+            placeholder="无"
           />
         </div>
       </div>
@@ -862,17 +928,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >获奖时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >获奖时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-award2">
             <input
-                type="text"
-                class="form-control"
-                name="time_award2"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_award2"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -881,17 +947,17 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项类别</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项类别</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="award_grade2"
-              list="award-grade2"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_grade2"
+            list="award-grade2"
+            placeholder="无"
           />
           <datalist id="award-grade2" style="display: none">
             <option value="国家级">国家级</option>
@@ -903,16 +969,16 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项名称等级</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项名称等级</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="award_name2"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_name2"
+            placeholder="无"
           />
         </div>
       </div>
@@ -921,17 +987,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >获奖时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >获奖时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-award3">
             <input
-                type="text"
-                class="form-control"
-                name="time_award3"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_award3"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -940,17 +1006,17 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项类别</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项类别</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="award_grade3"
-              list="award-grade3"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_grade3"
+            list="award-grade3"
+            placeholder="无"
           />
           <datalist id="award-grade3" style="display: none">
             <option value="国家级">国家级</option>
@@ -962,16 +1028,16 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项名称等级</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项名称等级</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="award_name3"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_name3"
+            placeholder="无"
           />
         </div>
       </div>
@@ -980,17 +1046,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >获奖时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >获奖时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-award4">
             <input
-                type="text"
-                class="form-control"
-                name="time_award4"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_award4"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -999,17 +1065,17 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项类别</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项类别</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="award_grade4"
-              list="award-grade4"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_grade4"
+            list="award-grade4"
+            placeholder="无"
           />
           <datalist id="award-grade4" style="display: none">
             <option value="国家级">国家级</option>
@@ -1021,16 +1087,16 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项名称等级</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项名称等级</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="award_name4"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_name4"
+            placeholder="无"
           />
         </div>
       </div>
@@ -1039,17 +1105,17 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >获奖时间</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >获奖时间</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <div class="input-group date" id="datetimepicker-award5">
             <input
-                type="text"
-                class="form-control"
-                name="time_award5"
-                placeholder="无"
+              type="text"
+              class="form-control"
+              name="time_award5"
+              placeholder="无"
             />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -1058,17 +1124,17 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项类别</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项类别</label
         >
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
           <input
-              type="text"
-              class="form-control"
-              name="award_grade5"
-              list="award-grade5"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_grade5"
+            list="award-grade5"
+            placeholder="无"
           />
           <datalist id="award-grade5" style="display: none">
             <option value="国家级">国家级</option>
@@ -1080,16 +1146,16 @@
         </div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >奖项名称等级</label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >奖项名称等级</label
         >
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
           <input
-              type="text"
-              class="form-control"
-              name="award_name5"
-              placeholder="无"
+            type="text"
+            class="form-control"
+            name="award_name5"
+            placeholder="无"
           />
         </div>
       </div>
@@ -1102,18 +1168,18 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >个人陈述 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >个人陈述 <span style="color: red">* </span></label
         >
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <textarea
-              class="form-control"
-              rows="10"
-              name="statement_input"
-              maxlength="500"
-              placeholder="个人陈述(不超过500字)"
-              required
+            class="form-control"
+            rows="10"
+            name="statement_input"
+            maxlength="500"
+            placeholder="个人陈述(不超过500字)"
+            required
           ></textarea>
         </div>
       </div>
@@ -1122,27 +1188,27 @@
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
         <label
-            class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-            style="white-space: nowrap"
-        >研究计划 <span style="color: red">* </span></label
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+          style="white-space: nowrap"
+          >研究计划 <span style="color: red">* </span></label
         >
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <textarea
-              class="form-control"
-              rows="10"
-              name="researchplan_input"
-              maxlength="500"
-              placeholder="研究计划(不超过500字)"
-              required
+            class="form-control"
+            rows="10"
+            name="researchplan_input"
+            maxlength="500"
+            placeholder="研究计划(不超过500字)"
+            required
           ></textarea>
         </div>
       </div>
 
       <div class="form-group">
         <label
-            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label"
-            style="font-size: xx-small; color: red; text-align: center"
-        >填写完报名系统后，请将申请材料压缩发送至邮箱palmwebsite@163.com，申请材料要求见实验室网站招生页面</label
+          class="col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label"
+          style="font-size: xx-small; color: red; text-align: center"
+          >填写完报名系统后，请将申请材料压缩发送至邮箱palmwebsite@163.com，申请材料要求见实验室网站招生页面</label
         >
       </div>
 
@@ -1162,8 +1228,8 @@
 </template>
 
 <style scoped>
-@import url('https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
-@import url('https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css');
+@import url("https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css");
+@import url("https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css");
 
 #website-title {
   font-family: "-apple-system", "Arial", "Microsoft YaHei", serif;

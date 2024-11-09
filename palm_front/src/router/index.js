@@ -1,7 +1,7 @@
 // @/router/index.js 路由管理文件
 // createRouter：创建router实例对象
 // createWebHistory：创建history模式的路由
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import Login from '@/views/Login/index.vue'
 import Layout from '@/views/Layout/index.vue'
 import Home from '@/views/Home/index.vue'
@@ -9,8 +9,10 @@ import Admin from '@/views/Admin/index.vue'
 import Apply from '@/views/Apply/index.vue'
 import About from '@/views/About/index.vue'
 
+const hash = createWebHashHistory();
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    // history: createWebHistory(import.meta.env.BASE_URL),
+    history: hash,
     // path和component对应关系的位置
     routes: [
         {

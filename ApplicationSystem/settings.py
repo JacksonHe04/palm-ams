@@ -48,13 +48,28 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ApplicationSystem.urls'
 
+# 前端构建的 dist 目录路径
+FRONTEND_BUILD_DIR = os.path.join(BASE_DIR, 'palm_front', 'dist')
+
+# 静态文件 URL 前缀
+STATIC_URL = '/static/'
+
+# 设置静态文件的目录，设置为列表形式
+STATICFILES_DIRS = [
+    os.path.join(FRONTEND_BUILD_DIR),
+    os.path.join(BASE_DIR, 'static')
+]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 多写几个模板目录，比如palm_front目录
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates')
-            , os.path.join(BASE_DIR, 'palm_front')
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'static')
+            , os.path.join(FRONTEND_BUILD_DIR)
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -119,13 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-# 仅有上面的设置，只说明了样式放在static文件，需要指定和项目根目录的关系
 
-# 设置静态文件的目录，设置为列表形式
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
 
 # 图片储存根路径
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
