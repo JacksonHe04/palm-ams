@@ -1,9 +1,9 @@
 <script setup>
-import Form from "@/views/Apply/Form.vue";
+import NewForm from "@/views/Apply/NewForm.vue";
 </script>
 
 <template>
-  <Form />
+  <NewForm />
 </template>
 
 <style scoped></style>

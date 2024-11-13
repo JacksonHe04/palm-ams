@@ -1,69 +1,69 @@
 <script setup>
-function formSubmit() {
-  var sex = document.getElementById("form_sex").value;
-  if (sex === "请选择") {
-    alert("请输入性别！");
-    return false;
-  }
-
-  var reg_phone = /^1\d{10}$/;
-  var phonenumber = document.getElementById("form_phonenumber").value;
-  if (!reg_phone.test(phonenumber)) {
-    alert("手机号格式不正确！");
-    return false;
-  }
-
-  var reg_email = new RegExp(
-    "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$",
-  );
-  var email = document.getElementById("form_email").value;
-  if (!reg_email.test(email)) {
-    alert("邮箱格式不正确！");
-    return false;
-  }
-
-  var registrationtype = document.getElementById("form_registrationtype").value;
-  if (registrationtype === "请选择") {
-    alert("请选择报名类型！");
-    return false;
-  }
-
-  var tutor_first = document.getElementById("form_tutor_first").value;
-  var tutor_second = document.getElementById("form_tutor_second").value;
-  var tutor_third = document.getElementById("form_tutor_third").value;
-  if (
-    tutor_first === "请选择" ||
-    tutor_second === "请选择" ||
-    tutor_third === "请选择"
-  ) {
-    alert("请选择志愿导师！");
-    return false;
-  }
-  if (
-    tutor_first === tutor_second ||
-    tutor_first === tutor_third ||
-    tutor_second === tutor_third
-  ) {
-    alert("志愿导师不能重复！");
-    return false;
-  }
-
-  var ajustment = document.getElementById("form_ajustment").value;
-  if (ajustment === "请选择") {
-    alert("请选择是否服从调剂！");
-    return false;
-  }
-
-  var fileDom = document.getElementById("photo");
-  var file = fileDom.files[0];
-  if (!file || file.type.indexOf("image/") < 0) {
-    alert("请上传个人证件照");
-    return false;
-  }
-
-  alert("感谢您报名PALM实验室！后续请关注邮件通知！");
-  return true;
-}
+// function formSubmit() {
+//   var sex = document.getElementById("form_sex").value;
+//   if (sex === "请选择") {
+//     alert("请输入性别！");
+//     return false;
+//   }
+//
+//   var reg_phone = /^1\d{10}$/;
+//   var phonenumber = document.getElementById("form_phonenumber").value;
+//   if (!reg_phone.test(phonenumber)) {
+//     alert("手机号格式不正确！");
+//     return false;
+//   }
+//
+//   var reg_email = new RegExp(
+//     "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$",
+//   );
+//   var email = document.getElementById("form_email").value;
+//   if (!reg_email.test(email)) {
+//     alert("邮箱格式不正确！");
+//     return false;
+//   }
+//
+//   var registrationtype = document.getElementById("form_registrationtype").value;
+//   if (registrationtype === "请选择") {
+//     alert("请选择报名类型！");
+//     return false;
+//   }
+//
+//   var tutor_first = document.getElementById("form_tutor_first").value;
+//   var tutor_second = document.getElementById("form_tutor_second").value;
+//   var tutor_third = document.getElementById("form_tutor_third").value;
+//   if (
+//     tutor_first === "请选择" ||
+//     tutor_second === "请选择" ||
+//     tutor_third === "请选择"
+//   ) {
+//     alert("请选择志愿导师！");
+//     return false;
+//   }
+//   if (
+//     tutor_first === tutor_second ||
+//     tutor_first === tutor_third ||
+//     tutor_second === tutor_third
+//   ) {
+//     alert("志愿导师不能重复！");
+//     return false;
+//   }
+//
+//   var ajustment = document.getElementById("form_ajustment").value;
+//   if (ajustment === "请选择") {
+//     alert("请选择是否服从调剂！");
+//     return false;
+//   }
+//
+//   var fileDom = document.getElementById("photo");
+//   var file = fileDom.files[0];
+//   if (!file || file.type.indexOf("image/") < 0) {
+//     alert("请上传个人证件照");
+//     return false;
+//   }
+//
+//   alert("感谢您报名PALM实验室！后续请关注邮件通知！");
+//   return true;
+// }
 </script>
 <template>
   <div class="container">
@@ -77,6 +77,7 @@ function formSubmit() {
       action=""
     >
       {% csrf_token %}
+      <!-- 1. 个人基本信息 -->
       <p
         style="
           font-family: SimHei, serif;
@@ -529,6 +530,8 @@ function formSubmit() {
         </div>
       </div>
 
+      <!-- 2. 意向选择 -->
+
       <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
         意向选择
       </p>
@@ -704,6 +707,8 @@ function formSubmit() {
         </div>
       </div>
 
+      <!-- 3. 论文发表 -->
+
       <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
         论文发表
       </p>
@@ -860,6 +865,8 @@ function formSubmit() {
           />
         </div>
       </div>
+
+      <!-- 4. 奖项荣誉 -->
 
       <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
         奖项荣誉
@@ -1160,6 +1167,8 @@ function formSubmit() {
         </div>
       </div>
 
+      <!-- 5. 个人陈述与研究计划 -->
+
       <p style="font-family: SimHei; font-size: x-large; font-weight: bold">
         个人陈述与研究计划
       </p>
@@ -1211,6 +1220,8 @@ function formSubmit() {
           >填写完报名系统后，请将申请材料压缩发送至邮箱palmwebsite@163.com，申请材料要求见实验室网站招生页面</label
         >
       </div>
+
+      <!-- 提交 -->
 
       <div class="form-group">
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5"></div>
