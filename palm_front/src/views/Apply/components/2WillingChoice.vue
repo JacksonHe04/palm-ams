@@ -1,5 +1,6 @@
 <script setup>
 
+import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
 </script>
 
 <template>
@@ -179,6 +180,7 @@
     </div>
   </div>
 </div>
+  <DividerLine />
 </template>
 
 <style scoped>

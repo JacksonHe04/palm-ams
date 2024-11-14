@@ -6,6 +6,7 @@ import Awards from "@/views/Apply/components/4Awards.vue";
 import Plan from "@/views/Apply/components/5Plan.vue";
 import Upload from "@/views/Apply/components/6Upload.vue";
 import Submit from "@/views/Apply/components/7Submit.vue";
+import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
 
 // function formSubmit() {
 //   var sex = document.getElementById("form_sex").value;
@@ -77,6 +78,7 @@ import Submit from "@/views/Apply/components/7Submit.vue";
 <template>
   <div class="container">
     <p id="website-title">东南大学PALM实验室申请系统</p>
+    <DividerLine />
     <form
       class="form-horizontal"
       method="post"
@@ -90,7 +92,6 @@ import Submit from "@/views/Apply/components/7Submit.vue";
       <WillingChoice />
       <Papers />
       <Awards />
-      <!--<Plan />-->
       <Upload />
       <Submit />
     </form>

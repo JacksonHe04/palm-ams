@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import SchoolList from "@/views/Apply/components/PersonalInfo/components/SchoolList.vue";
 import Avatar from "@/views/Apply/components/PersonalInfo/components/Avatar.vue";
 import DegreeInfo from "@/views/Apply/components/PersonalInfo/components/DegreeInfo.vue";
+import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
 
 // 存储选择的学校评级
 const rating = ref('');
@@ -173,6 +174,7 @@ const handleSchoolSelect = (data) => {
               class="form-control"
               :value="percentageRank"
               readonly
+              placeholder="自动计算"
           />
         </div>
         <div class="col-lg-3"></div>
@@ -216,6 +218,7 @@ const handleSchoolSelect = (data) => {
       </div>
     </div>
   </div>
+  <DividerLine />
 </template>
 
 <script>
