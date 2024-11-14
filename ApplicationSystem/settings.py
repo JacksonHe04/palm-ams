@@ -32,8 +32,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 
-    'Apply',
+    'Apply',  # 这是之前的应用，我们舍弃
+
+    # 以下为我们创建的应用
+    'Api.testapp',
+    'Api.home'
+    # ......     继续注册新的应用
+
 ]
 
 MIDDLEWARE = [
@@ -44,7 +51,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'ApplicationSystem.urls'
 
@@ -95,7 +106,7 @@ DATABASES = {
         'HOST': '127.0.0.1',  # 数据库地址，本�?虚拟) ip 地址 127.0.0.1
         'PORT': 3306,  # 端口
         'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库密�?
+        'PASSWORD': '123456',  # 数据库密码
 
     }
 }

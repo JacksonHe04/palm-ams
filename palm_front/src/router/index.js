@@ -8,6 +8,7 @@ import Home from '@/views/Home/index.vue'
 import Admin from '@/views/Admin/index.vue'
 import Apply from '@/views/Apply/index.vue'
 import About from '@/views/About/index.vue'
+import Test from '@/views/Test/index.vue'
 
 const hash = createWebHashHistory();
 const router = createRouter({
@@ -44,6 +45,12 @@ const router = createRouter({
                     component: About,
                     meta: { title: '关于开发者' }
                 },
+                {
+                //     /test
+                    path: '/test',
+                    component: Test,
+                    meta: { title: '开发者测试页面' }
+                }
 
             ]
         },
