@@ -1,7 +1,7 @@
 # django-vue-lyadmin  frontend 前端框架
 
 #### slogon
-
+Check
 做一个专业前端能用的框架，后台人员也能面向配置的、能改得动的CRUD
 
 #### 介绍
