@@ -2,7 +2,7 @@
   <el-menu class="el-menu-demo" mode="horizontal"  background-color="var(--l-header-bg)"  text-color="#ffffff" active-text-color="#ffffff" :ellipsis="false">
       <div  :style="collapsed ? collapsedWidth : 'width:90px;margin-left:0'" class="divleft">
           <p class="login-inner" @click.stop="" style="text-align: center;" :style="collapsed ? loginInnerWidth : 'width:90px'">
-             <img class="logoimg" src="../assets/logo.png" alt=""  :style="collapsed ? 'width:40px' : 'width:24px;height:24px;margin-left:0'">
+             <!--<img class="logoimg" src="../assets/logo.png" alt=""  :style="collapsed ? 'width:40px' : 'width:24px;height:24px;margin-left:0'">-->
           </p>
         <img class="showimg" :src="collapsed?imgsq:imgshow" @click.stop="toggle(collapsed)">
       </div>

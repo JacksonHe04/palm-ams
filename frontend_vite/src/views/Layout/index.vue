@@ -8,7 +8,10 @@ import BackToTop from "@/views/Layout/BackToTop.vue";
 <template>
   <LayoutHeader />
   <Background>
+    <slot />
     <RouterView />
+  <!--  插槽-->
+
   </Background>
   <BackToTop />
   <LayoutFooter />
