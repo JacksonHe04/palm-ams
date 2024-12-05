@@ -29,7 +29,7 @@
                             name:"日",
                             type:"success"
                         }},
-                    {id:2,title:"订单数",nums:250108,totalnums:365899,icon:{
+                    {id:2,title:"申请数",nums:250108,totalnums:365899,icon:{
                             type:"GoodsFilled",
                             background:"#e6a23c",
                         },
@@ -37,7 +37,7 @@
                             name:"月",
                             type:"warning"
                         }},
-                    {id:3,title:"下载数",nums:356897,totalnums:568952,icon:{
+                    {id:3,title:"简历数",nums:356897,totalnums:568952,icon:{
                             type:"Download",
                             background:"#409eff",
                         },
@@ -45,7 +45,7 @@
                             name:"周",
                             type:""
                         }},
-                    {id:4,title:"成交数",nums:156889,totalnums:956889,icon:{
+                    {id:4,title:"接收数",nums:156889,totalnums:956889,icon:{
                             type:"WalletFilled",
                             background:"#f56c6c",
                         },

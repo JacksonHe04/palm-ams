@@ -21,7 +21,7 @@
         }
         },
         legend: {
-        data: ['衣服', '零食', '手机', '生鲜', '母婴']
+        data: ['985', '211', '本校', 'EECS', 'CCF-A']
         },
         toolbox: {
         feature: {
@@ -48,7 +48,7 @@
         ],
         series: [
         {
-          name: '衣服',
+          name: '985',
           type: 'line',
           stack: 'Total',
           areaStyle: {},
@@ -58,7 +58,7 @@
           data: [120, 132, 101, 134, 90, 230, 210]
         },
         {
-          name: '零食',
+          name: '211',
           type: 'line',
           stack: 'Total',
           areaStyle: {},
@@ -68,7 +68,7 @@
           data: [220, 182, 191, 234, 290, 330, 310]
         },
         {
-          name: '手机',
+          name: '本校',
           type: 'line',
           stack: 'Total',
           areaStyle: {},
@@ -78,7 +78,7 @@
           data: [150, 232, 201, 154, 190, 330, 410]
         },
         {
-          name: '生鲜',
+          name: 'EECS',
           type: 'line',
           stack: 'Total',
           areaStyle: {},
@@ -88,7 +88,7 @@
           data: [320, 332, 301, 334, 390, 330, 320]
         },
         {
-          name: '母婴',
+          name: 'CCF-A',
           type: 'line',
           stack: 'Total',
           label: {

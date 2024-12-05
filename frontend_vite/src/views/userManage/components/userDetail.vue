@@ -29,6 +29,9 @@
                 <el-form-item label="用户昵称：" prop="nickname">
                     {{formData.nickname}}
                 </el-form-item>
+                <el-form-item label="邮箱：" prop="email">
+                    {{formData.email}}
+                </el-form-item>
                 <el-form-item label="手机号：" prop="mobile">
                     {{formData.mobile}}
                 </el-form-item>

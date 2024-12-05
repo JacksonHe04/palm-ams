@@ -23,7 +23,7 @@
           <RouterLink to="/test">开发者测试</RouterLink>
         </li>
         <li class="home">
-          <RouterLink to="/">管理</RouterLink>
+          <RouterLink to="/admin">管理</RouterLink>
         </li>
       </ul>
     </div>

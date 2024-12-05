@@ -1,5 +1,6 @@
 <template>
     <div :class="{'ly-is-full':isFull}">
+        <!-- 检索/筛选 -->
         <div class="tableSelect" ref="tableSelect">
             <el-form :inline="true" :model="formInline" label-position="left">
                 <el-form-item label="用户昵称：">
@@ -33,14 +34,38 @@
                         <span v-text="getIndex(scope.$index)"></span>
                     </template>
                 </el-table-column>
-                <el-table-column min-width="70" prop="avatar" label="用户头像">
+                <el-table-column min-width="70" prop="avatar" label="照片">
                     <template #default="scope">
                         <img  :src="scope.row.avatar ? scope.row.avatar : defaultImg" style="width: 30px;height: 30px" :onerror="defaultImg" >
                     </template>
                 </el-table-column>
-                <el-table-column min-width="110" prop="username" label="用户名"></el-table-column>
-                <el-table-column min-width="110" prop="nickname" label="用户昵称"></el-table-column>
+                <el-table-column min-width="110" prop="username" label="姓名"></el-table-column>
+                <el-table-column min-width="110" prop="nickname" label="昵称"></el-table-column>
+                <el-table-column min-width="110" prop="email" label="邮箱"></el-table-column>
                 <el-table-column min-width="100" prop="mobile" label="手机号"></el-table-column>
+                <el-table-column min-width="110" prop="undergraduateSchool" label="本科院校"></el-table-column>
+                <el-table-column min-width="110" prop="undergraduateMajor" label="本科专业"></el-table-column>
+                <el-table-column min-width="110" prop="percentage" label="百分比"></el-table-column>
+                <el-table-column min-width="110" prop="majorCount" label="专业人数"></el-table-column>
+                <el-table-column min-width="110" prop="rank" label="排名"></el-table-column>
+
+                <el-table-column min-width="110" prop="graduateSchool" label="硕士院校"></el-table-column>
+                <el-table-column min-width="110" prop="graduateMajor" label="硕士专业"></el-table-column>
+                <el-table-column min-width="110" prop="graduateAdvisor" label="硕士导师"></el-table-column>
+                <el-table-column min-width="110" prop="gender" label="性别"></el-table-column>
+                <el-table-column min-width="110" prop="birthDate" label="出生年月"></el-table-column>
+                <el-table-column min-width="110" prop="mobile" label="手机号"></el-table-column>
+                <el-table-column min-width="110" prop="email" label="邮箱"></el-table-column>
+                <el-table-column min-width="110" prop="applicationType" label="报名类型"></el-table-column>
+                <el-table-column min-width="110" prop="firstChoice" label="第一志愿"></el-table-column>
+                <el-table-column min-width="110" prop="secondChoice" label="第二志愿"></el-table-column>
+                <el-table-column min-width="110" prop="thirdChoice" label="第三志愿"></el-table-column>
+                <el-table-column min-width="110" prop="adjustment" label="服从调剂"></el-table-column>
+                <el-table-column min-width="110" prop="publications" label="论文发表"></el-table-column>
+                <el-table-column min-width="110" prop="awards" label="奖项荣誉"></el-table-column>
+                <el-table-column min-width="110" prop="resume" label="简历"></el-table-column>
+                <el-table-column min-width="110" prop="proofMaterials" label="证明材料"></el-table-column>
+
                 <el-table-column min-width="100" label="状态">
                     <template #default="scope">
                         <el-tag v-if="scope.row.is_active">正常</el-tag>

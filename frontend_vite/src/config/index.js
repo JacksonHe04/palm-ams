@@ -1,6 +1,7 @@
 import pkg from '../../package.json'
 //API DOMAIN
 const API_DOMAIN = process.env.NODE_ENV === 'development' ? "127.0.0.1:8000" : "django-vue3-lyadmin.lybbn.cn"
+// const API_DOMAIN = process.env.NODE_ENV === "127.0.0.1:8000"
 //版本号
 const APP_VER = pkg.version
 //lyadmin系统配置
@@ -16,7 +17,7 @@ export default {
     API_URL : process.env.NODE_ENV === 'development' ? "http://"+ API_DOMAIN +"/api/" : "https://"+ API_DOMAIN +"/api/",
 
     //标题
-    APP_TITLE : "django-vue-lyadmin后台管理系统",
+    APP_TITLE : "东南大学PALM实验室申请系统",
 
 	//是否开启多标签
 	ISMULTITABS: true,

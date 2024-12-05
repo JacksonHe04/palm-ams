@@ -61,6 +61,13 @@ const routes = [
         },
       },
       {
+        path: "/admin",
+        redirect: "/analysis", // 添加这一行
+        meta: {
+          requireAuth: true,
+        },
+      },
+      {
         path: "/404",
         name: "404",
         component: () => import("../views/Home/index.vue"),

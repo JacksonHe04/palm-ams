@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-section">
-    <h1>欢迎来到 PALM 实验室</h1>
-    <p>我们致力于推动人工智能和前沿科技的研究，欢迎您的加入！</p>
+    <h1>欢迎申请 PALM 实验室</h1>
+    <!--<p>我们致力于推动人工智能和前沿科技的研究，欢迎您的加入！</p>-->
     <router-link to="/apply">
       <button class="apply-button">立即申请</button>
     </router-link>

@@ -25,7 +25,6 @@
 </template>
 <script setup>
 import { ref, onMounted, getCurrentInstance, computed } from "vue";
-import Layout from "@/views/layout/index.vue";
 import navcon from "@/components/navcon.vue";
 import leftnav from "@/components/leftnav.vue";
 import Mutitabs from "@/components/mutitabs.vue";
