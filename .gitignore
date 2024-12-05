@@ -1,8 +1,8 @@
-# Ignore compiled Python files
 *.pyc
 __pycache__/
 .idea
 
 .DS_Store
-ApplicationSystem/.DS_Store
-Docs/
+palm_back/ApplicationSystem/.DS_Store
+
+discarded

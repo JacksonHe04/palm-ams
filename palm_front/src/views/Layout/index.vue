@@ -6,10 +6,23 @@ import BackToTop from "@/views/Layout/BackToTop.vue";
 </script>
 
 <template>
-  <LayoutHeader />
   <Background>
-    <RouterView />
+    <LayoutHeader />
+    <div class="content">
+      <RouterView />
+    </div>
+    <BackToTop />
+    <LayoutFooter />
   </Background>
-  <BackToTop />
-  <LayoutFooter />
 </template>
+
+<style scoped>
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-height: calc(100vh - 60px);
+}
+</style>

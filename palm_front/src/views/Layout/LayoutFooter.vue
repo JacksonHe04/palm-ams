@@ -84,11 +84,11 @@
 
 <style scoped>
 .app_footer {
-  background-image: linear-gradient(
-      15deg,
-      rgba(10, 24, 85, 0.6) 0%,
-      rgba(136, 194, 213, 0.6) 100%
-  );
+  /* background-image: linear-gradient( */
+  /*     15deg, */
+  /*     rgba(255, 255, 255, 1) 0%,  !* 白色 *! */
+  /*     rgba(173, 216, 230, 0.6) 100%  !* 浅蓝色 *! */
+  /* ); */
   padding: 40px 0 0 0;
   color: #333;
 }

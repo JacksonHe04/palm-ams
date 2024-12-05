@@ -1,7 +1,6 @@
 <template>
   <div class="welcome-section">
     <h1>欢迎来到 PALM 实验室</h1>
-    <p>我们致力于推动人工智能和前沿科技的研究，欢迎您的加入！</p>
     <router-link to="/apply">
       <button class="apply-button">立即申请</button>
     </router-link>
@@ -31,12 +30,12 @@ export default {
 
 .apply-button {
   margin-top: 30px;
-  padding: 0.8rem 1.5rem;
+  padding: 1rem 2rem;
   font-size: 2rem;
   color: #fff;
   background-color: #5d7faa;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

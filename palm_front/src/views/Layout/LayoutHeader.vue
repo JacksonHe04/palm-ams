@@ -7,7 +7,7 @@
     <div class="container">
       <ul class="app-header-nav-left">
         <li class="manager">
-          <RouterLink to="/">PalmAdmissionsSystem</RouterLink>
+          <RouterLink to="/">东南大学 PALM 实验室申请系统</RouterLink>
         </li>
       </ul>
       <ul class="app-header-nav">
@@ -25,7 +25,7 @@
           <RouterLink to="/test">开发者测试</RouterLink>
         </li>
         <li class="home">
-          <a href="http://10.208.121.222:5174/" target="_blank">管理</a>
+          <RouterLink to="/admin">管理</RouterLink>
         </li>
       </ul>
     </div>
@@ -33,13 +33,12 @@
 </template>
 
 <style scoped>
+a {
+  color: #777777;
+}
+
 .app-header {
-  background-image: linear-gradient(
-    15deg,
-    rgba(10, 24, 85, 0.6) 0%,
-    rgba(136, 194, 213, 0.6) 100%
-  );
-  /* border-bottom: 2px solid #e0e0e0; */
+  height: fit-content;
 
   .container {
     display: flex;
@@ -59,7 +58,7 @@
         display: inline-block;
         width: 1px;
         height: 90%;
-        background-color: #e0e0e0;
+        background-color: #cacaca;
         vertical-align: bottom;
         margin-left: 20px;
         margin-right: 20px;
@@ -69,8 +68,6 @@
         line-height: 32px;
         height: 32px;
         display: inline-block;
-        font-weight: bold;
-        color: #d8d8d8;
         text-decoration: none;
         transition: color 0.5s ease;
         &:hover {
@@ -100,7 +97,7 @@
         display: inline-block;
         width: 1px;
         height: 90%;
-        background-color: #e0e0e0;
+        background-color: #cacaca;
         vertical-align: bottom;
         margin-left: 20px;
         margin-right: 20px;
@@ -111,8 +108,6 @@
         line-height: 32px;
         height: 32px;
         display: inline-block;
-        font-weight: bold;
-        color: #707070;
         text-decoration: none;
         transition: color 0.5s ease;
 
