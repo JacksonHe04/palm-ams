@@ -5,7 +5,7 @@
 from django.shortcuts import render
 from .models import PalmApplicant
 from django.http import HttpResponseRedirect
-from palm_back.ApplicationSystem.settings import MEDIA_ROOT  # 导入上传文件保存路径 或 from django.conf import settings
+from ApplicationSystem.settings import MEDIA_ROOT  # 导入上传文件保存路径 或 from django.conf import settings
 from django.utils import timezone
 import pytz
 import os

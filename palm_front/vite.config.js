@@ -10,4 +10,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: 'static/[name].[hash].[ext]',
+        chunkFileNames: 'static/[name].[hash].js',
+        entryFileNames: 'static/[name].[hash].js',
+      },
+    },
+  },
 })

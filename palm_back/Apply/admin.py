@@ -4,10 +4,9 @@
 2. 提供导出选中数据到Excel文件的功能。
 """
 from django.contrib import admin
-from palm_back.Apply.models import PalmApplicant
+from .models import PalmApplicant
 from django.shortcuts import HttpResponse
 from openpyxl import Workbook
-
 
 class testAdmin(admin.ModelAdmin):
     list_display = ('name_input','sex_input','birthday','province','city','district','undergraduate_university_input')
