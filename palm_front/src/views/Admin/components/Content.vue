@@ -4,13 +4,13 @@ import { ref } from 'vue';
 const contentRef = ref(null);
 
 let isDragging = false;
-let startX;
-let scrollLeft;
+let startY;
+let scrollTop;
 
 const startDragging = (e) => {
   isDragging = true;
-  startX = e.pageX - contentRef.value.offsetLeft;
-  scrollLeft = contentRef.value.scrollLeft;
+  startY = e.pageY - contentRef.value.offsetTop;
+  scrollTop = contentRef.value.scrollTop;
 };
 
 const stopDragging = () => {
@@ -20,9 +20,9 @@ const stopDragging = () => {
 const drag = (e) => {
   if (!isDragging) return;
   e.preventDefault();
-  const x = e.pageX - contentRef.value.offsetLeft;
-  const walk = (x - startX) * 1.5; // 拖动速度
-  contentRef.value.scrollLeft = scrollLeft - walk;
+  const y = e.pageY - contentRef.value.offsetTop;
+  const walk = (y - startY) * 1.5; // 拖动速度
+  contentRef.value.scrollTop = scrollTop - walk;
 };
 
 window.addEventListener('mouseup', stopDragging);

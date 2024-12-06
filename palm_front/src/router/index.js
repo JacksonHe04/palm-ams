@@ -1,11 +1,4 @@
-// @/router/index.js 路由管理文件
-// createRouter：创建router实例对象
-// createWebHistory：创建history模式的路由
-import {
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
-} from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "@/views/Login/index.vue";
 import Layout from "@/views/Layout/index.vue";
 import Home from "@/views/Home/index.vue";
@@ -78,7 +71,7 @@ const router = createRouter({
               component: () => import("@/views/Admin/Setting/index.vue"),
               meta: { title: "系统设置" },
             },
-          //   profile
+            //   profile
             {
               path: "profile",
               name: "profile",

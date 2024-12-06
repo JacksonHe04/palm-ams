@@ -3,7 +3,6 @@ import PersonalInfo from "@/views/Apply/components/PersonalInfo/PersonalInfo.vue
 import WillingChoice from "@/views/Apply/components/2WillingChoice.vue";
 import Papers from "@/views/Apply/components/3Papers.vue";
 import Awards from "@/views/Apply/components/4Awards.vue";
-import Plan from "@/views/Apply/components/5Plan.vue";
 import Upload from "@/views/Apply/components/6Upload.vue";
 import Submit from "@/views/Apply/components/7Submit.vue";
 import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
@@ -113,7 +112,7 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
 
 .container {
   background-color: rgba(255, 255, 255, 0.5);
-  width: 1200px;
+  width: 80%;
   padding: 30px;
   margin: 50px auto;
   border-radius: 50px;

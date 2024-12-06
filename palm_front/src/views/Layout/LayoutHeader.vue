@@ -12,17 +12,20 @@
       </ul>
       <ul class="app-header-nav">
 
-        <li>
-          <a href="https://www.seu.edu.cn" class="active"
-            >东南大学</a
-          >
-        </li>
+        <!--<li>-->
+        <!--  <a href="https://www.seu.edu.cn" class="active"-->
+        <!--    >东南大学</a-->
+        <!--  >-->
+        <!--</li>-->
         <!--<li><a href="https://cs.seu.edu.cn" class="active">计算机学院</a></li>-->
         <li>
           <a href="https://palm.seu.edu.cn/" class="active">PALM实验室</a>
         </li>
         <li>
           <RouterLink to="/test">开发者测试</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/apply">申请</RouterLink>
         </li>
         <li class="home">
           <RouterLink to="/admin">管理</RouterLink>

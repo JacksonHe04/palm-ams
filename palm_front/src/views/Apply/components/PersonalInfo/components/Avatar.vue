@@ -19,7 +19,7 @@ const handleFileChange = (event) => {
   <div class="avatar">
     <div class="form-group-container">
       <div class="form-group">
-        <img id="preview" alt="1寸证件照(小于300KB)" />
+        <img id="preview" alt="请上传：1寸证件照" />
       </div>
       <div class="form-group">
         <button @click="fileInput.click()">上传头像</button>
@@ -39,6 +39,8 @@ img {
   border: 1px solid grey; /* 设置边框 */
   width: 2.5cm;
   height: 3.5cm;
+  border-radius: 10px; /* 添加圆角 */
+  padding: 10px;
 }
 
 .form-group-container {
@@ -65,3 +67,4 @@ button:hover {
   background: rgba(129, 163, 198, 0.41);
 }
 </style>
+

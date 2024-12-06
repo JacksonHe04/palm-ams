@@ -37,7 +37,14 @@ const handleFileUpload = (event, fileRef) => {
 
 .upload {
   justify-content: center;
-  padding: 20px 300px 0;
+  /* padding: 20px 300px 0; */
+  text-align: center;
+  display: flex;
+/*   居中 */
+  align-items: center;
+/*   竖直排列 */
+  flex-direction: column;
+  width: 100%;
 }
 
 .file-upload {
@@ -45,6 +52,7 @@ const handleFileUpload = (event, fileRef) => {
   justify-content: center;
   align-items: center;
   margin-bottom: 16px;
+  width: max-content;
 
   background-color: #ffffff; /* 白色背景 */
   border: 1px solid #d9d9d9; /* 边框 */
