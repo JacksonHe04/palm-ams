@@ -1,19 +1,20 @@
 <template>
   <el-row class="dashboard-layout" gutter={20}>
-    <el-col :span="8">
+    <el-col :span="12">
       <SchoolLevelDashboard />
     </el-col>
-    <el-col :span="8">
+    <el-col :span="12">
+      <EnrollmentTypeDashboard />
+
+    </el-col>
+    <el-col :span="12">
       <MajorDistributionDashboard />
     </el-col>
-    <el-col :span="8">
-      <DataCountDashboard />
-    </el-col>
-    <el-col :span="8">
+    <el-col :span="12">
       <SchoolDistributionDashboard />
     </el-col>
-    <el-col :span="8">
-      <EnrollmentTypeDashboard />
+    <el-col :span="12">
+      <DataCountDashboard />
     </el-col>
   </el-row>
 </template>

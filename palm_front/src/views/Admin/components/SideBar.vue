@@ -2,7 +2,7 @@
   <aside class="sidebar">
     <ul class="menu">
       <li v-for="item in menuItems" :key="item.name" class="menu-item">
-        <RouterLink :to="item.path" class="menu-link">
+        <RouterLink :to="item.path" class="menu-link" active-class="active">
           <span class="icon">{{ item.icon }}</span>
           <span class="label">{{ item.label }}</span>
         </RouterLink>
@@ -60,8 +60,12 @@ const props = defineProps({
   color: #3498db;
 }
 
+.menu-link.active {
+  color: #3498db; /* 或者你想要的其他颜色 */
+  background-color: aliceblue;
+}
+
 .icon {
   margin-right: 10px;
 }
 </style>
-
