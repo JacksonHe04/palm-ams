@@ -1,0 +1,192 @@
+[
+  {
+    "id": 1,
+    "name": "小明",
+    "graduationYear": 2023,
+    "gender": "男",
+    "birthDate": "1999-01",
+    "photo": "path/to/photo1.jpg",
+    "university": "东南大学",
+    "major": "计算机科学",
+    "majorCount": 100,
+    "rank": 5,
+    "percentage": "5%",
+    "masterUniversity": "斯坦福大学",
+    "masterMajor": "人工智能",
+    "tutor": "张三教授",
+    "phone": "13800138000",
+    "email": "xiaoming@example.com",
+    "applicationType": "硕士",
+    "firstChoice": "张敏灵",
+    "secondChoice": "薛晖",
+    "thirdChoice": "耿新",
+    "isAdjustable": true,
+    "papers": [
+      {
+        "publicationTime": "2022-01",
+        "journalConference": "AI Journal",
+        "paperName": "Vol.1",
+        "ccfLevel": "CCF-A",
+        "awardCategory": "最佳论文"
+      },
+      {
+        "publicationTime": "2022-02",
+        "journalConference": "AI Conference",
+        "paperName": "Vol.2",
+        "ccfLevel": "CCF-B",
+        "awardCategory": "优秀论文"
+      },
+      {
+        "publicationTime": "2022-03",
+        "journalConference": "AI Symposium",
+        "paperName": "Vol.3",
+        "ccfLevel": "CCF-C",
+        "awardCategory": "创新论文"
+      }
+    ],
+    "awards": [
+      {
+        "isLeader": true,
+        "awardTime": "2021-01",
+        "awardName": "ACM竞赛一等奖",
+        "levelRanking": "一等奖"
+      },
+      {
+        "isLeader": false,
+        "awardTime": "2021-02",
+        "awardName": "电子设计竞赛二等奖",
+        "levelRanking": "二等奖"
+      },
+      {
+        "isLeader": true,
+        "awardTime": "2021-03",
+        "awardName": "编程大赛三等奖",
+        "levelRanking": "三等奖"
+      }
+    ],
+    "resume": "path/to/resume1.pdf",
+    "proofs": "path/to/proof1.zip",
+    "status": "待审核"
+  },
+  {
+    "id": 2,
+    "name": "小红",
+    "graduationYear": 2024,
+    "gender": "女",
+    "birthDate": "2000-05",
+    "photo": "path/to/photo2.jpg",
+    "university": "清华大学",
+    "major": "电子工程",
+    "majorCount": 80,
+    "rank": 12,
+    "percentage": "15%",
+    "masterUniversity": "",
+    "masterMajor": "",
+    "tutor": "",
+    "phone": "13900139000",
+    "email": "xiaohong@example.com",
+    "applicationType": "直博",
+    "firstChoice": "贾育衡",
+    "secondChoice": "杨旭",
+    "thirdChoice": "张敏灵",
+    "isAdjustable": false,
+    "papers": [
+      {
+        "publicationTime": "2023-01",
+        "journalConference": "Control Systems Journal",
+        "paperName": "Vol.3",
+        "ccfLevel": "CCF-A",
+        "awardCategory": "最佳论文"
+      },
+      {
+        "publicationTime": "2023-02",
+        "journalConference": "Control Systems Conference",
+        "paperName": "Vol.4",
+        "ccfLevel": "CCF-B",
+        "awardCategory": "优秀论文"
+      },
+      {
+        "publicationTime": "2023-03",
+        "journalConference": "Control Systems Symposium",
+        "paperName": "Vol.5",
+        "ccfLevel": "CCF-C",
+        "awardCategory": "创新论文"
+      }
+    ],
+    "awards": [
+      {
+        "isLeader": true,
+        "awardTime": "2022-01",
+        "awardName": "电子设计竞赛二等奖",
+        "levelRanking": "二等奖"
+      },
+      {
+        "isLeader": false,
+        "awardTime": "2022-02",
+        "awardName": "编程大赛三等奖",
+        "levelRanking": "三等奖"
+      },
+      {
+        "isLeader": true,
+        "awardTime": "2022-03",
+        "awardName": "ACM竞赛一等奖",
+        "levelRanking": "一等奖"
+      }
+    ],
+    "resume": "path/to/resume2.pdf",
+    "proofs": "path/to/proof2.zip",
+    "status": "待审核"
+  },
+  {
+    "id": 3,
+    "name": "小明"
+  },
+  {
+    "id": 4,
+    "name": "小明"
+  },
+  {
+    "id": 5,
+    "name": "小明"
+  },
+  {
+    "id": 6,
+    "name": "小明"
+  },
+  {
+    "id": 7,
+    "name": "小明"
+  },
+  {
+    "id": 8,
+    "name": "小明"
+  },
+  {
+    "id": 9,
+    "name": "小明"
+  },
+  {
+    "id": 10,
+    "name": "小明"
+  },
+  {
+    "id": 11,
+    "name": "小明"
+  },
+  {
+    "id": 12,
+    "name": "小明"
+  },
+  {
+    "id": 13,
+    "name": "小明"
+  },
+  {
+    "id": 14,
+    "name": "小明"
+  },
+  {
+    "id": 15,
+    "name": "小明"
+  }
+]

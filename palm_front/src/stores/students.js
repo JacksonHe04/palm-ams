@@ -32,7 +32,8 @@ export const useStudentsStore = defineStore("students", {
   }),
   actions: {
     async fetchStudents() {
-      this.students = [
+      this.students =
+        [
         {
           id: 1, // ID
           name: "小明", // 姓名

@@ -60,7 +60,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'ApplicationSystem.urls'
 
 # 前端构建的 dist 目录路径
-FRONTEND_BUILD_DIR = os.path.join(BASE_DIR, 'palm_front', 'dist')
+FRONTEND_BUILD_DIR = os.path.join(BASE_DIR)
 
 # 静态文件 URL 前缀
 STATIC_URL = '/static/'
