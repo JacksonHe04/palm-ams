@@ -37,7 +37,7 @@ export default {
       const worksheet = XLSX.utils.json_to_sheet(rows, { header: headers });
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "表格数据");
-      XLSX.writeFile(workbook, "导出的表格.xlsx");
+      XLSX.writeFile(workbook, "学生信息表格.xlsx");
     },
   },
 };

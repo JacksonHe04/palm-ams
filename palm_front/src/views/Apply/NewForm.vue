@@ -73,7 +73,7 @@ import Awards from "@/views/Apply/components/4Awards.vue";
 import Upload from "@/views/Apply/components/6Upload.vue";
 import Submit from "@/views/Apply/components/7Submit.vue";
 import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
-import { postData } from "@/utils/http.js"; // 引入 postData 方法
+// import { postData } from "@/utils/http.js"; // 引入 postData 方法
 
 import Test from "@/views/Apply/components/Test.vue";
 
@@ -112,35 +112,39 @@ function formSubmit() {
     firstChoice: formData.value.willingChoice.tutor_first,
     secondChoice: formData.value.willingChoice.tutor_second,
     thirdChoice: formData.value.willingChoice.tutor_third,
-    isAdjustable: formData.value.submit.ajustment === '是',
-    papers: formData.value.papers.map(paper => ({
+    isAdjustable: formData.value.submit.ajustment === "是",
+    papers: formData.value.papers.map((paper) => ({
       publicationTime: paper.publicationTime,
       journalConference: paper.journalConference,
       paperName: paper.paperName,
       ccfLevel: paper.ccfLevel,
       awardCategory: paper.awardCategory,
     })),
-    awards: formData.value.awards.map(award => ({
+    awards: formData.value.awards.map((award) => ({
       isLeader: award.isLeader,
       awardTime: award.awardTime,
       awardName: award.awardName,
       levelRanking: award.levelRanking,
     })),
-    resume: formData.value.upload.resume ? formData.value.upload.resume.name : null,
-    proofs: formData.value.upload.proofs ? formData.value.upload.proofs.name : null,
+    resume: formData.value.upload.resume
+      ? formData.value.upload.resume.name
+      : null,
+    proofs: formData.value.upload.proofs
+      ? formData.value.upload.proofs.name
+      : null,
     status: "待审核",
   };
 
   // 发送数据到后端
-  postData('/api/apply', formattedData)
-      .then(response => {
-        console.log('Success:', response);
-        alert("感谢您报名PALM实验室！后续请关注邮件通知！");
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert("报名失败，请重试！");
-      });
+  // postData("/api/apply", formattedData)
+  //   .then((response) => {
+  //     console.log("Success:", response);
+  //     alert("感谢您报名PALM实验室！后续请关注邮件通知！");
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //     alert("报名失败，请重试！");
+  //   });
 
   return false; // 阻止表单默认提交行为
 }
@@ -225,7 +229,6 @@ function formSubmit() {
     </form>
   </div>
 </template>
-
 
 <style scoped>
 @import url("https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css");

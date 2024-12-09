@@ -3,15 +3,15 @@
     <el-row class="form-settings">
       <el-col :span="8">
         <field-selector
-          :fields="allFields"
-          :visible-fields="visibleFields"
+          :fields="store.allFields"
+          :visible-fields="store.visibleFields"
           @update-visible-fields="updateVisibleFields"
         />
       </el-col>
       <el-col :span="16" class="search-filter">
         <el-input
           v-model="filterText"
-          placeholder="搜索姓名、邮箱或手机号"
+          placeholder="智能筛选您输入的内容"
           @input="onFilter"
         />
         <el-select v-model="selectedSort" placeholder="排序">
@@ -26,8 +26,8 @@
         <!-- 导出按钮 -->
         <ExportButton
           :tableData="filteredStudents"
-          :visible-fields="visibleFields"
-          :field-props="fieldProps"
+          :visible-fields="store.visibleFields"
+          :field-props="store.fieldProps"
         />
       </el-col>
     </el-row>
@@ -42,19 +42,19 @@
       >
         <!-- 动态生成常规列 -->
         <el-table-column
-          v-for="field in visibleFields"
+          v-for="field in store.visibleFields"
           :key="field"
-          :prop="fieldProps[field]"
+          :prop="store.fieldProps[field]"
           :label="field"
-          v-if="!isPaperOrAwardField(field)"
+          v-if="!store.isPaperOrAwardField(field)"
           :min-width="100"
         >
           <template #default="{ row }">
             <span>{{
-              row[fieldProps[field]] !== undefined &&
-              row[fieldProps[field]] !== null &&
-              row[fieldProps[field]] !== ""
-                ? row[fieldProps[field]]
+              row[store.fieldProps[field]] !== undefined &&
+              row[store.fieldProps[field]] !== null &&
+              row[store.fieldProps[field]] !== ""
+                ? row[store.fieldProps[field]]
                 : "无"
             }}</span>
           </template>
@@ -62,7 +62,7 @@
 
         <!-- 论文列 -->
         <template
-          v-for="(paperField, index) in paperFields"
+          v-for="(paperField, index) in store.paperFields"
           :key="`论文-${index}`"
         >
           <el-table-column :label="`论文${index + 1}`">
@@ -81,7 +81,7 @@
 
         <!-- 奖项列 -->
         <template
-          v-for="(awardField, index) in awardFields"
+          v-for="(awardField, index) in store.awardFields"
           :key="`奖项-${index}`"
         >
           <el-table-column :label="`奖项${index + 1}`">
@@ -112,7 +112,7 @@
 
 <script>
 import { ref, computed, onMounted } from "vue";
-import { useStudentsStore } from "@/stores/students";
+import { useStudentsStore } from "@/stores/studentsStore.js";
 import FieldSelector from "./FieldSelector.vue";
 import ExportButton from "@/views/Admin/Students/components/ExportButton.vue";
 
@@ -130,63 +130,6 @@ export default {
     const selectedDetails = ref({});
     const dialogWidth = ref("50%");
 
-    const allFields = [
-      "ID",
-      "姓名",
-      "报名类型",
-      "毕业年份",
-      "本科学校",
-      "本科专业",
-      "专业人数",
-      "排名",
-      "百分比",
-      "硕士学校",
-      "硕士专业",
-      "导师",
-      "性别",
-      "出生年月",
-      "照片",
-      "手机号码",
-      "电子邮箱",
-      "第一志愿",
-      "第二志愿",
-      "第三志愿",
-      "是否服从调剂",
-      "简历文件",
-      "证明材料",
-      "状态",
-    ];
-
-    const visibleFields = computed(() => store.visibleFields);
-
-    // 字段映射
-    const fieldProps = {
-      ID: "id",
-      姓名: "name",
-      毕业年份: "graduationYear",
-      性别: "gender",
-      出生年月: "birthDate",
-      照片: "photo",
-      本科学校: "university",
-      本科专业: "major",
-      专业人数: "majorCount",
-      排名: "rank",
-      百分比: "percentage",
-      硕士学校: "masterUniversity",
-      硕士专业: "masterMajor",
-      导师: "tutor",
-      手机号码: "phone",
-      电子邮箱: "email",
-      报名类型: "applicationType",
-      第一志愿: "firstChoice",
-      第二志愿: "secondChoice",
-      第三志愿: "thirdChoice",
-      是否服从调剂: "isAdjustable",
-      简历文件: "resume",
-      证明材料: "proofs",
-      状态: "status",
-    };
-
     // 筛选学生数据
     const students = computed(() => store.students || []);
     const filteredStudents = computed(() =>
@@ -203,14 +146,6 @@ export default {
       store.visibleFields = fields;
     };
 
-    // 动态生成的论文和奖项字段
-    const paperFields = ["论文一", "论文二", "论文三"];
-    const awardFields = ["奖项一", "奖项二", "奖项三"];
-
-    // 判断是否是论文或奖项字段
-    const isPaperOrAwardField = (field) =>
-      paperFields.includes(field) || awardFields.includes(field);
-
     // 点击展开详情
     const showDetails = (type, details) => {
       selectedDetails.value = details;
@@ -219,15 +154,10 @@ export default {
     };
 
     return {
+      store,
       filterText,
       selectedSort,
-      allFields,
-      visibleFields,
-      fieldProps,
       filteredStudents,
-      paperFields,
-      awardFields,
-      isPaperOrAwardField, // 添加这一行
       dialogVisible,
       selectedDetails,
       showDetails,
