@@ -102,70 +102,127 @@
 
     <!-- 详情弹窗 -->
     <el-dialog v-model="dialogVisible" title="详细信息" :width="dialogWidth">
-      <pre>{{ selectedDetails }}</pre>
+      <div v-if="selectedDetails">
+        <div
+          v-for="(value, key) in selectedDetails"
+          :key="key"
+          class="detail-item"
+        >
+          <strong>{{ key }}:</strong> {{ value }}
+        </div>
+      </div>
       <span slot="footer" class="dialog-footer">
+        <h1 />
         <el-button @click="dialogVisible = false">关闭</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
-<script>
-import { ref, computed, onMounted } from "vue";
+<script setup>
+import { ref, computed, onMounted, watch } from "vue";
 import { useStudentsStore } from "@/stores/studentsStore.js";
 import FieldSelector from "./FieldSelector.vue";
 import ExportButton from "@/views/Admin/Students/components/ExportButton.vue";
 
-export default {
-  components: { ExportButton, FieldSelector },
-  setup() {
-    const store = useStudentsStore();
-    onMounted(() => {
-      store.fetchStudents();
-    });
+// 数据存储和初始化
+const store = useStudentsStore();
+onMounted(() => {
+  store.fetchStudents();
+});
 
-    const filterText = ref("");
-    const selectedSort = ref("");
-    const dialogVisible = ref(false);
-    const selectedDetails = ref({});
-    const dialogWidth = ref("50%");
+// 过滤和排序相关的数据
+const filterText = ref("");
+const selectedSort = ref("ID"); // 初始化默认排序字段
 
-    // 筛选学生数据
-    const students = computed(() => store.students || []);
-    const filteredStudents = computed(() =>
-      students.value.filter((student) =>
-        Object.values(student).some((value) =>
-          value.toString().includes(filterText.value),
-        ),
-      ),
-    );
+// 计算属性
+const students = computed(() => store.students || []);
+const filteredStudents = computed(() =>
+  students.value
+    .filter((student) => searchInObject(student, filterText.value))
+    .sort((a, b) => {
+      if (!selectedSort.value) return 0;
+      const fieldKey = store.fieldProps[selectedSort.value]; // 获取正确的字段名
+      let aValue = a[fieldKey];
+      let bValue = b[fieldKey];
 
-    const onFilter = () => {};
+      // 检查是否为百分比形式的字符串
+      const isPercentage = (value) =>
+        typeof value === "string" && value.endsWith("%");
 
-    const updateVisibleFields = (fields) => {
-      store.visibleFields = fields;
-    };
+      if (isPercentage(aValue) && isPercentage(bValue)) {
+        aValue = parseFloat(aValue.replace("%", ""));
+        bValue = parseFloat(bValue.replace("%", ""));
+        return aValue - bValue;
+      }
 
-    // 点击展开详情
-    const showDetails = (type, details) => {
-      selectedDetails.value = details;
-      dialogWidth.value = type === "paper" ? "50%" : "40%";
-      dialogVisible.value = true;
-    };
+      // 确保 aValue 和 bValue 是可比较的类型
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return aValue.localeCompare(bValue);
+      } else if (typeof aValue === "number" && typeof bValue === "number") {
+        return aValue - bValue;
+      } else {
+        return 0; // 如果类型不匹配，返回 0
+      }
+    }),
+);
 
-    return {
-      store,
-      filterText,
-      selectedSort,
-      filteredStudents,
-      dialogVisible,
-      selectedDetails,
-      showDetails,
-      onFilter,
-      updateVisibleFields,
-    };
-  },
+function searchInObject(obj, searchText) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      if (typeof value === "string" && value.includes(searchText)) {
+        return true;
+      } else if (Array.isArray(value)) {
+        for (const item of value) {
+          if (typeof item === "object" && searchInObject(item, searchText)) {
+            return true;
+          }
+        }
+      } else if (typeof value === "object" && value !== null) {
+        if (searchInObject(value, searchText)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+const sortOptions = computed(() => {
+  return store.allFields.map((field) => ({
+    label: field,
+    value: field,
+  }));
+});
+
+// 方法
+const onFilter = () => {};
+
+// 更新可见字段
+const updateVisibleFields = (fields) => {
+  store.visibleFields = fields;
 };
+
+// 奖项、论文详情弹窗
+const dialogVisible = ref(false);
+const selectedDetails = ref({});
+const dialogWidth = ref("50%");
+
+const showDetails = (type, details) => {
+  selectedDetails.value = details;
+  dialogWidth.value = type === "paper" ? "30%" : "30%";
+  dialogVisible.value = true;
+};
+
+// 调试输出
+watch(selectedSort, (newVal) => {
+  console.log("Selected Sort:", newVal);
+});
+
+watch(filteredStudents, (newVal) => {
+  console.log("Filtered Students:", newVal);
+});
 </script>
 
 <style scoped>
