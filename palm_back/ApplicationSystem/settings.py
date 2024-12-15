@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     # 以下为我们创建的应用
     'Api.testapp',
     # 'Api.home'
-    'Api.apply'
+    'Api.apply',
+    'Api.students'
     # ......     继续注册新的应用
 
 ]
