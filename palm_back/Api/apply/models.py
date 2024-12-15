@@ -60,6 +60,9 @@ class Apply(models.Model):
     award3_awardName = models.CharField(max_length=100, null=True, blank=True)
     award3_levelRanking = models.CharField(max_length=50, null=True, blank=True)
 
+    universityLevel = models.CharField(max_length=50, null=True, blank=True)
+    masterUniversityLevel = models.CharField(max_length=50, null=True, blank=True)
+
     class Meta:
         db_table = 'students'
 

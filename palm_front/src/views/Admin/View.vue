@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import AdminHeader from "@/views/Admin/components/AdminHeader.vue";
-import SideBar from "@/views/Admin/components/SideBar.vue";
-import Content from "@/views/Admin/components/Content.vue";
+import AdminHeader from "@/views/Admin/Layout/AdminHeader.vue";
+import SideBar from "@/views/Admin/Layout/SideBar.vue";
+import Content from "@/views/Admin/Layout/Content.vue";
 
 const menuItems = ref([
   { name: "dashboard", label: "仪表盘", path: "/admin/dashboard", icon: "📊" },

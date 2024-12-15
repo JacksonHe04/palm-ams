@@ -58,6 +58,7 @@ const props = defineProps({
 
 .menu-link:hover {
   color: #3498db;
+  background-color: aliceblue;
 }
 
 .menu-link.active {

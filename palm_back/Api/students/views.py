@@ -77,6 +77,9 @@ def get_students(request):
                     "levelRanking": apply.award3_levelRanking
                 }
             ],
+
+            "universityLevel": apply.universityLevel,
+            "masterUniversityLevel": apply.masterUniversityLevel,
             "resume": None,  # 假设没有 resume 字段，如果有请添加
             "proofs": apply.proofs,
             "status": apply.status

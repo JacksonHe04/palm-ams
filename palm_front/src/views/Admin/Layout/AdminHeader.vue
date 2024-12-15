@@ -1,4 +1,4 @@
-<!-- src/components/AdminHeader.vue -->
+<!-- src/Layout/AdminHeader.vue -->
 <template>
   <header class="admin-header">
     <!-- 左侧占位 -->

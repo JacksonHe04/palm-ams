@@ -110,6 +110,9 @@ def apply_post(request):
                     'award3_awardTime': award3.get('awardTime'),
                     'award3_awardName': award3.get('awardName'),
                     'award3_levelRanking': award3.get('levelRanking'),
+
+                    'universityLevel': data.get('universityLevel'),
+                    'masterUniversityLevel': data.get('masterUniversityLevel'),
                 }
             )
 
