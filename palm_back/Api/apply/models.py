@@ -1,11 +1,11 @@
 from django.db import models
 
-class apply(models.Model):
+class Apply(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
     graduationYear = models.IntegerField()
     gender = models.CharField(max_length=10)
-    birthDate = models.DateField()
+    birthDate = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='Apply/')
     university = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
@@ -63,5 +63,5 @@ class apply(models.Model):
     class Meta:
         db_table = 'students'
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name

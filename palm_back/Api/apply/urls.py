@@ -6,6 +6,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('apply/', views.apply),
-
+    path('', views.apply_post),
+    path('get/', views.test_get),
 ]

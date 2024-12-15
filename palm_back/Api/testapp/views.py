@@ -23,7 +23,7 @@ def test_post(request):
             # 创建并保存新学生记录
             new_student = TestStudent(name=name, age=age, grade=grade)
             new_student.save()
-            return JsonResponse({'status': 'success', 'message': '学生信息提交成功'})
+            return JsonResponse({'status': 'success', 'message': '学生信息提交成功'}, status=201)
         except IntegrityError as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
         except Exception as e:
