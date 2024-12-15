@@ -19,7 +19,8 @@ urlpatterns = [
     path('testdb/', testdb.testdb),
 
     path('api/test/', include('Api.testapp.urls',)),
-    path('api/home/', include('Api.home.urls',)),
+    # path('api/home/', include('Api.home.urls',)),
+    path('api/apply/',include('Api.apply.urls',)),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
