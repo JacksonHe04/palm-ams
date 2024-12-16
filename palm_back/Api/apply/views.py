@@ -116,13 +116,18 @@ def apply_post(request):
                 }
             )
 
-            return JsonResponse({'message': '申请已成功提交'}, status=200)
-        #
+            response_data = {
+                'message': '申请表单提交成功',
+                'data': {
+                    'id': apply_obj.id,
+                    'status': apply_obj.status
+                }
+            }
+
+            return JsonResponse(response_data, status=200)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
-    #
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 def test_get(request):
     return JsonResponse({'message': 'This is a test GET request'})
