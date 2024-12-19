@@ -1,20 +1,45 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
+import { useApplyStore } from "@/stores/applyStore.js";
 
-// 初始化为一条记录
-const papers = ref([{ id: 1, time: "", journalName: "", paperName: "", ccfLevel: "" }]);
+const props = defineProps({
+  modelValue: Object
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const applyStore = useApplyStore();
+
+// 监听 applyStore.papers 的变化
+watch(
+  () => applyStore.papers,
+  (newVal) => {
+    emit('update:modelValue', {
+      ...props.modelValue,
+      papers: newVal
+    });
+  },
+  { deep: true }
+);
+
+// 初始化 papers
+if (!applyStore.papers.length) {
+  applyStore.updateField('papers', [{ id: 1, publicationTime: "", journalConference: "", paperName: "", ccfLevel: "" }]);
+}
 
 // 添加新条目的函数
 const addPaper = () => {
-  const newId = papers.value.length + 1; // 新ID
-  papers.value.push({ id: newId, time: "", journalName: "", paperName: "", ccfLevel: "" });
+  const newId = applyStore.papers.length + 1; // 新ID
+  const newPapers = [...applyStore.papers, { id: newId, publicationTime: "", journalConference: "", paperName: "", ccfLevel: "" }];
+  applyStore.updateField('papers', newPapers);
 };
 
 // 移除最后一条记录的函数（确保至少保留一条记录）
 const removePaper = () => {
-  if (papers.value.length > 1) {
-    papers.value.pop();
+  if (applyStore.papers.length > 1) {
+    const newPapers = applyStore.papers.slice(0, -1);
+    applyStore.updateField('papers', newPapers);
   }
 };
 </script>
@@ -23,7 +48,7 @@ const removePaper = () => {
   <div class="infoClass">
     <p class="infoClassTitle">论文发表</p>
 
-    <div v-for="(paper, index) in papers" :key="paper.id" class="form-group row">
+    <div v-for="(paper, index) in applyStore.papers" :key="paper.id" class="form-group row">
       <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label" style="white-space: nowrap">发表时间</label>
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <div class="input-group date" :id="`datetimepicker-paper${paper.id}`">
@@ -31,7 +56,7 @@ const removePaper = () => {
               type="text"
               class="form-control"
               :name="`time_paper${paper.id}`"
-              v-model="paper.time"
+              v-model="paper.publicationTime"
               placeholder="无"
           />
           <span class="input-group-addon">
@@ -46,7 +71,7 @@ const removePaper = () => {
             type="text"
             class="form-control"
             :name="`journal_name${paper.id}`"
-            v-model="paper.journalName"
+            v-model="paper.journalConference"
             placeholder="无"
         />
       </div>
@@ -70,17 +95,17 @@ const removePaper = () => {
             v-model="paper.ccfLevel"
         >
           <option value="" disabled selected>请选择</option>
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
+          <option value="CCF-A">CCF-A</option>
+          <option value="CCF-B">CCF-B</option>
+          <option value="CCF-C">CCF-C</option>
           <option value="其他">其他</option>
         </select>
       </div>
 
       <!-- 仅在当前最后一条填写行的下方显示加号和减号按钮 -->
-      <div v-if="index === papers.length - 1" class="col-xs-12 text-center mt-2">
+      <div v-if="index === applyStore.papers.length - 1" class="col-xs-12 text-center mt-2">
         <button @click="addPaper" class="btn btn-primary">+</button>
-        <button v-if="papers.length > 1" @click="removePaper" class="btn btn-danger ml-2">-</button>
+        <button v-if="applyStore.papers.length > 1" @click="removePaper" class="btn btn-danger ml-2">-</button>
       </div>
     </div>
   </div>

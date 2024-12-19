@@ -28,6 +28,7 @@
           :tableData="filteredStudents"
           :visible-fields="store.visibleFields"
           :field-props="store.fieldProps"
+          :store="store"
         />
       </el-col>
     </el-row>
@@ -40,6 +41,8 @@
         :table-layout="'auto'"
         :default-sort="{ prop: selectedSort, order: 'ascending' }"
       >
+        <!-- 写一个序号列，从1开始 -->
+        <el-table-column type="index" label="#" width="50" />
         <!-- 动态生成常规列 -->
         <el-table-column
           v-for="field in store.visibleFields"
@@ -211,7 +214,7 @@ const dialogWidth = ref("50%");
 
 const showDetails = (type, details) => {
   selectedDetails.value = details;
-  dialogWidth.value = type === "paper" ? "30%" : "30%";
+  dialogWidth.value = type === "paper" ? "20%" : "20%";
   dialogVisible.value = true;
 };
 

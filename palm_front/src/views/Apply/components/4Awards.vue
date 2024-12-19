@@ -1,27 +1,54 @@
 <script setup>
-import {ref} from "vue";
+import { ref, watch } from "vue";
 import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
+import { useApplyStore } from "@/stores/applyStore.js";
 
-// 默认初始化为一条记录
-const awards = ref([{time: "", grade: "", name: "", rank: "", isLeader: false}]);
+const props = defineProps({
+  modelValue: Object
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const applyStore = useApplyStore();
+
+// 监听 applyStore.awards 的变化
+watch(
+  () => applyStore.awards,
+  (newVal) => {
+    emit('update:modelValue', {
+      ...props.modelValue,
+      awards: newVal
+    });
+  },
+  { deep: true }
+);
+
+// 初始化 awards
+if (!applyStore.awards.length) {
+  applyStore.updateField('awards', [{ awardTime: "", awardName: "", levelRanking: "", isLeader: false }]);
+}
 
 // 奖项类别选项
 const awardGrades = ["世界级", "国家级", "省级", "市级", "校级", "院级"];
 
 // 切换是否为负责人的开关
 const toggleSwitch = (index) => {
-  awards.value[index].isLeader = !awards.value[index].isLeader;
+  const newAwards = [...applyStore.awards];
+  newAwards[index].isLeader = !newAwards[index].isLeader;
+  applyStore.updateField('awards', newAwards);
 };
 
 // 添加新奖项
 const addAward = () => {
-  awards.value.push({time: "", grade: "", name: "", rank: "", isLeader: false});
+  const newAwards = [...applyStore.awards, { awardTime: "", awardName: "", levelRanking: "", isLeader: false, awardRanking: ""}];
+  applyStore.updateField('awards', newAwards);
 };
 
 // 移除最后一条奖项，保留至少一条
 const removeAward = () => {
-  if (awards.value.length > 1) {
-    awards.value.pop();
+  if (applyStore.awards.length > 1) {
+    const newAwards = applyStore.awards.slice(0, -1);
+    applyStore.updateField('awards', newAwards);
   }
 };
 </script>
@@ -30,7 +57,7 @@ const removeAward = () => {
   <div>
     <p class="infoClassTitle">奖项荣誉</p>
 
-    <div v-for="(award, index) in awards" :key="index" class="form-group">
+    <div v-for="(award, index) in applyStore.awards" :key="index" class="form-group">
       <!-- 第一行: 获奖时间、奖项类别、是否为负责人 -->
       <div class="award-row">
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
@@ -43,7 +70,7 @@ const removeAward = () => {
               type="text"
               class="form-control"
               :name="`award_grade${index + 1}`"
-              v-model="award.grade"
+              v-model="award.levelRanking"
               :list="`award-grade${index + 1}`"
               placeholder="请选择"
           />
@@ -72,7 +99,7 @@ const removeAward = () => {
                 type="text"
                 class="form-control"
                 :name="`time_award${index + 1}`"
-                v-model="award.time"
+                v-model="award.awardTime"
                 placeholder="无"
             />
             <span class="input-group-addon">
@@ -93,7 +120,7 @@ const removeAward = () => {
             type="text"
             class="form-control"
             :name="`award_name${index + 1}`"
-            v-model="award.name"
+            v-model="award.awardName"
             placeholder="如：诺贝尔物理学奖"
         />
       </div>
@@ -106,7 +133,7 @@ const removeAward = () => {
             type="text"
             class="form-control"
             :name="`award_rank${index + 1}`"
-            v-model="award.rank"
+            v-model="award.awardRanking"
             placeholder="如：一等奖/第一名"
         />
       </div>
@@ -118,9 +145,9 @@ const removeAward = () => {
       </div>
 
       <!-- 加号和减号按钮，仅在最后一条记录下方显示 -->
-      <div v-if="index === awards.length - 1" class="col-xs-12 text-center mt-2">
+      <div v-if="index === applyStore.awards.length - 1" class="col-xs-12 text-center mt-2">
         <button @click="addAward" class="btn btn-primary">+</button>
-        <button v-if="awards.length > 1" @click="removeAward" class="btn btn-danger ml-2">-</button>
+        <button v-if="applyStore.awards.length > 1" @click="removeAward" class="btn btn-danger ml-2">-</button>
       </div>
     </div>
   </div>

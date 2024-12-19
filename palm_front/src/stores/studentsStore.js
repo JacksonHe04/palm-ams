@@ -5,7 +5,7 @@ export const useStudentsStore = defineStore("students", {
   state: () => ({
     students: [], // 学生数据
     visibleFields: [
-      "ID",
+      // "ID",
       "姓名",
       // "性别",
       // "出生年月",

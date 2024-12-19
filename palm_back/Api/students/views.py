@@ -40,21 +40,21 @@ def get_students(request):
                     "journalConference": apply.paper1_journalConference,
                     "paperName": apply.paper1_paperName,
                     "ccfLevel": apply.paper1_ccfLevel,
-                    "awardCategory": apply.paper1_awardCategory
+                    # "awardCategory": apply.paper1_awardCategory
                 },
                 {
                     "publicationTime": apply.paper2_publicationTime,
                     "journalConference": apply.paper2_journalConference,
                     "paperName": apply.paper2_paperName,
                     "ccfLevel": apply.paper2_ccfLevel,
-                    "awardCategory": apply.paper2_awardCategory
+                    # "awardCategory": apply.paper2_awardCategory
                 },
                 {
                     "publicationTime": apply.paper3_publicationTime,
                     "journalConference": apply.paper3_journalConference,
                     "paperName": apply.paper3_paperName,
                     "ccfLevel": apply.paper3_ccfLevel,
-                    "awardCategory": apply.paper3_awardCategory
+                    # "awardCategory": apply.paper3_awardCategory
                 }
             ],
             "awards": [
@@ -62,19 +62,22 @@ def get_students(request):
                     "isLeader": apply.award1_isLeader,
                     "awardTime": apply.award1_awardTime,
                     "awardName": apply.award1_awardName,
-                    "levelRanking": apply.award1_levelRanking
+                    "levelRanking": apply.award1_levelRanking,
+                    "awardRanking": apply.award1_awardRanking
                 },
                 {
                     "isLeader": apply.award2_isLeader,
                     "awardTime": apply.award2_awardTime,
                     "awardName": apply.award2_awardName,
-                    "levelRanking": apply.award2_levelRanking
+                    "levelRanking": apply.award2_levelRanking,
+                    "awardRanking": apply.award2_awardRanking
                 },
                 {
                     "isLeader": apply.award3_isLeader,
                     "awardTime": apply.award3_awardTime,
                     "awardName": apply.award3_awardName,
-                    "levelRanking": apply.award3_levelRanking
+                    "levelRanking": apply.award3_levelRanking,
+                    "awardRanking": apply.award3_awardRanking
                 }
             ],
 

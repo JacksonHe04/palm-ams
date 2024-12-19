@@ -9,7 +9,7 @@ const menuItems = ref([
   { name: "users", label: "学生表格", path: "/admin/students", icon: "👤" },
   { name: "interview", label: "面试打分", path: "/admin/interview", icon: "📋" },
   { name: "analytics", label: "数据分析", path: "/admin/analysis", icon: "📈" },
-  { name: "setting", label: "系统设置", path: "/admin/setting", icon: "⚙️" },
+  // { name: "setting", label: "系统设置", path: "/admin/setting", icon: "⚙️" },
 ]);
 </script>
 <template>

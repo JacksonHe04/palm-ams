@@ -100,16 +100,19 @@ def apply_post(request):
                     'award1_awardTime': award1.get('awardTime'),
                     'award1_awardName': award1.get('awardName'),
                     'award1_levelRanking': award1.get('levelRanking'),
+                    'award1_awardRanking': award1.get('awardRanking'),
 
                     'award2_isLeader': award2.get('isLeader'),
                     'award2_awardTime': award2.get('awardTime'),
                     'award2_awardName': award2.get('awardName'),
                     'award2_levelRanking': award2.get('levelRanking'),
+                    'award2_awardRanking': award2.get('awardRanking'),
 
                     'award3_isLeader': award3.get('isLeader'),
                     'award3_awardTime': award3.get('awardTime'),
                     'award3_awardName': award3.get('awardName'),
                     'award3_levelRanking': award3.get('levelRanking'),
+                    'award3_awardRanking': award3.get('awardRanking'),
 
                     'universityLevel': data.get('universityLevel'),
                     'masterUniversityLevel': data.get('masterUniversityLevel'),

@@ -1,7 +1,7 @@
 from django.db import models
 
 class Apply(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.CharField(primary_key=True, max_length=50)
     name = models.CharField(max_length=50)
     graduationYear = models.IntegerField()
     gender = models.CharField(max_length=10)
@@ -49,16 +49,19 @@ class Apply(models.Model):
     award1_awardTime = models.CharField(max_length=7, null=True, blank=True)
     award1_awardName = models.CharField(max_length=100, null=True, blank=True)
     award1_levelRanking = models.CharField(max_length=50, null=True, blank=True)
+    award1_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     award2_isLeader = models.BooleanField(null=True, blank=True)
     award2_awardTime = models.CharField(max_length=7, null=True, blank=True)
     award2_awardName = models.CharField(max_length=100, null=True, blank=True)
     award2_levelRanking = models.CharField(max_length=50, null=True, blank=True)
+    award2_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     award3_isLeader = models.BooleanField(null=True, blank=True)
     award3_awardTime = models.CharField(max_length=7, null=True, blank=True)
     award3_awardName = models.CharField(max_length=100, null=True, blank=True)
     award3_levelRanking = models.CharField(max_length=50, null=True, blank=True)
+    award3_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     universityLevel = models.CharField(max_length=50, null=True, blank=True)
     masterUniversityLevel = models.CharField(max_length=50, null=True, blank=True)

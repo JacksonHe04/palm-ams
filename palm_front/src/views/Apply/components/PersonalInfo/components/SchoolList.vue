@@ -121,5 +121,12 @@ const handleSchoolSelect = (event) => {
     <option value="上海科技大学">上海科技大学</option>
     <option value="中国科学院大学">中国科学院大学</option>
   </datalist>
-  <input type="text" class="form-control" @input="handleSchoolSelect" list="props.id" :placeholder="placeholder" />
+  <input
+      type="text"
+      class="form-control"
+      @input="handleSchoolSelect"
+      :list="props.id"
+      :placeholder="placeholder"
+      :required="$attrs.required"
+  />
 </template>

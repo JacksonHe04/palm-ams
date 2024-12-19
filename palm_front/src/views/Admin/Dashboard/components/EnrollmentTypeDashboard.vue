@@ -41,9 +41,7 @@ export default {
             },
             emphasis: {
               label: {
-                show: true,
-                fontSize: '30',
-                fontWeight: 'bold'
+                show: false,
               }
             },
             labelLine: {

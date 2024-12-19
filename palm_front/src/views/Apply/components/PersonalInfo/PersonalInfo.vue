@@ -1,17 +1,50 @@
-<!-- PersonalInfo.vue -->
 <script setup>
-import { ref } from "vue";
+import { ref, watch, computed } from "vue";
+import { useApplyStore } from "@/stores/applyStore.js";
 import Avatar from "@/views/Apply/components/PersonalInfo/components/Avatar.vue";
 import DegreeInfo from "@/views/Apply/components/PersonalInfo/components/DegreeInfo.vue";
 import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
 
-// 存储选择的学校评级
-const rating = ref("");
+const applyStore = useApplyStore();
 
 // 处理子组件传递的数据
-const handleSchoolSelect = (data) => {
-  rating.value = data.rating;
+const handleDegreeInfoUpdate = (data) => {
+  if (data.label === "本科") {
+    applyStore.updateField("universityLevel", data.rating);
+    applyStore.updateField("major", data.major);
+    applyStore.updateField("university", data.school); // 更新学校名称
+  } else if (data.label === "硕士") {
+    applyStore.updateField("masterUniversityLevel", data.rating);
+    applyStore.updateField("masterMajor", data.major);
+    applyStore.updateField("masterUniversity", data.school); // 更新学校名称
+    applyStore.updateField("tutor", data.advisor); // 更新导师信息
+  }
 };
+
+// 使用 watch 监听数据变化并更新 Pinia
+watch(
+  () => applyStore.name,
+  (newValue) => {
+    // 如果需要额外处理，可以在这里添加逻辑
+  },
+);
+
+// 计算属性
+const percentageRank = computed(() => {
+  if (!applyStore || !applyStore.majorCount || !applyStore.rank) {
+    return "";
+  }
+  const percentage = (applyStore.rank / applyStore.majorCount) * 100;
+  return `${percentage.toFixed(2)}%`;
+});
+
+// 监听 percentageRank 变化并更新 Pinia
+watch(
+  () => percentageRank.value,
+  (newValue) => {
+    applyStore.updateField("percentage", newValue);
+  },
+);
 </script>
 
 <template>
@@ -26,13 +59,13 @@ const handleSchoolSelect = (data) => {
           <!-- 姓名 -->
           <div class="form-group">
             <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-              >姓 名 <span style="color: red">* </span></label
+              >姓 名</label
             >
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <input
                 type="text"
                 class="form-control"
-                name="name_input"
+                v-model="applyStore.name"
                 required
               />
             </div>
@@ -41,10 +74,15 @@ const handleSchoolSelect = (data) => {
           <!-- 性别 -->
           <div class="form-group">
             <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-              >性 别 <span style="color: red">* </span></label
+              >性 别</label
             >
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <select class="form-control" name="sex_input" id="form_sex">
+              <select
+                class="form-control"
+                v-model="applyStore.gender"
+                id="form_sex"
+                required
+              >
                 <option value="请选择">请选择</option>
                 <option value="男">男</option>
                 <option value="女">女</option>
@@ -58,13 +96,12 @@ const handleSchoolSelect = (data) => {
           <!-- 毕业年份 -->
           <div class="form-group">
             <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
-              毕业年份 <span style="color: red">*</span>
+              毕业年份
             </label>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <select
                 class="form-control"
-                name="round_select"
-                v-model="selectedRound"
+                v-model="applyStore.graduationYear"
                 required
               >
                 <option value="2024">2024</option>
@@ -73,11 +110,10 @@ const handleSchoolSelect = (data) => {
                 <option value="">其他</option>
               </select>
               <input
-                v-if="selectedRound === ''"
+                v-if="applyStore.graduationYear === ''"
                 type="number"
                 class="form-control"
-                name="round_input"
-                v-model="customRound"
+                v-model="applyStore.customRound"
                 required
               />
             </div>
@@ -88,19 +124,20 @@ const handleSchoolSelect = (data) => {
             <label
               class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
               style="white-space: nowrap"
-              >出生年月 <span style="color: red">* </span></label
+              >出生年月</label
             >
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <div class="input-group date" id="datetimepicker1">
+              <div
+                class="input-group date form-control"
+                id="datetimepicker1"
+                style="padding: 0"
+              >
                 <input
-                  type="text"
-                  class="form-control"
-                  name="birthday"
+                  type="date"
+                  v-model="applyStore.birthDate"
                   required
+                  style="margin-top: 5px; border: none; width: 80%"
                 />
-                <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-                </span>
               </div>
             </div>
           </div>
@@ -108,13 +145,16 @@ const handleSchoolSelect = (data) => {
       </div>
 
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-      <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="margin-top: -60px">
+      <div
+        class="col-xs-3 col-sm-3 col-md-3 col-lg-3"
+        style="margin-top: -60px"
+      >
         <Avatar />
       </div>
     </div>
 
     <!-- 本科信息 -->
-    <DegreeInfo label="本科" />
+    <DegreeInfo label="本科" @degreeInfoUpdated="handleDegreeInfoUpdate" />
 
     <!-- 专业排名 -->
     <div class="form-group">
@@ -123,14 +163,13 @@ const handleSchoolSelect = (data) => {
       <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-        >专业人数 <span style="color: red">* </span></label
+        >专业人数</label
       >
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <input
           type="text"
           class="form-control"
-          name="gradepeople_input"
-          v-model.number="gradePeople"
+          v-model.number="applyStore.majorCount"
           min="1"
           required
         />
@@ -139,14 +178,13 @@ const handleSchoolSelect = (data) => {
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
 
       <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        >排 名 <span style="color: red">* </span></label
+        >排 名</label
       >
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <input
           type="text"
           class="form-control"
-          name="grade_input"
-          v-model.number="grade"
+          v-model.number="applyStore.rank"
           min="1"
           required
         />
@@ -168,7 +206,11 @@ const handleSchoolSelect = (data) => {
     </div>
 
     <!-- 硕士信息，包含导师字段 -->
-    <DegreeInfo label="硕士" :showAdvisor="true" />
+    <DegreeInfo
+      label="硕士"
+      :showAdvisor="true"
+      @degreeInfoUpdated="handleDegreeInfoUpdate"
+    />
 
     <!-- 电话；邮箱 -->
     <div class="form-group">
@@ -177,13 +219,13 @@ const handleSchoolSelect = (data) => {
       <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-        >手机号码 <span style="color: red">* </span></label
+        >手机号码</label
       >
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <input
           type="text"
           class="form-control"
-          name="phonenumber_input"
+          v-model="applyStore.phone"
           id="form_phonenumber"
           required
         />
@@ -194,13 +236,13 @@ const handleSchoolSelect = (data) => {
       <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-        >电子邮箱 <span style="color: red">* </span></label
+        >电子邮箱</label
       >
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <input
           type="text"
           class="form-control"
-          name="email_input"
+          v-model="applyStore.email"
           id="form_email"
           required
         />
@@ -216,18 +258,7 @@ export default {
     return {
       selectedRound: "2025",
       customRound: null,
-      gradePeople: null,
-      grade: null,
     };
-  },
-  computed: {
-    percentageRank() {
-      if (this.gradePeople && this.grade) {
-        const percentage = (this.grade / this.gradePeople) * 100;
-        return `${percentage.toFixed(2)}%`;
-      }
-      return "";
-    },
   },
 };
 </script>

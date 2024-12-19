@@ -1,6 +1,37 @@
 <script setup>
-
+import { ref, watch } from "vue";
 import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
+import { useApplyStore } from "@/stores/applyStore.js";
+
+const applyStore = useApplyStore();
+
+// 定义本地 ref 并初始化为 Pinia 中的值
+const registrationType = ref(applyStore.applicationType);
+const firstChoice = ref(applyStore.firstChoice);
+const secondChoice = ref(applyStore.secondChoice);
+const thirdChoice = ref(applyStore.thirdChoice);
+const isAdjustable = ref(applyStore.isAdjustable);
+
+// 监听本地 ref 的变化，并更新 Pinia 中的状态
+watch(registrationType, (newValue) => {
+  applyStore.updateField('applicationType', newValue);
+});
+
+watch(firstChoice, (newValue) => {
+  applyStore.updateField('firstChoice', newValue);
+});
+
+watch(secondChoice, (newValue) => {
+  applyStore.updateField('secondChoice', newValue);
+});
+
+watch(thirdChoice, (newValue) => {
+  applyStore.updateField('thirdChoice', newValue);
+});
+
+watch(isAdjustable, (newValue) => {
+  applyStore.updateField('isAdjustable', newValue === '是' ? true : false);
+});
 </script>
 
 <template>
@@ -15,13 +46,12 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
     <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-    >报名类型 <span style="color: red">* </span></label
+    >报名类型</label
     >
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <select
           class="form-control"
-          name="registrationtype_input"
-          id="form_registrationtype"
+          v-model="registrationType"
           required
       >
         <option value="请选择">请选择</option>
@@ -38,13 +68,12 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
     <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-    >第一志愿 <span style="color: red">* </span></label
+    >第一志愿</label
     >
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <select
           class="form-control"
-          name="tutor_input_first"
-          id="form_tutor_first"
+          v-model="firstChoice"
           required
       >
         <option value="请选择">请选择</option>
@@ -79,13 +108,12 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
     <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-    >第二志愿 <span style="color: red">* </span></label
+    >第二志愿</label
     >
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <select
           class="form-control"
-          name="tutor_input_second"
-          id="form_tutor_second"
+          v-model="secondChoice"
           required
       >
         <option value="请选择">请选择</option>
@@ -122,13 +150,12 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
     <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-    >第三志愿 <span style="color: red">* </span></label
+    >第三志愿</label
     >
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <select
           class="form-control"
-          name="tutor_input_third"
-          id="form_tutor_third"
+          v-model="thirdChoice"
           required
       >
         <option value="请选择">请选择</option>
@@ -163,13 +190,12 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
     <label
         class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
         style="white-space: nowrap"
-    >服从调剂 <span style="color: red">* </span></label
+    >服从调剂</label
     >
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <select
           class="form-control"
-          name="ajustment_input"
-          id="form_ajustment"
+          v-model="isAdjustable"
           required
       >
         <option value="请选择">请选择</option>
@@ -182,7 +208,3 @@ import DividerLine from "@/views/Apply/components/tools/DividerLine.vue";
 </div>
   <DividerLine />
 </template>
-
-<style scoped>
-
-</style>

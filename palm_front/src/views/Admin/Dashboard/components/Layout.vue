@@ -13,9 +13,9 @@
     <el-col :span="12">
       <SchoolDistributionDashboard />
     </el-col>
-    <el-col :span="12">
-      <DataCountDashboard />
-    </el-col>
+    <!--<el-col :span="12">-->
+    <!--  <DataCountDashboard />-->
+    <!--</el-col>-->
   </el-row>
 </template>
 
