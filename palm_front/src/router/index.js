@@ -90,6 +90,12 @@ const router = createRouter({
           component: Test,
           meta: { title: "开发者测试页面" },
         },
+      //   read
+        {
+          path: "/read",
+          component: () => import("@/views/Read/index.vue"),
+          meta: { title: "PALM实验室申请说明" },
+        },
       ],
     },
   ],

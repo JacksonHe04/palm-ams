@@ -3,11 +3,12 @@ import LayoutHeader from "@/views/Layout/LayoutHeader.vue";
 import Background from "@/views/Layout/Background.vue";
 import LayoutFooter from "@/views/Layout/LayoutFooter.vue";
 import BackToTop from "@/views/Layout/BackToTop.vue";
+import Header from "@/views/Layout/Header.vue";
 </script>
 
 <template>
   <Background>
-    <LayoutHeader />
+    <Header />
     <div class="content">
       <RouterView />
     </div>

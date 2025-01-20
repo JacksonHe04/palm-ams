@@ -91,6 +91,7 @@
   /* ); */
   padding: 40px 0 0 0;
   color: #333;
+  margin-top: 100px;
 }
 
 .contact .container {
