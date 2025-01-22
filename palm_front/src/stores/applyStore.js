@@ -26,7 +26,7 @@ export const useApplyStore = defineStore("apply", {
     firstChoice: "",
     secondChoice: "",
     thirdChoice: "",
-    isAdjustable: false,
+    isAdjustable: true,
     papers: [],
     awards: [],
     resume: "",

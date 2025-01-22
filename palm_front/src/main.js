@@ -6,6 +6,7 @@ import App from './App.vue';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'; // Element Plus 样式
 import zhCn from 'element-plus/es/locale/lang/zh-cn'; // 设置中文语言包
+import "tailwindcss/tailwind.css"
 
 const app = createApp(App);
 

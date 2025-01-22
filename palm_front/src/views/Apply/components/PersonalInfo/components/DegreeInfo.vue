@@ -49,14 +49,12 @@ const emitData = () => {
 </script>
 
 <template>
-  <div class="form-group">
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-
+  <div class="grid grid-cols-12 items-center">
     <!-- 学校选择 -->
-    <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">
-      {{ label }}学校
+    <label :class="['col-start-2 col-span-1', 'text-right mr-2']">
+      {{ label }}院校
     </label>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div :class="['col-span-2']">
       <SchoolList
         :id="`${label.toLowerCase()}-university-input`"
         @schoolSelected="handleSchoolSelect"
@@ -66,18 +64,20 @@ const emitData = () => {
     </div>
 
     <!-- 评级显示 -->
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label ratingLabel">
-      <span v-if="rating" class="ratingResult">{{ rating }}</span>
+    <div :class="['col-span-1']">
+      <span v-if="rating" class="inline-block px-2 py-1 bg-white text-cornflowerblue text-sm rounded-full border border-gray-300">
+        {{ rating }}
+      </span>
     </div>
 
     <!-- 专业选择 -->
-    <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">
+    <label :class="['col-span-1', 'text-right mr-2']">
       专业
     </label>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div :class="['col-span-2']">
       <input
         type="text"
-        class="form-control"
+        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         name="major_input"
         list="major-input"
         :placeholder="label === '硕士' ? '本科生不填写此项' : ''"
@@ -88,39 +88,20 @@ const emitData = () => {
     </div>
 
     <!-- 硕士导师信息 -->
-    <div v-if="showAdvisor" class="col-lg-4">
-      <label class="col-lg-3 control-label" style="white-space: nowrap">
+
+      <label v-if="showAdvisor" :class="['col-span-2', 'text-right mr-2', 'whitespace-nowrap']">
         导师
       </label>
-      <div class="col-lg-6">
+      <div v-if="showAdvisor" :class="['col-span-2']">
         <input
-          class="form-control"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           type="text"
           placeholder="本科生不填写此项"
           @change="handleAdvisorChange"
           :required="label === '本科'"
         />
-      </div>
-      <div class="col-lg-3"></div>
+
     </div>
   </div>
 </template>
 
-<style scoped>
-.form-group .ratingLabel {
-  padding-top: 6px;
-  text-align: left;
-  padding-left: 0;
-}
-
-.ratingResult {
-  display: inline;
-  border-radius: 30%;
-  background-color: #fff;
-  color: cornflowerblue;
-  font-size: 14px;
-  vertical-align: middle;
-  border: 2px solid #ccc;
-  padding: 5px 8px;
-}
-</style>

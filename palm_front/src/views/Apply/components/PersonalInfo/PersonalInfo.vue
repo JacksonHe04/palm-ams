@@ -48,59 +48,49 @@ watch(
 </script>
 
 <template>
-  <div>
-    <p class="infoClassTitle">个人基本信息</p>
+  <div class="px-8">
+    <p class="text-2xl font-bold mb-8">个人基本信息</p>
 
-    <div class="form-group">
+    <div class="mb-8">
       <!-- 姓名；性别；毕业年份；出生日期 -->
-      <div style="margin-top: 40px">
-        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+      <div class="grid grid-cols-12 gap-8">
+        <!-- 左侧信息 -->
+        <div class="col-span-4 col-start-2 space-y-4">
           <!-- 姓名 -->
-          <div class="form-group">
-            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-              >姓 名</label
-            >
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <input
-                type="text"
-                class="form-control"
-                v-model="applyStore.name"
-                required
-              />
-            </div>
+          <div class="grid grid-cols-8 items-center">
+            <label class="col-span-2 text-right mr-4">姓 名</label>
+            <input
+              type="text"
+              class="col-span-6 form-control"
+              v-model="applyStore.name"
+              required
+            />
           </div>
 
           <!-- 性别 -->
-          <div class="form-group">
-            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-              >性 别</label
+          <div class="grid grid-cols-8 items-center">
+            <label class="col-span-2 text-right mr-4">性 别</label>
+            <select
+              class="col-span-6 form-control"
+              v-model="applyStore.gender"
+              id="form_sex"
+              required
             >
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <select
-                class="form-control"
-                v-model="applyStore.gender"
-                id="form_sex"
-                required
-              >
-                <option value="请选择">请选择</option>
-                <option value="男">男</option>
-                <option value="女">女</option>
-              </select>
-            </div>
+              <option value="请选择">请选择</option>
+              <option value="男">男</option>
+              <option value="女">女</option>
+            </select>
           </div>
         </div>
 
-        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <!-- 中间信息 -->
+        <div class="col-span-4 space-y-4">
           <!-- 毕业年份 -->
-          <div class="form-group">
-            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
-              毕业年份
-            </label>
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <div class="grid grid-cols-8 items-center">
+            <label class="col-span-3 text-right mr-4">毕业年份</label>
+            <div class="col-span-5">
               <select
-                class="form-control"
+                class="form-control mb-2"
                 v-model="applyStore.graduationYear"
                 required
               >
@@ -120,36 +110,23 @@ watch(
           </div>
 
           <!-- 出生日期 -->
-          <div class="form-group">
-            <label
-              class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label"
-              style="white-space: nowrap"
-              >出生年月</label
-            >
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <div
-                class="input-group date form-control"
-                id="datetimepicker1"
-                style="padding: 0"
-              >
-                <input
-                  type="date"
-                  v-model="applyStore.birthDate"
-                  required
-                  style="margin-top: 5px; border: none; width: 80%"
-                />
-              </div>
+          <div class="grid grid-cols-8 items-center">
+            <label class="col-span-3 text-right mr-4">出生年月</label>
+            <div class="col-span-5">
+              <input
+                type="date"
+                v-model="applyStore.birthDate"
+                required
+                class="form-control"
+              />
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-      <div
-        class="col-xs-3 col-sm-3 col-md-3 col-lg-3"
-        style="margin-top: -60px"
-      >
-        <Avatar />
+        <!-- 头像上传 -->
+        <div class="col-span-2">
+          <Avatar />
+        </div>
       </div>
     </div>
 
@@ -157,55 +134,40 @@ watch(
     <DegreeInfo label="本科" @degreeInfoUpdated="handleDegreeInfoUpdate" />
 
     <!-- 专业排名 -->
-    <div class="form-group">
-      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-
-      <label
-        class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        style="white-space: nowrap"
-        >专业人数</label
-      >
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="grid grid-cols-12 mb-8 items-center">
+      <div class="col-start-2 col-span-3 grid grid-cols-8 items-center">
+        <label class="col-span-3 text-right mr-4">专业人数</label>
         <input
           type="text"
-          class="form-control"
+          class="col-span-5 form-control"
           v-model.number="applyStore.majorCount"
           min="1"
           required
         />
       </div>
+      <div class="col-span-1"></div>
 
-      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+      <label class="col-span-1 text-right mr-4">排 名</label>
+      <input
+        type="text"
+        class="col-span-2 form-control"
+        v-model.number="applyStore.rank"
+        min="1"
+        required
+      />
 
-      <label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        >排 名</label
-      >
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        <input
-          type="text"
-          class="form-control"
-          v-model.number="applyStore.rank"
-          min="1"
-          required
-        />
-      </div>
-
-      <div class="col-lg-4">
-        <label class="col-lg-3 control-label">百分比</label>
-        <div class="col-lg-6">
-          <input
-            type="text"
-            class="form-control"
-            :value="percentageRank"
-            readonly
-            placeholder="自动计算"
-          />
-        </div>
-        <div class="col-lg-3"></div>
-      </div>
+      <div class="col-span-1"></div>
+      <label class="col-span-1 text-right mr-4">百分比</label>
+      <input
+        type="text"
+        class="col-span-2 form-control"
+        :value="percentageRank"
+        readonly
+        placeholder="自动计算"
+      />
     </div>
 
-    <!-- 硕士信息，包含导师字段 -->
+    <!-- 硕士信息 -->
     <DegreeInfo
       label="硕士"
       :showAdvisor="true"
@@ -213,35 +175,23 @@ watch(
     />
 
     <!-- 电话；邮箱 -->
-    <div class="form-group">
-      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-
-      <label
-        class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        style="white-space: nowrap"
-        >手机号码</label
-      >
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="grid grid-cols-12 mb-8 items-center">
+      <div class="col-start-2 col-span-3 grid grid-cols-8 items-center">
+        <label class="col-span-3 text-right mr-4">手机号码</label>
         <input
           type="text"
-          class="form-control"
+          class="col-span-5 form-control"
           v-model="applyStore.phone"
           id="form_phonenumber"
           required
         />
       </div>
-
-      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-
-      <label
-        class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
-        style="white-space: nowrap"
-        >电子邮箱</label
-      >
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <div class="col-span-1"></div>
+      <div class="col-span-3 grid grid-cols-8 items-center">
+        <label class="col-span-3 text-right mr-4">电子邮箱</label>
         <input
           type="text"
-          class="form-control"
+          class="col-span-5 form-control"
           v-model="applyStore.email"
           id="form_email"
           required
@@ -251,6 +201,12 @@ watch(
   </div>
   <DividerLine />
 </template>
+
+<style scoped>
+.form-control {
+  @apply px-3 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
+}
+</style>
 
 <script>
 export default {
