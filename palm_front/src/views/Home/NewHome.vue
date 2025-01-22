@@ -10,7 +10,7 @@
         </p>
         <div class="email-form">
           <RouterLink to="/apply"
-            ><button class="btn btn-primary">申请加入我们</button></RouterLink
+            ><div class="btn btn-apply">申请加入我们</div></RouterLink
           >
         </div>
         <p class="trial-text">
@@ -81,9 +81,9 @@
                   模式分析与挖掘研究所<br />
                   （东南大学）
                 </p>
-                <button class="btn btn-ghost" style="margin-top: 8px">
+                <div style="margin-top: 8px">
                   了解详情
-                </button>
+                </div>
               </div>
             </div>
           </div>
@@ -123,6 +123,7 @@
     </div>
   </div>
 </template>
+
 
 <style scoped>
 * {
@@ -180,14 +181,6 @@ body {
   gap: 16px;
   margin-bottom: 16px;
   max-width: 480px;
-}
-
-.email-input {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  font-size: 16px;
 }
 
 .trial-text {
@@ -302,6 +295,24 @@ body {
   }
 }
 
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-apply {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-apply:hover {
+  background-color: #93c5fd;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero {
@@ -321,5 +332,3 @@ body {
   }
 }
 </style>
-
-<script setup></script>

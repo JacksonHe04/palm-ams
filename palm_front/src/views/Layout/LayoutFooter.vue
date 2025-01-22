@@ -84,14 +84,11 @@
 
 <style scoped>
 .app_footer {
-  /* background-image: linear-gradient( */
-  /*     15deg, */
-  /*     rgba(255, 255, 255, 1) 0%,  !* 白色 *! */
-  /*     rgba(173, 216, 230, 0.6) 100%  !* 浅蓝色 *! */
-  /* ); */
-  padding: 40px 0 0 0;
+  padding: 40px 120px 0 120px;
   color: #333;
   margin-top: 100px;
+  margin-left: 135px;
+  margin-right: 135px;
 }
 
 .contact .container {
@@ -137,7 +134,6 @@ a:hover {
 }
 
 .seperator {
-  width: 40%;
   height: 1px;
   background-color: #cccccc;
   display: block;

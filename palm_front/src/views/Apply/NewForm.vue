@@ -74,7 +74,7 @@ const handleSubmit = async () => {
 
 
 <style scoped>
-@import url("https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css");
+/* @import url("https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"); */
 /* @import url("https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"); */
 
 #website-title {

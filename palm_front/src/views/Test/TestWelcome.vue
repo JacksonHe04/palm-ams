@@ -8,7 +8,7 @@ const apiData = ref(null);
 // 定义一个方法来调用后端API
 const fetchData = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/home/welcome');
+    const response = await axios.get('http://localhost:3000/api/home/welcome');
     apiData.value = response.data;
     console.log('GET请求成功:', response.data);
   } catch (error) {

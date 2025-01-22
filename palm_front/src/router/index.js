@@ -96,6 +96,42 @@ const router = createRouter({
           component: () => import("@/views/Read/index.vue"),
           meta: { title: "PALM实验室申请说明" },
         },
+      //   introduction
+        {
+          path: "/introduction",
+          component: () => import("@/views/Introduction/index.vue"),
+          meta: { title: "PALM实验室介绍" },
+        },
+      //   news
+        {
+          path: "/news",
+          component: () => import("@/views/News/index.vue"),
+          meta: { title: "PALM实验室新闻" },
+        },
+      //   members
+        {
+          path: "/members",
+          component: () => import("@/views/Members/index.vue"),
+          meta: { title: "PALM实验室成员" },
+        },
+      //   academics
+        {
+          path: "/academics",
+          component: () => import("@/views/Academics/index.vue"),
+          meta: { title: "PALM实验室学术" },
+        },
+      //   signup
+        {
+          path: "/signup",
+          component: () => import("@/views/Signup/index.vue"),
+          meta: { title: "PALM实验室报名" },
+        },
+      //   login
+        {
+          path: "/login",
+          component: () => import("@/views/Login/index.vue"),
+          meta: { title: "PALM实验室登录" },
+        },
       ],
     },
   ],
@@ -107,25 +143,25 @@ const router = createRouter({
   },
 });
 
-// 假设 isAuthenticated 是一个函数，用于检查用户是否已登录
 import { isAuthenticated } from "@/utils/auth"; // 根据实际情况导入
 
-// router.beforeEach((to, from, next) => {
-//     document.title = to.meta.title || 'palm';
-//
-//     // 检查目标路由是否是 /admin
-//     if (to.path === '/admin') {
-//         // 如果用户未登录，则重定向到 /login
-//         if (!isAuthenticated()) {
-//             next('/login');
-//         } else {
-//             // 如果用户已登录，则继续访问 /admin
-//             next();
-//         }
-//     } else {
-//         // 对于其他路由，直接放行
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || 'palm';
+
+  // 检查目标路由是否是 /admin 或其子路由
+  if (to.path.startsWith('/admin')) {
+    // 如果用户未登录，则重定向到 /login
+    if (!isAuthenticated()) {
+      next('/login');
+    } else {
+      // 如果用户已登录，则继续访问 /admin
+      next();
+    }
+  } else {
+    // 对于其他路由，直接放行
+    next();
+  }
+});
+
 
 export default router;

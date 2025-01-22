@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <div class="container">
     <h1 class="title">PALM实验室招收 2025年秋季入学博士及硕士研究生</h1>
@@ -13,7 +11,7 @@
       <p>面试安排：具体见面试邮件通知</p>
       <h3>注意事项</h3>
 
-      <ul>
+      <ul class="notice-list">
         <li>申请前请首先阅读本页 “PALM实验室招生说明”。</li>
         <li>
           报名系统网址：<a href="http://139.155.248.15/apply/"
@@ -41,14 +39,12 @@
       <p class="indent">
         首先感谢您有兴趣选择东南大学模式学习与挖掘（PALM）实验室作为您攻读博士/硕士学位的地方，为帮助您更加确信您的选择是否明智，请耐心阅读如下说明：
       </p>
-      <ul>
+      <ul class="recruitment-details">
         <li>
-          <b class="important">重要</b
-          >：您是否了解我们的研究方向？在大致了解的基础上，您是否确实对这些方向感兴趣？研究之路可能充满挫败感，如果没有足够的兴趣支撑，可能会感到痛苦。
+          <span class="important">重要：</span> 您是否了解我们的研究方向？在大致了解的基础上，您是否确实对这些方向感兴趣？研究之路可能充满挫败感，如果没有足够的兴趣支撑，可能会感到痛苦。
         </li>
         <li>
-          <b class="important">重要</b
-          >：您是否有较大的经济压力？研究工作需要全心投入，在读期间还要考虑赚钱是件非常糟糕的事情。尽管我们会提供助研金作为生活补贴，但如果这是您的主要考虑，PALM实验室可能不是您的最佳选择。
+          <span class="important">重要：</span> 您是否有较大的经济压力？研究工作需要全心投入，在读期间还要考虑赚钱是件非常糟糕的事情。尽管我们会提供助研金作为生活补贴，但如果这是您的主要考虑，PALM实验室可能不是您的最佳选择。
         </li>
         <li>
           对于本科生申请者，相对于申请硕士研究生，我们更希望看到直博申请者。因为这给了我们更多时间规划更为长远而有意义的研究课题，并进行更为系统的科研训练。当然，这并不意味着我们不欢迎您申请硕士研究生。
@@ -68,423 +64,140 @@
       </ul>
 
       <h3>2024年PALM实验室拟招生导师名单</h3>
-      <table class="center-table" cellspacing="1" bgcolor="black">
-        <tr>
-          <td class="table-header" align="center" width="150" height="50">
-            <b>拟招生导师</b>
-          </td>
-          <td class="table-header" align="center" width="300" height="50">
-            <b>拟招生对象</b>
-          </td>
-          <td class="table-header" align="center" width="300" height="50">
-            <b>招生院系</b>
-          </td>
-          <td class="table-header" align="center" width="300" height="50">
-            <b>研究方向</b>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            耿新
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、模式识别、计算机视觉
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            张敏灵
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、数据挖掘、模式识别
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            薛晖
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、模式识别、计算机视觉
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            周德宇
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            自然语言处理
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            张宇
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、机器学习
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            魏秀参
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、机器学习、机器人
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            宋沫飞
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机图形学、计算机视觉
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            贾育衡
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、数据挖掘、模式识别
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            陈浩
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、机器学习
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            杨旭
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            视觉语言多模态、因果推断
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            周毅
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、模式识别、医学影像分析
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            魏通
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、数据挖掘
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            王洪松
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、多媒体内容理解
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            方鹏飞
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、机器学习
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            李竹颖
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            博士生、直博生、硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            人机交互、普适计算
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            闫亚萍
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、机器学习
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            时霄
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            电子设计自动化
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            祁磊
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机视觉、机器学习
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            徐宁
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、数据挖掘
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            乔伊果
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            多模态视觉感知、计算机视觉、机器学习
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            吕佳祺
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、数据挖掘、模式识别
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            王靖
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            机器学习、数据挖掘
-          </td>
-        </tr>
-
-        <tr>
-          <td bgcolor="transparent" align="center" width="150" height="50">
-            石楚涵
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            硕士生
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            计算机学院、软件学院、东蒙联合研究生院
-          </td>
-          <td bgcolor="transparent" align="center" width="300" height="50">
-            数据可视化、可视分析、人机交互
-          </td>
-        </tr>
+      <table class="center-table">
+        <thead>
+          <tr>
+            <th>拟招生导师</th>
+            <th>拟招生对象</th>
+            <th>招生院系</th>
+            <th>研究方向</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(mentor, index) in mentors" :key="index">
+            <td>{{ mentor.name }}</td>
+            <td>{{ mentor.recruitmentType }}</td>
+            <td>{{ mentor.department }}</td>
+            <td>{{ mentor.researchDirection }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
 </template>
 
-<style scoped>
-li {
-  text-align: left;
-  font-size: 16px;
-  line-height: 2;
-  * {
+<script>
+export default {
+  data() {
+    return {
+      mentors: [
+        { name: '耿新', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、模式识别、计算机视觉' },
+        { name: '张敏灵', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、数据挖掘、模式识别' },
+        { name: '薛晖', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、模式识别、计算机视觉' },
+        { name: '周德宇', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '自然语言处理' },
+        { name: '张宇', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、机器学习' },
+        { name: '魏秀参', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、机器学习、机器人' },
+        { name: '宋沫飞', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机图形学、计算机视觉' },
+        { name: '贾育衡', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、数据挖掘、模式识别' },
+        { name: '陈浩', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、机器学习' },
+        { name: '杨旭', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '视觉语言多模态、因果推断' },
+        { name: '周毅', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、模式识别、医学影像分析' },
+        { name: '魏通', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、数据挖掘' },
+        { name: '王洪松', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、多媒体内容理解' },
+        { name: '方鹏飞', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、机器学习' },
+        { name: '李竹颖', recruitmentType: '博士生、直博生、硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '人机交互、普适计算' },
+        { name: '闫亚萍', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、机器学习' },
+        { name: '时霄', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '电子设计自动化' },
+        { name: '祁磊', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '计算机视觉、机器学习' },
+        { name: '徐宁', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、数据挖掘' },
+        { name: '乔伊果', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '多模态视觉感知、计算机视觉、机器学习' },
+        { name: '吕佳祺', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、数据挖掘、模式识别' },
+        { name: '王靖', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '机器学习、数据挖掘' },
+        { name: '石楚涵', recruitmentType: '硕士生', department: '计算机学院、软件学院、东蒙联合研究生院', researchDirection: '数据可视化、可视分析、人机交互' }
+      ]
+    };
   }
-}
+};
+</script>
 
-
-
+<style scoped>
 .container {
-  /* 添加容器样式 */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .title {
   text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .welcome-message {
-  color: red;
-  font-size: 15px;
+  color: #d9534f;
+  font-size: 1.2rem;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .part-big {
-  /* 添加部分样式 */
+  margin-top: 20px;
 }
 
 .indent {
   text-indent: 2em;
+  margin-bottom: 10px;
 }
 
 .important {
-  color: red;
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.notice-list li,
+.recruitment-details li {
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
 }
 
 .center-table {
-  display: grid;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.5
-  ); /* 设置背景颜色为白色，透明度为50% */
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+  min-width: 400px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.table-header {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.5
-  ); /* 设置表头背景颜色为白色，透明度为50% */
+.center-table th,
+.center-table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.center-table th {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.center-table tbody tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+
+.center-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  .center-table {
+    font-size: 0.9rem;
+  }
+
+  .center-table th,
+  .center-table td {
+    padding: 8px 12px;
+  }
 }
 </style>

@@ -146,7 +146,7 @@ const removeAward = () => {
 
       <!-- 加号和减号按钮，仅在最后一条记录下方显示 -->
       <div v-if="index === applyStore.awards.length - 1" class="col-xs-12 text-center mt-2">
-        <button @click="addAward" class="btn btn-primary">+</button>
+        <button @click="addAward" class="btn btn-apply">+</button>
         <button v-if="applyStore.awards.length > 1" @click="removeAward" class="btn btn-danger ml-2">-</button>
       </div>
     </div>

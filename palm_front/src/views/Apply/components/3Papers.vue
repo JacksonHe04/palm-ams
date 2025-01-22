@@ -104,7 +104,7 @@ const removePaper = () => {
 
       <!-- 仅在当前最后一条填写行的下方显示加号和减号按钮 -->
       <div v-if="index === applyStore.papers.length - 1" class="col-xs-12 text-center mt-2">
-        <button @click="addPaper" class="btn btn-primary">+</button>
+        <button @click="addPaper" class="btn btn-apply">+</button>
         <button v-if="applyStore.papers.length > 1" @click="removePaper" class="btn btn-danger ml-2">-</button>
       </div>
     </div>

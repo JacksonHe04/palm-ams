@@ -12,7 +12,7 @@ const studentForm = ref({
 // 提交表单
 const handleSubmit = async () => {
   try {
-    const response = await axios.post('http://localhost:8000/api/test/test_post/', studentForm.value)
+    const response = await axios.post('http://localhost:3000/api/test/test_post/', studentForm.value)
     alert('学生信息提交成功')
     console.log(response.data)
   } catch (error) {
@@ -27,7 +27,7 @@ const studentInfo = ref({})
 
 const handleSearch = async () => {
   try {
-    const response = await axios.get(`http://localhost:8000/api/test/test_get/?name=${searchStudent.value}`)
+    const response = await axios.get(`http://localhost:3000/api/test/test_get/?name=${searchStudent.value}`)
     console.log('Response data:', response.data) // 添加调试信息
     studentInfo.value = response.data.data
   } catch (error) {

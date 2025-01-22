@@ -9,8 +9,8 @@
       <RouterLink to="/read">2025 Join Us</RouterLink>
     </div>
     <div class="auth-buttons">
-      <button class="btn btn-ghost">Sign Up</button>
-      <button class="btn btn-primary">Login</button>
+      <RouterLink to="/signup" class="btn btn-know">Sign Up</RouterLink>
+      <RouterLink to="/login" class="btn btn-apply">Login</RouterLink>
     </div>
   </nav>
 </template>
@@ -29,7 +29,7 @@ nav {
   align-items: center;
   gap: 10px;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: bold;
   color: #1f2937;
 }
 
@@ -49,30 +49,41 @@ a:hover {
 }
 
 .nav-links a:hover {
-  color: #1f2937;
+  color: #1f2937; /* 保持原有hover颜色 */
 }
 
 .auth-buttons {
   display: flex;
   gap: 16px;
+  height: 30px;
 }
 
 .btn {
-  padding: 8px 16px;
+  padding: 2px 12px;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
 }
 
-.btn-ghost {
+.btn-know {
   background: transparent;
   border: 1px solid #000000;
+  color: black;
 }
 
-.btn-primary {
-  background: #1f2937;
+.btn-know:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
+.btn-apply {
+  background: black;
   color: white;
   border: none;
+}
+
+.btn-apply:hover {
+  background: skyblue;
 }
 </style>
