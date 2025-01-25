@@ -1,3 +1,3 @@
-nest generate module test --no-spec
-nest generate service test --no-spec
-nest generate controller test --no-spec
+nest generate module apply --no-spec
+nest generate service apply --no-spec
+nest generate controller apply --no-spec

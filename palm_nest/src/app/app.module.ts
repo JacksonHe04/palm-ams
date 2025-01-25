@@ -5,9 +5,11 @@ import { HomeModule } from '../home/home.module';
 import { AuthModule } from '../auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TestModule } from '../test/test.module';
+import { AdminModule } from '../admin/admin.module';
+import { ApplyModule } from '../apply/apply.module';
 
 @Module({
-  imports: [HomeModule, AuthModule, TestModule,
+  imports: [HomeModule, AuthModule, TestModule, AdminModule, ApplyModule,
   TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
