@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from "vue";
-import AdminHeader from "@/views/Admin/Layout/AdminHeader.vue";
 import SideBar from "@/views/Admin/Layout/SideBar.vue";
 import Content from "@/views/Admin/Layout/Content.vue";
 
 const menuItems = ref([
   { name: "dashboard", label: "仪表盘", path: "/admin/dashboard", icon: "📊" },
   { name: "users", label: "学生表格", path: "/admin/students", icon: "👤" },
+  { name: "filter", label: "筛选", path: "/admin/filter", icon: "🔍" },
   { name: "interview", label: "面试打分", path: "/admin/interview", icon: "📋" },
   { name: "analytics", label: "数据分析", path: "/admin/analysis", icon: "📈" },
-  // { name: "setting", label: "系统设置", path: "/admin/setting", icon: "⚙️" },
+  { name: "setting", label: "系统设置", path: "/admin/setting", icon: "⚙️" },
 ]);
 </script>
 <template>
@@ -19,9 +19,6 @@ const menuItems = ref([
     </div>
 
     <div class="main-container">
-      <div class="header-container">
-        <AdminHeader />
-      </div>
       <main class="content-container">
         <Content />
       </main>
