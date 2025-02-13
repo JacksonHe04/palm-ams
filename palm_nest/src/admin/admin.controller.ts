@@ -1,4 +1,4 @@
-// src/admin/controllers/apply.controller.ts
+// src/management/controllers/apply.controller.ts
 import { Controller, Get } from '@nestjs/common';
 import { ApplyService } from './admin.service';
 import { Apply } from './entities/students.entity';

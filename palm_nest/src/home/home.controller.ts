@@ -1,4 +1,4 @@
-// src/home/home.controller.ts
+// src/front-desk/front-desk.controller.ts
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { HomeService } from './home.service';
 
@@ -6,7 +6,7 @@ import { HomeService } from './home.service';
 export class HomeController {
   constructor(private readonly testService: HomeService) {}
 
-  @Get('home/welcome')
+  @Get('front-desk/welcome')
   @HttpCode(HttpStatus.OK)
   async getWelcomeData() {
     try {

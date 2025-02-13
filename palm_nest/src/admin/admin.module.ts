@@ -1,4 +1,4 @@
-// src/admin/admin.module.ts
+// src/management/management.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApplyController } from './admin.controller';

@@ -1,0 +1,46 @@
+<template>
+  <el-row class="dashboard-layout" gutter={20}>
+    <el-col :span="12">
+      <SchoolLevelDashboard />
+    </el-col>
+    <el-col :span="12">
+      <EnrollmentTypeDashboard />
+
+    </el-col>
+    <el-col :span="12">
+      <MajorDistributionDashboard />
+    </el-col>
+    <el-col :span="12">
+      <SchoolDistributionDashboard />
+    </el-col>
+    <!--<el-col :span="12">-->
+    <!--  <DataCountDashboard />-->
+    <!--</el-col>-->
+  </el-row>
+</template>
+
+<script>
+import SchoolLevelDashboard from "@/views/management/dashboard/components/SchoolLevelDashboard.vue";
+import MajorDistributionDashboard from "@/views/management/dashboard/components/MajorDistributionDashboard.vue";
+import DataCountDashboard from "@/views/management/dashboard/components/DataCountDashboard.vue";
+import SchoolDistributionDashboard from "@/views/management/dashboard/components/SchoolDistributionDashboard.vue";
+import EnrollmentTypeDashboard from "@/views/management/dashboard/components/EnrollmentTypeDashboard.vue";
+
+export default {
+  name: 'DashboardLayout',
+  components: {
+    SchoolLevelDashboard,
+    MajorDistributionDashboard,
+    DataCountDashboard,
+    SchoolDistributionDashboard,
+    EnrollmentTypeDashboard,
+  },
+};
+</script>
+
+<style scoped>
+.dashboard-layout {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+</style>

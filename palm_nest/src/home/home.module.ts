@@ -1,4 +1,4 @@
-// src/home/home.module.ts
+// src/front-desk/front-desk.module.ts
 import { Module } from '@nestjs/common';
 import { HomeController } from './home.controller';
 import { HomeService } from './home.service';

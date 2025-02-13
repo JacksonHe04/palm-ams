@@ -14,7 +14,7 @@ export class AuthController {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
     return {
-      message: 'Login successful',
+      message: 'login successful',
       user: result,
     };
   }

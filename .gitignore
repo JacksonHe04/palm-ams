@@ -1,8 +1,8 @@
 *.pyc
 __pycache__/
-.idea
+/.idea
 
 .DS_Store
-palm_back/ApplicationSystem/.DS_Store
+back-django/ApplicationSystem/.DS_Store
 
 discarded

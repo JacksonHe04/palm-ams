@@ -58,7 +58,7 @@ export class ApplyService {
     const response = {
       message: "申请表单提交成功",
       data: {
-        id: savedApply.id, // 确保 savedApply 是单个 Apply 实例
+        id: savedApply.id, // 确保 savedApply 是单个 apply 实例
         time: currentTime
       }
     };

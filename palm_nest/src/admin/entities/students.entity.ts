@@ -1,4 +1,4 @@
-// src/admin/entities/apply.entity.ts
+// src/management/entities/apply.entity.ts
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'students' })

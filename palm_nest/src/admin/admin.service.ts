@@ -1,4 +1,4 @@
-// src/admin/services/apply.service.ts
+// src/management/services/apply.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
