@@ -10,7 +10,7 @@
 
     <div class="bubble-cards">
       <div
-        class="bubble-item"
+        class="bubble-item my-1"
         v-for="(item, index) in bubbleItems"
         :key="index"
       >

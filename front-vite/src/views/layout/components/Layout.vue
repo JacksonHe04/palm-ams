@@ -6,21 +6,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted() {
-    // 确保 hero-section 的高度可以超过视口高度
-    const heroSection = this.$el;
-    heroSection.style.height = 'auto'; // 设置为 auto 以适应内容高度
-    heroSection.style.minHeight = `${window.innerHeight}px`; // 确保至少有视口高度
-
-    window.addEventListener('resize', () => {
-      heroSection.style.minHeight = `${window.innerHeight}px`; // 动态调整最小高度
-    });
-  }
-};
-</script>
-
 <style scoped>
 .hero-section {
   display: flex;

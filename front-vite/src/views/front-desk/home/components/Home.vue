@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="home-main my-14 md:my-28">
     <HeroSection />
     <HomeCards />
   </div>
@@ -25,9 +25,8 @@ body {
   min-height: 100vh;
 }
 
-.container {
+.home-main {
   max-width: 1200px;
-  margin: 0 auto;
   padding: 0 20px;
 }
 

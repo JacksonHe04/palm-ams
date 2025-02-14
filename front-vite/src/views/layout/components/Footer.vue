@@ -1,25 +1,26 @@
 <template>
-  <footer class="w-full mt-40 py-10 px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto px-60">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div v-for="(section, index) in footerSections" :key="index" class="footer-section">
+  <footer class="w-full mt-20 sm:mt-10 py-5 sm:py-10 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-8">
+      <!-- 使用 flex 布局替换 grid 布局 -->
+      <div class="flex flex-col sm:flex-row gap-4 sm:gap-8">
+        <div v-for="(section, index) in footerSections" :key="index" class="mx-auto my-0 md:text-left">
           <h3 class="text-gray-500 font-bold mb-2">{{ section.title }}</h3>
           <ul class="space-y-2">
             <li v-for="(link, linkIndex) in section.links" :key="linkIndex">
-              <a :href="link.url" target="_blank" class="text-gray-500">
-                <i v-if="link.icon" :class="link.icon" class="mr-2"></i>{{ link.name }}
+              <a :href="link.url" target="_blank" class="text-gray-500 hover:text-blue-500">
+                {{ link.name }}
               </a>
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="mt-10 border-t border-white pt-10">
+      <div class="mt-8 sm:mt-10 border-t border-white pt-5 sm:pt-10">
         <p class="text-center text-gray-500">
-          CopyRight © 何锦诚，刘宇轩，戴雨成，胡瀚 2025 All rights reserved.
+          CopyRight © 何锦诚 | 刘宇轩 | 戴雨成 | 胡瀚 <br class="md:hidden">2025 All rights reserved.
         </p>
-        <p class="text-center text-gray-500 mt-1">
-          东南大学2025年创业实践项目作品
+        <p class="text-center text-gray-500 mt-3">
+          东南大学 2025 年创业实践项目作品
         </p>
       </div>
     </div>
@@ -30,17 +31,7 @@
 footer {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.footer-link {
-  color: #4b5563; /* text-gray-700 */
-  transition: color 0.3s ease; /* hover effect */
-}
-
-.footer-link:hover {
-  color: #63b3ed; /* hover:text-blue-500 */
-}
 </style>
-
 
 <script>
 export default {
@@ -101,7 +92,7 @@ export default {
           title: '关于 PALM',
           links: [
             {
-              name: '东南大学 PALM 实验室',
+              name: 'PALM 实验室',
               url: 'https://palm.seu.edu.cn/'
             },
             {

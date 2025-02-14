@@ -81,8 +81,7 @@ $hover-bg-color: wheat;
 .trial-text {
   color: $text-color;
   font-size: 14px;
-  display: flex;
-  align-items: center;
+  text-align: left;
   gap: 8px;
 }
 
@@ -130,9 +129,7 @@ $hover-bg-color: wheat;
   }
 
   .email-form {
-    flex-direction: column;
+    // flex-direction: column;
   }
 }
 </style>
-<script setup lang="ts">
-</script>
