@@ -1,13 +1,14 @@
 <template>
-  <div class="content">
+  <div class="main mt-14 md:mt-20">
     <RouterView />
   </div>
 </template>
 
 <style scoped>
-.content {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(100vh - 4.5rem);
 }
 </style>

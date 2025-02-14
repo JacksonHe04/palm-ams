@@ -42,15 +42,14 @@ window.addEventListener('mouseleave', stopDragging);
 
 <style scoped>
 .content {
-  background-color: white;
-  border-radius: 10px;
-  margin: 0px 50px 0px 30px; /* 增加外边距 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  height: calc(100% - 30px);
+  height: 100%;
+  width: 100%;
   padding: 0;
+  white-space: nowrap; /* 防止内容换行 */
+
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   overflow-y: auto; /* 允许垂直滚动 */
   overflow-x: scroll; /* 允许水平滚动 */
-  white-space: nowrap; /* 防止内容换行 */
-  width: 1100px; /* 固定宽度 */
 }
 </style>

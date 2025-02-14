@@ -1,5 +1,5 @@
 <template>
-  <footer class="w-full mt-20 sm:mt-10 py-5 sm:py-10 px-4 sm:px-6 lg:px-8">
+  <footer class="w-full mt-0 py-5 sm:py-10 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-8">
       <!-- 使用 flex 布局替换 grid 布局 -->
       <div class="flex flex-col sm:flex-row gap-4 sm:gap-8">

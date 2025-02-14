@@ -127,9 +127,5 @@ $hover-bg-color: wheat;
   .hero-title {
     font-size: 36px;
   }
-
-  .email-form {
-    // flex-direction: column;
-  }
 }
 </style>

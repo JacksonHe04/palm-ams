@@ -1,5 +1,5 @@
 <script setup>
-import View from "./View.vue";
+import View from "./layout/View.vue";
 </script>
 
 <template>

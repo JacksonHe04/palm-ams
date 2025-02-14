@@ -237,7 +237,6 @@ watch(filteredStudents, (newVal) => {
 .form-settings {
   display: flex;
   align-items: stretch;
-  z-index: 1000;
   width: 40%;
   margin-left: 1rem;
   margin-bottom: 10px;

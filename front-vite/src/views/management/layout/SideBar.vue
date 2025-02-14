@@ -1,6 +1,11 @@
 <template>
-  <aside class="sidebar">
-    <ul class="menu">
+  <aside :class="['sidebar', { collapsed: isCollapsed }]">
+    <div class="button-container">
+      <button @click="toggleSidebar" class="toggle-button">
+        <i :data-feather="isCollapsed ? 'chevrons-right' : 'chevrons-left'"></i>
+      </button>
+    </div>
+    <ul v-if="!isCollapsed" class="menu">
       <li v-for="item in menuItems" :key="item.name" class="menu-item">
         <RouterLink :to="item.path" class="menu-link" active-class="active">
           <span class="icon">{{ item.icon }}</span>
@@ -12,61 +17,166 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { ref } from "vue";
+import { defineProps, defineEmits } from "vue";
+import feather from "feather-icons";
+
 const props = defineProps({
-  menuItems: {
-    type: Array,
-    required: true,
+  isCollapsed: Boolean,
+});
+
+const emit = defineEmits(["toggle"]);
+
+const menuItems = ref([
+  {
+    name: "dashboard",
+    label: "仪表盘",
+    path: "/management/dashboard",
+    icon: "📊",
   },
+  {
+    name: "users",
+    label: "学生表格",
+    path: "/management/students",
+    icon: "👤",
+  },
+  { name: "filter", label: "筛选", path: "/management/filter", icon: "🔍" },
+  {
+    name: "interview",
+    label: "面试打分",
+    path: "/management/interview",
+    icon: "📋",
+  },
+  {
+    name: "analytics",
+    label: "数据分析",
+    path: "/management/analysis",
+    icon: "📈",
+  },
+  {
+    name: "setting",
+    label: "系统设置",
+    path: "/management/setting",
+    icon: "⚙️",
+  },
+]);
+
+const toggleSidebar = () => {
+  emit("toggle");
+  // 更新Feather图标
+  feather.replace();
+};
+
+// 监听props变化
+watch(
+  () => props.isCollapsed,
+  () => {
+    // 当折叠状态改变时更新图标
+    feather.replace();
+  },
+);
+
+// 初始化Feather Icons
+import { onMounted, watch } from "vue";
+
+onMounted(() => {
+  feather.replace();
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .sidebar {
-  background-color: white;
-  color: #141414;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-radius: 10px;
-  margin: 30px 0px 30px 50px; /* 增加外边距 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-}
-
-.label {
-  color: #141414;
-  font-weight: normal;
-}
-
-.menu {
-  list-style: none;
   padding: 0;
-}
+  background-color: white;
+  transition: width 0.3s ease;
+  width: 220px; // 添加固定宽度
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1); // 添加阴影效果
 
-.menu-item {
-  margin-bottom: 15px;
-}
+  &.collapsed {
+    width: 40px;
+    padding: 0;
+    overflow: hidden;
 
-.menu-link {
-  color: #141414;
-  text-decoration: none;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-}
+    .label {
+      display: none;
+    }
 
-.menu-link:hover {
-  color: #3498db;
-  background-color: aliceblue;
-}
+    .icon {
+      margin-right: 0;
+    }
 
-.menu-link.active {
-  color: #3498db; /* 或者你想要的其他颜色 */
-  background-color: aliceblue;
-}
+    .menu {
+      display: none;
+    }
+  }
 
-.icon {
-  margin-right: 10px;
+  .button-container {
+    padding: 0;
+    position: relative;
+    height: 44px;
+    border-bottom: 1px solid #f0f0f0; // 添加底部边框
+    
+    .toggle-button {
+      position: absolute;
+      top: 10px;
+      left: 8px; // 减小左侧间距使按钮更靠左
+      background-color: white;
+      border: 1px solid $admin-border;
+      border-radius: 4px;
+      padding: 0 8px;
+      cursor: pointer;
+      z-index: 1000;
+      font-size: 16px;
+      height: 24px;
+
+      i {
+        color: #808080;
+      }
+    }
+  }
+
+  .menu {
+    list-style: none;
+    padding: 12px 8px; // 增加整体内边距
+    margin: 0;
+
+    .menu-item {
+      margin-bottom: 8px; // 减小项目间距
+
+      .menu-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 16px; // 增加内边距
+        border-radius: 6px; // 增加圆角
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: #f0f8ff;
+          color: #2980b9;
+        }
+
+        &.active {
+          background-color: #e0f7fa;
+          color: #009688;
+          font-weight: 500; // 激活时文字加粗
+        }
+
+        .icon {
+          margin-right: 12px; // 调整图标间距
+          font-size: 18px; // 增加图标大小
+          width: 24px; // 固定图标宽度
+          text-align: center; // 图标居中对齐
+        }
+
+        .label {
+          font-size: 14px; // 设置文字大小
+        }
+      }
+    }
+  }
 }
 </style>

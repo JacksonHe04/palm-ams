@@ -5,6 +5,7 @@
         <img src="/palm_logo_cicle.png" alt="Palm Logo" class="logo">
         <div class="nav-title">SEU PALM Lab</div>
       </RouterLink>
+
       <div class="hidden md:flex space-x-8">
         <RouterLink
           v-for="item in navItems"
@@ -15,6 +16,7 @@
           {{ item.name }}
         </RouterLink>
       </div>
+
       <div class="md:hidden">
         <button @click="toggleMenu" class="text-gray-600 hover:text-gray-800">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -23,6 +25,7 @@
         </button>
       </div>
     </div>
+
     <div v-if="isMenuOpen" class="md:hidden bg-transparent py-4 px-4 space-y-4">
       <RouterLink
         v-for="item in navItems"

@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^1.7.7",
     "echarts": "^5.5.1",
+    "feather-icons": "^4.29.2",
     "particles.js": "^2.0.0",
     "pinia": "^2.3.0",
     "uuid": "^11.0.3",
