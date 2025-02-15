@@ -3,7 +3,7 @@
 前人编写的测试数据库的文件，暂时不用管
 """
 from django.http import HttpResponse
-from Apply.models import PalmApplicant
+# from Apply.models import PalmApplicant
 
 
 # 数据库操作

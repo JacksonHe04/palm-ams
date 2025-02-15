@@ -90,6 +90,22 @@ export const useStudentsStore = defineStore("students", {
     },
     paperFields: ["论文一", "论文二", "论文三"],
     awardFields: ["奖项一", "奖项二", "奖项三"],
+    sortableFields: [
+      "百分比",
+      "本科等级",
+      "硕士等级",
+      "ID",
+      "报名类型",
+      "毕业年份",
+      "本科专业",
+      "硕士专业",
+    ],
+    levelOrder: {
+      A: 1,
+      B: 2,
+      C: 3,
+      // 添加其他等级及其顺序
+    },
   }),
   actions: {
     async fetchStudents() {

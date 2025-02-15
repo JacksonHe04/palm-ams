@@ -31,32 +31,32 @@ const menuItems = ref([
   {
     name: "dashboard",
     label: "仪表盘",
-    path: "/management/dashboard",
+    path: "dashboard",
     icon: "📊",
   },
   {
     name: "users",
     label: "学生表格",
-    path: "/management/students",
+    path: "students",
     icon: "👤",
   },
-  { name: "filter", label: "筛选", path: "/management/filter", icon: "🔍" },
+  { name: "filter", label: "筛选方案", path: "filter", icon: "🔍" },
   {
     name: "interview",
     label: "面试打分",
-    path: "/management/interview",
+    path: "interview",
     icon: "📋",
   },
   {
     name: "analytics",
     label: "数据分析",
-    path: "/management/analysis",
+    path: "analysis",
     icon: "📈",
   },
   {
     name: "setting",
     label: "系统设置",
-    path: "/management/setting",
+    path: "setting",
     icon: "⚙️",
   },
 ]);
@@ -92,7 +92,7 @@ onMounted(() => {
   padding: 0;
   background-color: white;
   transition: width 0.3s ease;
-  width: 220px; // 添加固定宽度
+  width: 100%; // 添加固定宽度
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1); // 添加阴影效果
 
   &.collapsed {
@@ -122,11 +122,11 @@ onMounted(() => {
     .toggle-button {
       position: absolute;
       top: 10px;
-      left: 8px; // 减小左侧间距使按钮更靠左
+      left: 8px;
       background-color: white;
       border: 1px solid $admin-border;
       border-radius: 4px;
-      padding: 0 8px;
+      padding: 0;
       cursor: pointer;
       z-index: 1000;
       font-size: 16px;

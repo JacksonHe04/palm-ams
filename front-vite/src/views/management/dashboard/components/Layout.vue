@@ -37,10 +37,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.dashboard-layout {
-  margin-top: 20px;
-  padding: 0 20px;
-}
-</style>

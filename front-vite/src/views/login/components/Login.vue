@@ -17,7 +17,7 @@ export default {
         password.value,
       );
       if (loginSuccess) {
-        await router.push("/management");
+        await router.push("/admin");
       }
     };
 

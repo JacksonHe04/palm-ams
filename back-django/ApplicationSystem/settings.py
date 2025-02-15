@@ -26,7 +26,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.management',
+    # 'django.contrib.management',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
 
-    'apply',  # 这是之前的应用，我们舍弃
+    # 'apply',  # 这是之前的应用，我们舍弃
 
     # 以下为我们创建的应用
     'Api.testapp',

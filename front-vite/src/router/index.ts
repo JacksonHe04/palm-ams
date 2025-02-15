@@ -31,7 +31,7 @@ const router = createRouter({
           meta: { title: "登录PALM实验室" },
         },
         {
-          path: "/management",
+          path: "/admin",
           component: Admin,
           meta: { title: "PALM实验室后台管理" },
           children: [

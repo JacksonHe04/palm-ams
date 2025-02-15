@@ -36,20 +36,27 @@ window.addEventListener('mouseleave', stopDragging);
     @mousedown="startDragging"
     @mousemove="drag"
   >
+    <div class="content-container">
     <RouterView />
+    </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .content {
   height: 100%;
   width: 100%;
-  padding: 0;
+  padding: 20px;
   white-space: nowrap; /* 防止内容换行 */
-
-  background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  background-color: $admin-bg-color;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* 允许垂直滚动 */
   overflow-x: scroll; /* 允许水平滚动 */
+}
+
+.content-container {
+  border: 1px solid $admin-border;
+  width: 100%;
+  height: 100%;
 }
 </style>

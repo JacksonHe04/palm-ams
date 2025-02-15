@@ -9,11 +9,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('management/', admin.site.urls), # Django的Admin页面
+    # path('management/', admin.site.urls), # Django的Admin页面
 
 
     # path('', views.process_form),
-    path('', include('apply.urls')),
+    # path('', include('apply.urls')),
     # path('apply_old/', views.process_form_old),
     # path('old/', views.index_old),
     path('testdb/', testdb.testdb),

@@ -51,12 +51,12 @@ export default {
 }
 
 .floating-container {
-  position: absolute;
+  position: fixed;
   z-index: 1000; /* 确保它在其他元素之上 */
   background-color: white; /* 根据需要设置背景颜色 */
   border: 1px solid #dcdcdc; /* 根据需要设置边框 */
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  width: 100%; /* 根据需要调整宽度 */
+  width: 30%; /* 根据需要调整宽度 */
   padding: 15px 0 0 15px;
   border-radius: 10px;
 }
