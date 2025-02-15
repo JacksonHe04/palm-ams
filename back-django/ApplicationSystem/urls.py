@@ -9,18 +9,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    # path('management/', admin.site.urls), # Django的Admin页面
-
-
-    # path('', views.process_form),
-    # path('', include('apply.urls')),
-    # path('apply_old/', views.process_form_old),
-    # path('old/', views.index_old),
-    path('testdb/', testdb.testdb),
-
-    path('api/test/', include('Api.testapp.urls',)),
-    # path('api/front-desk/', include('Api.front-desk.urls',)),
     path('api/apply/',include('Api.apply.urls',)),
     path('api/students/', include('Api.students.urls',)),
+    path('api/auth/', include('Api.auth.urls',)),
+    path('api/settings/', include('Api.setting.urls')),
+    path('api/test/', include('Api.testapp.urls',)),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

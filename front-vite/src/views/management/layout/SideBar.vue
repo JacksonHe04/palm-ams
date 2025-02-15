@@ -55,9 +55,15 @@ const menuItems = ref([
   },
   {
     name: "setting",
-    label: "系统设置",
+    label: "规则设置",
     path: "setting",
     icon: "⚙️",
+  },
+  {
+    name: "account",
+    label: "账号设置",
+    path: "account",
+    icon: "👩🏻‍💻️",
   },
 ]);
 

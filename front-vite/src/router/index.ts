@@ -78,12 +78,12 @@ const router = createRouter({
               component: () => import("@/views/management/setting/index.vue"),
               meta: { title: "系统设置" },
             },
-            //   profile
+          //   account
             {
-              path: "profile",
-              name: "profile",
-              component: () => import("@/views/management/profile/index.vue"),
-              meta: { title: "个人资料" },
+              path: "account",
+              name: "account",
+              component: () => import("@/views/management/account/index.vue"),
+              meta: { title: "账号管理" },
             },
           ],
         },

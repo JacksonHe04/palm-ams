@@ -103,8 +103,7 @@ export const useStudentsStore = defineStore("students", {
     levelOrder: {
       A: 1,
       B: 2,
-      C: 3,
-      // 添加其他等级及其顺序
+      C: 3
     },
   }),
   actions: {

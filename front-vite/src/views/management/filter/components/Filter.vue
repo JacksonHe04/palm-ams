@@ -70,6 +70,15 @@
                   placeholder="输入值"
                 ></el-input-number>
               </template>
+              <template v-else-if="getFieldType(field) === 'boolean'">
+                <el-select
+                  v-model="filterConfig[field].value"
+                  placeholder="选择值"
+                >
+                  <el-option label="是" :value="true"></el-option>
+                  <el-option label="否" :value="false"></el-option>
+                </el-select>
+              </template>
             </div>
           </el-collapse-item>
         </el-collapse>
@@ -96,37 +105,38 @@
 
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue';
+import { ref, reactive, computed, watch, onMounted } from 'vue';
 import { ElMessage } from 'element-plus'
+import { useFilterStore } from '@/stores/filterStore'
 
-// Sample available fields (replace with your actual fields)
-const availableFields = [
-  { name: 'name', label: 'Name', type: 'string' },
-  { name: 'age', label: 'Age', type: 'number' },
-  { name: 'email', label: 'Email', type: 'string' },
-  { name: 'salary', label: 'Salary', type: 'number' },
-  // Add more fields as needed
-]
+const store = useFilterStore()
+const availableFields = computed(() => store.availableFields)
+const savedSchemes = computed(() => store.savedSchemes)
 
+// 添加缺失的响应式变量初始化
 const schemeName = ref('')
 const selectedFields = ref([])
 const activeNames = ref([])
 const filterConfig = reactive({})
-const savedSchemes = ref([])
+const emit = defineEmits(['filter-result'])
 
-const getFieldLabel = (fieldName) => {
-  const field = availableFields.find(f => f.name === fieldName)
-  return field ? field.label : fieldName
-}
+// 初始化时获取保存的筛选方案
+onMounted(async () => {
+  try {
+    const token = localStorage.getItem('token') // 假设token存储在localStorage中
+    if (token) {
+      await store.fetchSchemes(token) // 传递token到store方法
+    } else {
+      ElMessage.error('请先登录')
+    }
+  } catch (error) {
+    ElMessage.error('获取筛选方案失败')
+  }
+})
 
-const getFieldType = (fieldName) => {
-  const field = availableFields.find(f => f.name === fieldName)
-  return field ? field.type : 'string'
-}
-
-const saveScheme = () => {
+const saveScheme = async () => {
   if (!schemeName.value) {
-    ElMessage.warning('Please enter a scheme name')
+    ElMessage.warning('请输入方案名称')
     return
   }
 
@@ -136,36 +146,65 @@ const saveScheme = () => {
     config: JSON.parse(JSON.stringify(filterConfig))
   }
 
-  const existingIndex = savedSchemes.value.findIndex(s => s.name === scheme.name)
-  if (existingIndex !== -1) {
-    savedSchemes.value[existingIndex] = scheme
-    ElMessage.success('Scheme updated successfully')
-  } else {
-    savedSchemes.value.push(scheme)
-    ElMessage.success('Scheme saved successfully')
+  try {
+    await store.saveScheme(scheme)
+    ElMessage.success('方案保存成功')
+    schemeName.value = ''
+  } catch (error) {
+    ElMessage.error('保存方案失败')
   }
-
-  schemeName.value = ''
 }
 
-const loadScheme = (scheme) => {
+const loadScheme = async (scheme) => {
   schemeName.value = scheme.name
   selectedFields.value = scheme.fields
   Object.assign(filterConfig, scheme.config)
   activeNames.value = scheme.fields
-  ElMessage.success('Scheme loaded successfully')
+  ElMessage.success('方案加载成功')
 }
 
-const editScheme = (scheme) => {
-  loadScheme(scheme)
-}
-
-const deleteScheme = (scheme) => {
-  const index = savedSchemes.value.findIndex(s => s.name === scheme.name)
-  if (index !== -1) {
-    savedSchemes.value.splice(index, 1)
-    ElMessage.success('Scheme deleted successfully')
+const editScheme = async (scheme) => {
+  try {
+    await store.updateScheme(scheme.id, {
+      name: schemeName.value,
+      fields: selectedFields.value,
+      config: filterConfig
+    })
+    ElMessage.success('方案更新成功')
+  } catch (error) {
+    ElMessage.error('更新方案失败')
   }
+}
+
+const deleteScheme = async (scheme) => {
+  try {
+    await store.deleteScheme(scheme.id)
+    ElMessage.success('方案删除成功')
+  } catch (error) {
+    ElMessage.error('删除方案失败')
+  }
+}
+
+// 监听筛选配置变化，实时应用筛选
+watch([filterConfig, selectedFields], async () => {
+  if (selectedFields.value.length > 0) {
+    try {
+      const result = await store.applyFilter(filterConfig)
+      emit('filter-result', result)
+    } catch (error) {
+      console.error('应用筛选失败:', error)
+    }
+  }
+}, { deep: true })
+
+const getFieldLabel = (fieldName) => {
+  const field = availableFields.find(f => f.name === fieldName)
+  return field ? field.label : fieldName
+}
+
+const getFieldType = (fieldName) => {
+  const field = availableFields.find(f => f.name === fieldName)
+  return field ? field.type : 'string'
 }
 
 // Watch for changes in selectedFields to update filterConfig

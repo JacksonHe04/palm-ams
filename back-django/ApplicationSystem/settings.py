@@ -33,16 +33,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-
-    # 'apply',  # 这是之前的应用，我们舍弃
+    'rest_framework',
 
     # 以下为我们创建的应用
     'Api.testapp',
-    # 'Api.front-desk'
     'Api.apply',
-    'Api.students'
-    # ......     继续注册新的应用
-
+    'Api.students',
+    'Api.auth',
+    'Api.filter',
+    'Api.setting',
 ]
 
 MIDDLEWARE = [
