@@ -1,4 +1,4 @@
-// src/apis/applyStore.js
+// src/apis/applyStore.ts
 import http from '@/utils/http';
 
 export function submitApplication(data) {

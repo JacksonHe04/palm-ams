@@ -60,6 +60,12 @@ const menuItems = ref([
     icon: "⚙️",
   },
   {
+    name: "field",
+    label: "字段配置",
+    path: "field",
+    icon: "📝",
+  },
+  {
     name: "account",
     label: "账号设置",
     path: "account",

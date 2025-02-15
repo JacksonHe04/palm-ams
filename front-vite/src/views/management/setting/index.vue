@@ -69,7 +69,7 @@
           </el-table-column>
           <el-table-column prop="recruitmentType" label="招生类型">
             <template #default="{ row }">
-              <el-select v-model="row.recruitmentType" placeholder="选择招生类型">
+              <el-select v-model="row.recruitment_type" placeholder="选择招生类型">
                 <el-option label="硕士生" value="硕士生"></el-option>
                 <el-option label="博士生" value="博士生"></el-option>
                 <el-option label="硕士生和博士生" value="硕士生和博士生"></el-option>
@@ -92,10 +92,24 @@
       <el-tab-pane label="招生年份和时间调整">
         <el-form :model="store.admissionPeriod" label-width="120px">
           <el-form-item label="开始日期">
-            <el-date-picker v-model="store.admissionPeriod.startDate" type="date" placeholder="选择开始日期"></el-date-picker>
+            <div class="flex items-center gap-4">
+              <el-date-picker
+                v-model="store.admissionPeriod.startDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="选择开始日期"
+              ></el-date-picker>
+            </div>
           </el-form-item>
           <el-form-item label="结束日期">
-            <el-date-picker v-model="store.admissionPeriod.endDate" type="date" placeholder="选择结束日期"></el-date-picker>
+            <div class="flex items-center gap-4">
+              <el-date-picker
+                v-model="store.admissionPeriod.endDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="选择结束日期"
+              ></el-date-picker>
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="store.saveAdmissionPeriod">保存</el-button>

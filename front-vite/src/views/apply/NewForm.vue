@@ -6,7 +6,7 @@ import Awards from "@/views/apply/components/4Awards.vue";
 import Upload from "@/views/apply/components/6Upload.vue";
 import DividerLine from "@/views/apply/components/tools/DividerLine.vue";
 
-import { useApplyStore } from "@/stores/applyStore.js";
+import { useApplyStore } from "@/stores/applyStore.ts";
 import { submitApplication } from "@/apis/apply";
 
 const applyStore = useApplyStore();

@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/students/', include('Api.students.urls',)),
     path('api/auth/', include('Api.auth.urls',)),
     path('api/settings/', include('Api.setting.urls')),
+    path('api/filter/', include('Api.filter.urls',)),
     path('api/test/', include('Api.testapp.urls',)),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

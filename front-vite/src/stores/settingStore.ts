@@ -87,7 +87,12 @@ export const useSettingStore = defineStore("setting", () => {
   const fetchAdmissionPeriod = async () => {
     try {
       const response = await getAdmissionPeriod();
-      admissionPeriod.value = response.data;
+      if (response && response.data) {
+        admissionPeriod.value = {
+          startDate: response.data[0].start_date || "",
+          endDate: response.data[0].end_date || ""
+        };
+      }
     } catch (error) {
       console.error("获取招生时间配置失败:", error);
     }

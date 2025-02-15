@@ -216,7 +216,7 @@ watch(selectedSort, (newVal) => {
 });
 
 watch(filteredStudents, (newVal) => {
-  console.log("Filtered filed:", filterText.value);
+  console.log("Filtered field:", filterText.value);
 });
 </script>
 

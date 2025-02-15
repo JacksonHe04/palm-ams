@@ -57,5 +57,9 @@ export const getAdmissionPeriod = () => {
 
 // 更新招生时间配置
 export const updateAdmissionPeriod = (period: AdmissionPeriod) => {
-  return http.post('/api/settings/admission-period/', period);
+  const transformedData = {
+    start_date: period.startDate,
+    end_date: period.endDate
+  };
+  return http.post('/api/settings/admission-period/', transformedData);
 };

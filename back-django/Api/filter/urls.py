@@ -4,9 +4,8 @@ from .views import FilterSchemeViewSet
 from . import views
 
 router = DefaultRouter()
-router.register(r'filter-schemes', FilterSchemeViewSet)
+router.register(r'', FilterSchemeViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('filter-schemes/', views.filter_schemes, name='filter_schemes'),
 ]

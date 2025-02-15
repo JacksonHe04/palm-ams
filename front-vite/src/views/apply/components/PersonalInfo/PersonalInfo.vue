@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, computed } from "vue";
-import { useApplyStore } from "@/stores/applyStore.js";
+import { useApplyStore } from "@/stores/applyStore.ts";
 import Avatar from "@/views/apply/components/PersonalInfo/components/Avatar.vue";
 import DegreeInfo from "@/views/apply/components/PersonalInfo/components/DegreeInfo.vue";
 import DividerLine from "@/views/apply/components/tools/DividerLine.vue";

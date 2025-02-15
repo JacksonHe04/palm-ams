@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import DividerLine from "@/views/apply/components/tools/DividerLine.vue";
-import { useApplyStore } from "@/stores/applyStore.js";
+import { useApplyStore } from "@/stores/applyStore.ts";
 
 const applyStore = useApplyStore();
 

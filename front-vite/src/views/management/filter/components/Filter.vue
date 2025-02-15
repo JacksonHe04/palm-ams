@@ -103,124 +103,6 @@
   </div>
 </template>
 
-
-<script setup>
-import { ref, reactive, computed, watch, onMounted } from 'vue';
-import { ElMessage } from 'element-plus'
-import { useFilterStore } from '@/stores/filterStore'
-
-const store = useFilterStore()
-const availableFields = computed(() => store.availableFields)
-const savedSchemes = computed(() => store.savedSchemes)
-
-// 添加缺失的响应式变量初始化
-const schemeName = ref('')
-const selectedFields = ref([])
-const activeNames = ref([])
-const filterConfig = reactive({})
-const emit = defineEmits(['filter-result'])
-
-// 初始化时获取保存的筛选方案
-onMounted(async () => {
-  try {
-    const token = localStorage.getItem('token') // 假设token存储在localStorage中
-    if (token) {
-      await store.fetchSchemes(token) // 传递token到store方法
-    } else {
-      ElMessage.error('请先登录')
-    }
-  } catch (error) {
-    ElMessage.error('获取筛选方案失败')
-  }
-})
-
-const saveScheme = async () => {
-  if (!schemeName.value) {
-    ElMessage.warning('请输入方案名称')
-    return
-  }
-
-  const scheme = {
-    name: schemeName.value,
-    fields: selectedFields.value,
-    config: JSON.parse(JSON.stringify(filterConfig))
-  }
-
-  try {
-    await store.saveScheme(scheme)
-    ElMessage.success('方案保存成功')
-    schemeName.value = ''
-  } catch (error) {
-    ElMessage.error('保存方案失败')
-  }
-}
-
-const loadScheme = async (scheme) => {
-  schemeName.value = scheme.name
-  selectedFields.value = scheme.fields
-  Object.assign(filterConfig, scheme.config)
-  activeNames.value = scheme.fields
-  ElMessage.success('方案加载成功')
-}
-
-const editScheme = async (scheme) => {
-  try {
-    await store.updateScheme(scheme.id, {
-      name: schemeName.value,
-      fields: selectedFields.value,
-      config: filterConfig
-    })
-    ElMessage.success('方案更新成功')
-  } catch (error) {
-    ElMessage.error('更新方案失败')
-  }
-}
-
-const deleteScheme = async (scheme) => {
-  try {
-    await store.deleteScheme(scheme.id)
-    ElMessage.success('方案删除成功')
-  } catch (error) {
-    ElMessage.error('删除方案失败')
-  }
-}
-
-// 监听筛选配置变化，实时应用筛选
-watch([filterConfig, selectedFields], async () => {
-  if (selectedFields.value.length > 0) {
-    try {
-      const result = await store.applyFilter(filterConfig)
-      emit('filter-result', result)
-    } catch (error) {
-      console.error('应用筛选失败:', error)
-    }
-  }
-}, { deep: true })
-
-const getFieldLabel = (fieldName) => {
-  const field = availableFields.find(f => f.name === fieldName)
-  return field ? field.label : fieldName
-}
-
-const getFieldType = (fieldName) => {
-  const field = availableFields.find(f => f.name === fieldName)
-  return field ? field.type : 'string'
-}
-
-// Watch for changes in selectedFields to update filterConfig
-watch(selectedFields, (newFields) => {
-  const newConfig = {}
-  newFields.forEach(field => {
-    if (!filterConfig[field]) {
-      newConfig[field] = { operator: '', value: '' }
-    } else {
-      newConfig[field] = filterConfig[field]
-    }
-  })
-  Object.assign(filterConfig, newConfig)
-})
-</script>
-
 <style scoped>
 .filter-config-container {
   display: flex;
@@ -259,3 +141,104 @@ watch(selectedFields, (newFields) => {
   margin-bottom: 10px;
 }
 </style>
+<script setup>
+import { ref, reactive, computed, watch} from 'vue'
+import { ElMessage } from 'element-plus'
+import { useFilterStore } from '@/stores/filterStore'
+
+const store = useFilterStore()
+const availableFields = computed(() => store.availableFields)
+const savedSchemes = computed(() => store.savedSchemes)
+
+// 响应式变量初始化
+const schemeName = ref('')
+const selectedFields = ref([])
+const activeNames = ref([])
+const filterConfig = reactive({})
+
+// 获取字段标签
+const getFieldLabel = (fieldName) => {
+  const field = availableFields.value.find(f => f.name === fieldName)
+  return field ? field.label : fieldName
+}
+
+// 获取字段类型
+const getFieldType = (fieldName) => {
+  const field = availableFields.value.find(f => f.name === fieldName)
+  return field ? field.type : 'string'
+}
+
+// 保存方案
+const saveScheme = async () => {
+  if (!schemeName.value) {
+    ElMessage.warning('请输入方案名称')
+    return
+  }
+  if (selectedFields.value.length === 0) {
+    ElMessage.warning('请选择至少一个过滤字段')
+    return
+  }
+
+  try {
+    const scheme = {
+      name: schemeName.value,
+      fields: selectedFields.value,
+      config: filterConfig
+    }
+    await store.saveScheme(scheme)
+    ElMessage.success('保存成功')
+    schemeName.value = ''
+  } catch (error) {
+    ElMessage.error('保存失败')
+  }
+}
+
+// 加载方案
+const loadScheme = (scheme) => {
+  schemeName.value = scheme.name
+  selectedFields.value = scheme.fields
+  Object.assign(filterConfig, scheme.config)
+}
+
+// 编辑方案
+const editScheme = async (scheme) => {
+  try {
+    const updatedScheme = {
+      id: scheme.id,
+      name: schemeName.value || scheme.name,
+      fields: selectedFields.value,
+      config: filterConfig
+    }
+    await store.updateScheme(updatedScheme)
+    ElMessage.success('更新成功')
+  } catch (error) {
+    ElMessage.error('更新失败')
+  }
+}
+
+// 删除方案
+const deleteScheme = async (scheme) => {
+  try {
+    await store.removeScheme(scheme.id)
+    ElMessage.success('删除成功')
+  } catch (error) {
+    ElMessage.error('删除失败')
+  }
+}
+
+// 监听选中字段变化，更新过滤配置
+watch(selectedFields, (newFields) => {
+  const newConfig = {}
+  newFields.forEach(field => {
+    if (!filterConfig[field]) {
+      newConfig[field] = { operator: '', value: '' }
+    } else {
+      newConfig[field] = filterConfig[field]
+    }
+  })
+  Object.assign(filterConfig, newConfig)
+})
+
+// 初始化加载保存的方案
+store.fetchSchemes()
+</script>
