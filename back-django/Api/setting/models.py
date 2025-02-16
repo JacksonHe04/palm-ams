@@ -22,7 +22,9 @@ class Major(models.Model):
 
 class Personnel(models.Model):
     name = models.CharField(max_length=100, verbose_name='姓名')
-    recruitment_type = models.CharField(max_length=20, verbose_name='招生类型')
+    recruitment_type = models.CharField(max_length=50, verbose_name='招生类型')
+    department = models.CharField(max_length=200, verbose_name='所属院系', default='计算机学院、软件学院、东蒙联合研究生院')
+    research_direction = models.CharField(max_length=200, verbose_name='研究方向', default='待定')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

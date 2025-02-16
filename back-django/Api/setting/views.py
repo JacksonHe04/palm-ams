@@ -112,18 +112,13 @@ class PersonnelViewSet(viewsets.ModelViewSet):
     serializer_class = PersonnelSerializer
 
     def create(self, request, *args, **kwargs):
-        # 处理批量创建、更新和删除人员数据
         data = request.data
         response_data = []
         errors = []
 
-        # 获取现有人员记录
         existing_personnel = {person.name: person for person in Personnel.objects.all()}
-        
-        # 获取请求中的所有人员名称
         new_personnel_names = {item.get('name') for item in data if item.get('name')}
         
-        # 删除不在新数据中的人员
         for person_name, person in existing_personnel.items():
             if person_name not in new_personnel_names:
                 person.delete()
@@ -135,22 +130,23 @@ class PersonnelViewSet(viewsets.ModelViewSet):
                     errors.append({'error': '人员名称不能为空'})
                     continue
 
-                # 将recruitmentType转换为recruitment_type
-                if 'recruitmentType' in item:
-                    item['recruitment_type'] = item.pop('recruitmentType')
+                # 处理字段映射
+                processed_item = {
+                    'name': item.get('name'),
+                    'recruitment_type': item.get('recruitment_type'),
+                    'department': item.get('department'),  # 添加部门字段
+                    'research_direction': item.get('research_direction')  # 添加研究方向字段
+                }
 
-                # 检查是否存在同名人员
                 existing_person = existing_personnel.get(person_name)
 
                 if existing_person:
-                    # 更新现有人员
-                    serializer = self.get_serializer(existing_person, data=item, partial=True)
+                    serializer = self.get_serializer(existing_person, data=processed_item, partial=True)
                     serializer.is_valid(raise_exception=True)
                     serializer.save()
                     response_data.append(serializer.data)
                 else:
-                    # 创建新人员
-                    serializer = self.get_serializer(data=item)
+                    serializer = self.get_serializer(data=processed_item)
                     serializer.is_valid(raise_exception=True)
                     serializer.save()
                     response_data.append(serializer.data)

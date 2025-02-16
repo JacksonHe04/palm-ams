@@ -19,6 +19,8 @@ import {
 import defaultUniversities from '@/scripts/importSettings/importUniversities/universities.json';
 // 在文件顶部添加导入
 import defaultMajors from '@/scripts/importSettings/importMajors/majors.json';
+// 在文件顶部添加导入
+import defaultPersons from '@/scripts/importSettings/importPersons/persons.json';
 
 export const useSettingStore = defineStore("setting", () => {
   const universities = ref<University[]>([]);
@@ -148,6 +150,33 @@ export const useSettingStore = defineStore("setting", () => {
     }
   };
 
+  // 人员相关操作
+  const addPersonnel = () => {
+    personnel.value.push({
+      name: '',
+      recruitment_type: '',
+      department: '',
+      research_direction: ''
+    });
+  };
+  
+  const initializePersonnel = async () => {
+    try {
+      // 转换数据格式以匹配后端要求
+      const formattedPersonnel = defaultPersons.map(person => ({
+        name: person.name,
+        recruitment_type: person.recruitmentType,
+        department: person.department,
+        research_direction: person.researchDirection
+      }));
+      personnel.value = formattedPersonnel;
+      await savePersonnel();
+    } catch (error) {
+      console.error("初始化人员配置失败:", error);
+      throw error;
+    }
+  };
+
   return {
     universities,
     majors,
@@ -165,5 +194,6 @@ export const useSettingStore = defineStore("setting", () => {
     initializeUniversities,
     initializeMajors,
     initializeData,
+    initializePersonnel,
   };
 });

@@ -80,11 +80,21 @@
           <el-table-column prop="recruitment_type" label="招生类型">
             <template #default="{ row }">
               <el-select v-model="row.recruitment_type" placeholder="选择招生类型">
+                <el-option label="博士生、直博生、硕士生" value="博士生、直博生、硕士生"></el-option>
                 <el-option label="硕士生" value="硕士生"></el-option>
-                <el-option label="博士生" value="博士生"></el-option>
-                <el-option label="硕士生和博士生" value="硕士生和博士生"></el-option>
+                <el-option label="博士生、直博生" value="博士生、直博生"></el-option>
                 <el-option label="暂不招生" value="暂不招生"></el-option>
               </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column prop="department" label="所属院系">
+            <template #default="{ row }">
+              <el-input v-model="row.department" placeholder="请输入所属院系"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column prop="research_direction" label="研究方向">
+            <template #default="{ row }">
+              <el-input v-model="row.research_direction" placeholder="请输入研究方向"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -94,7 +104,10 @@
           </el-table-column>
         </el-table>
         <div class="mt-4 flex justify-between">
-          <el-button type="primary" @click="addPersonnel">新增人员</el-button>
+          <div class="flex gap-4">
+            <el-button type="primary" @click="addPersonnel">新增人员</el-button>
+            <el-button type="warning" @click="handleInitializePersonnel">初始化</el-button>
+          </div>
           <el-button type="success" @click="handleSavePersonnel">提交更改</el-button>
         </div>
       </el-tab-pane>
@@ -208,6 +221,26 @@ const handleInitializeMajors = async () => {
   } catch (error) {
     if (error !== 'cancel') {
       ElMessage.error('专业数据初始化失败');
+    }
+  }
+};
+
+const handleInitializePersonnel = async () => {
+  try {
+    await ElMessageBox.confirm(
+      '确定要初始化人员数据吗？这将覆盖当前所有数据。',
+      '警告',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    );
+    await store.initializePersonnel();
+    ElMessage.success('人员数据初始化成功');
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('人员数据初始化失败');
     }
   }
 };

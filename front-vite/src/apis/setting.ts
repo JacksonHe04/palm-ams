@@ -12,7 +12,9 @@ export interface Major {
 
 export interface Personnel {
   name: string;
-  recruitment_type: string;  // 修改字段名
+  recruitment_type: string;
+  department: string;
+  research_direction: string;
 }
 
 export interface AdmissionPeriod {
