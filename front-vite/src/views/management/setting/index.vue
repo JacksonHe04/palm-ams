@@ -26,8 +26,11 @@
           </el-table-column>
         </el-table>
         <div class="mt-4 flex justify-between">
-          <el-button type="primary" @click="addUniversity">新增院校</el-button>
-          <el-button type="success" @click="store.saveUniversities">保存更改</el-button>
+          <div class="flex gap-4">
+            <el-button type="primary" @click="addUniversity">新增院校</el-button>
+            <el-button type="warning" @click="handleInitialize">初始化</el-button>
+          </div>
+          <el-button type="success" @click="handleSaveUniversities">提交更改</el-button>
         </div>
       </el-tab-pane>
 
@@ -41,9 +44,13 @@
           <el-table-column prop="category" label="分类">
             <template #default="{ row }">
               <el-select v-model="row.category" placeholder="选择分类">
-                <el-option label="EECS" value="EECS"></el-option>
-                <el-option label="传统工科" value="传统工科"></el-option>
-                <el-option label="理科" value="理科"></el-option>
+                <el-option label="限制专业" value="限制专业"></el-option>
+                <!-- 数学类 -->
+                <el-option label="数学类" value="数学类"></el-option>
+                <el-option label="电子信息类" value="电子信息类"></el-option>
+                <el-option label="自动化类" value="自动化类"></el-option>
+                <el-option label="其他工科" value="其他工科"></el-option>
+                <el-option label="理科（非数学）" value="理科（非数学）"></el-option>
                 <el-option label="文商科" value="文商科"></el-option>
               </el-select>
             </template>
@@ -55,8 +62,11 @@
           </el-table-column>
         </el-table>
         <div class="mt-4 flex justify-between">
-          <el-button type="primary" @click="addMajor">新增专业</el-button>
-          <el-button type="success" @click="store.saveMajors">保存更改</el-button>
+          <div class="flex gap-4">
+            <el-button type="primary" @click="addMajor">新增专业</el-button>
+            <el-button type="warning" @click="handleInitializeMajors">初始化</el-button>
+          </div>
+          <el-button type="success" @click="handleSaveMajors">提交更改</el-button>
         </div>
       </el-tab-pane>
 
@@ -67,7 +77,7 @@
               <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="recruitmentType" label="招生类型">
+          <el-table-column prop="recruitment_type" label="招生类型">
             <template #default="{ row }">
               <el-select v-model="row.recruitment_type" placeholder="选择招生类型">
                 <el-option label="硕士生" value="硕士生"></el-option>
@@ -85,7 +95,7 @@
         </el-table>
         <div class="mt-4 flex justify-between">
           <el-button type="primary" @click="addPersonnel">新增人员</el-button>
-          <el-button type="success" @click="store.savePersonnel">保存更改</el-button>
+          <el-button type="success" @click="handleSavePersonnel">提交更改</el-button>
         </div>
       </el-tab-pane>
 
@@ -112,7 +122,7 @@
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="store.saveAdmissionPeriod">保存</el-button>
+            <el-button type="primary" @click="handleSaveAdmissionPeriod">提交</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -121,17 +131,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
+import { ElMessage } from 'element-plus';
 
 const store = useSettingStore();
 
 // 初始化数据
 onMounted(() => {
-  store.fetchUniversities();
-  store.fetchMajors();
-  store.fetchPersonnel();
-  store.fetchAdmissionPeriod();
+  store.initializeData();
 });
 
 // 院校相关操作
@@ -139,8 +147,9 @@ const addUniversity = () => {
   store.universities.push({ name: '', level: '' });
 };
 
-const removeUniversity = (index: number) => {
+const removeUniversity = async (index: number) => {
   store.universities.splice(index, 1);
+  await store.saveUniversities();
 };
 
 // 专业相关操作
@@ -148,17 +157,121 @@ const addMajor = () => {
   store.majors.push({ name: '', category: '' });
 };
 
-const removeMajor = (index: number) => {
+const removeMajor = async (index: number) => {
   store.majors.splice(index, 1);
+  await store.saveMajors();
 };
 
 // 人员相关操作
 const addPersonnel = () => {
-  store.personnel.push({ name: '', recruitmentType: '' });
+  store.personnel.push({ name: '', recruitment_Type: '' });
 };
 
-const removePersonnel = (index: number) => {
+const removePersonnel = async (index: number) => {
   store.personnel.splice(index, 1);
+  await store.savePersonnel();
+};
+
+const handleInitialize = async () => {
+  try {
+    await ElMessageBox.confirm(
+      '确定要初始化院校数据吗？这将覆盖当前所有数据。',
+      '警告',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    );
+    await store.initializeUniversities();
+    ElMessage.success('院校数据初始化成功');
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('院校数据初始化失败');
+    }
+  }
+};
+
+const handleInitializeMajors = async () => {
+  try {
+    await ElMessageBox.confirm(
+      '确定要初始化专业数据吗？这将覆盖当前所有数据。',
+      '警告',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    );
+    await store.initializeMajors();
+    ElMessage.success('专业数据初始化成功');
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('专业数据初始化失败');
+    }
+  }
+};
+
+// 添加数据变化监听
+watch(() => store.universities, () => {
+  if (!store.isInitializing) {
+    ElMessage.warning('您已修改院校数据，请记得提交更改');
+  }
+}, { deep: true });
+
+watch(() => store.majors, () => {
+  if (!store.isInitializing) {
+    ElMessage.warning('您已修改专业数据，请记得提交更改');
+  }
+}, { deep: true });
+
+watch(() => store.personnel, () => {
+  if (!store.isInitializing) {
+    ElMessage.warning('您已修改人员数据，请记得提交更改');
+  }
+}, { deep: true });
+
+watch([() => store.admissionPeriod.startDate, () => store.admissionPeriod.endDate], () => {
+  if (!store.isInitializing) {
+    ElMessage.warning('您已修改招生时间，请记得提交更改');
+  }
+});
+
+// 修改提交方法
+const handleSaveUniversities = async () => {
+  try {
+    await store.saveUniversities();
+    ElMessage.success('院校数据提交成功');
+  } catch (error) {
+    ElMessage.error('院校数据提交失败');
+  }
+};
+
+const handleSaveMajors = async () => {
+  try {
+    await store.saveMajors();
+    ElMessage.success('专业数据提交成功');
+  } catch (error) {
+    ElMessage.error('专业数据提交失败');
+  }
+};
+
+const handleSavePersonnel = async () => {
+  try {
+    await store.savePersonnel();
+    ElMessage.success('人员数据提交成功');
+  } catch (error) {
+    ElMessage.error('人员数据提交失败');
+  }
+};
+
+const handleSaveAdmissionPeriod = async () => {
+  try {
+    await store.saveAdmissionPeriod();
+    ElMessage.success('招生时间提交成功');
+  } catch (error) {
+    ElMessage.error('招生时间提交失败');
+  }
 };
 </script>
 

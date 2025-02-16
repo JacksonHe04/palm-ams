@@ -1,7 +1,7 @@
 // src/views/Login/Login.vue
 <script>
 import { ref } from "vue";
-import { useUserStore } from "@/stores/userStore.js";
+import { useUserStore } from "@/stores/userStore.ts";
 import { useRouter } from "vue-router";
 
 export default {
@@ -17,7 +17,7 @@ export default {
         password.value,
       );
       if (loginSuccess) {
-        await router.push("/admin");
+        await router.push("/admin/dashboard");
       }
     };
 

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getStudents } from "../apis/students";
+import { getStudents } from "@/apis/students";
 
 export const useStudentsStore = defineStore("students", {
   state: () => ({

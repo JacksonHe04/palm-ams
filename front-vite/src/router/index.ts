@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Login from "@/views/login/index.vue";
 import Layout from "@/views/layout/index.vue";
 import Home from "@/views/front-desk/home/index.vue";
@@ -7,7 +7,9 @@ import Apply from "@/views/apply/index.vue";
 import About from "@/views/front-desk/about/index.vue";
 import Test from "@/views/test/index.vue";
 
-const hash = createWebHashHistory();
+// const hash = createWebHashHistory();
+// 不要哈希
+const hash = createWebHistory();
 const router = createRouter({
   history: hash,
   routes: [
@@ -32,6 +34,7 @@ const router = createRouter({
         },
         {
           path: "/admin",
+          redirect: "/admin/dashboard",
           component: Admin,
           meta: { title: "PALM实验室后台管理" },
           children: [
@@ -151,7 +154,7 @@ const router = createRouter({
   },
 });
 
-import { isAuthenticated } from "@/utils/auth"; // 根据实际情况导入
+import { isAuthenticated } from "@/utils/auth.ts"; // 根据实际情况导入
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'palm';

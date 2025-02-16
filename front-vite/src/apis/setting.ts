@@ -12,7 +12,7 @@ export interface Major {
 
 export interface Personnel {
   name: string;
-  recruitmentType: string;
+  recruitment_type: string;  // 修改字段名
 }
 
 export interface AdmissionPeriod {

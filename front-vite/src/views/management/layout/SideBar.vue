@@ -6,12 +6,16 @@
       </button>
     </div>
     <ul v-if="!isCollapsed" class="menu">
-      <li v-for="item in menuItems" :key="item.name" class="menu-item">
-        <RouterLink :to="item.path" class="menu-link" active-class="active">
-          <span class="icon">{{ item.icon }}</span>
-          <span class="label">{{ item.label }}</span>
-        </RouterLink>
-      </li>
+      <template v-for="(category, index) in menuItems" :key="index">
+        <li class="category-name">{{ category.category }}</li>
+        <li v-for="item in category.items" :key="item.name" class="menu-item">
+          <RouterLink :to="item.path" class="menu-link" active-class="active">
+            <span class="icon">{{ item.icon }}</span>
+            <span class="label">{{ item.label }}</span>
+          </RouterLink>
+        </li>
+        <li v-if="index !== menuItems.length - 1" class="divider"></li>
+      </template>
     </ul>
   </aside>
 </template>
@@ -29,47 +33,72 @@ const emit = defineEmits(["toggle"]);
 
 const menuItems = ref([
   {
-    name: "dashboard",
-    label: "仪表盘",
-    path: "dashboard",
-    icon: "📊",
+    category: "可视化",
+    items: [
+      {
+        name: "dashboard",
+        label: "仪表盘",
+        path: "dashboard",
+        icon: "📊",
+      },
+      {
+        name: "analytics",
+        label: "数据分析",
+        path: "analysis",
+        icon: "📈",
+      },
+    ],
   },
   {
-    name: "users",
-    label: "学生表格",
-    path: "students",
-    icon: "👤",
-  },
-  { name: "filter", label: "筛选方案", path: "filter", icon: "🔍" },
-  {
-    name: "interview",
-    label: "面试打分",
-    path: "interview",
-    icon: "📋",
-  },
-  {
-    name: "analytics",
-    label: "数据分析",
-    path: "analysis",
-    icon: "📈",
+    category: "表格总览",
+    items: [
+      {
+        name: "users",
+        label: "学生表格",
+        path: "students",
+        icon: "👤",
+      },
+      {
+        name: "interview",
+        label: "面试打分",
+        path: "interview",
+        icon: "📋",
+      },
+    ],
   },
   {
-    name: "setting",
-    label: "规则设置",
-    path: "setting",
-    icon: "⚙️",
+    category: "招生自定义",
+    items: [
+      {
+        name: "filter",
+        label: "筛选方案",
+        path: "filter",
+        icon: "🔍",
+      },
+      {
+        name: "setting",
+        label: "规则设置",
+        path: "setting",
+        icon: "⚙️",
+      },
+    ],
   },
   {
-    name: "field",
-    label: "字段配置",
-    path: "field",
-    icon: "📝",
-  },
-  {
-    name: "account",
-    label: "账号设置",
-    path: "account",
-    icon: "👩🏻‍💻️",
+    category: "系统设置",
+    items: [
+      {
+        name: "field",
+        label: "字段配置",
+        path: "field",
+        icon: "📝",
+      },
+      {
+        name: "account",
+        label: "账号设置",
+        path: "account",
+        icon: "👩🏻‍💻️",
+      },
+    ],
   },
 ]);
 
@@ -164,7 +193,7 @@ onMounted(() => {
         align-items: center;
         padding: 10px 16px; // 增加内边距
         border-radius: 6px; // 增加圆角
-        transition: all 0.3s ease;
+        transition: all 1s ease;
 
         &:hover {
           background-color: #f0f8ff;
@@ -188,6 +217,21 @@ onMounted(() => {
           font-size: 14px; // 设置文字大小
         }
       }
+    }
+
+    .category-name {
+      font-size: 12px;
+      color: #999;
+      padding: 8px 16px;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #f0f0f0;
+      margin: 8px 16px;
+      list-style: none;
     }
   }
 }

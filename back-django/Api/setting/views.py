@@ -15,6 +15,14 @@ class UniversityViewSet(viewsets.ModelViewSet):
 
         # 获取现有院校记录
         existing_universities = {university.name: university for university in University.objects.all()}
+        
+        # 获取请求中的所有院校名称
+        new_university_names = {item.get('name') for item in data if item.get('name')}
+        
+        # 删除不在新数据中的院校
+        for university_name, university in existing_universities.items():
+            if university_name not in new_university_names:
+                university.delete()
 
         for item in data:
             try:
@@ -59,6 +67,14 @@ class MajorViewSet(viewsets.ModelViewSet):
 
         # 获取现有专业记录
         existing_majors = {major.name: major for major in Major.objects.all()}
+        
+        # 获取请求中的所有专业名称
+        new_major_names = {item.get('name') for item in data if item.get('name')}
+        
+        # 删除不在新数据中的专业
+        for major_name, major in existing_majors.items():
+            if major_name not in new_major_names:
+                major.delete()
 
         for item in data:
             try:
@@ -103,6 +119,14 @@ class PersonnelViewSet(viewsets.ModelViewSet):
 
         # 获取现有人员记录
         existing_personnel = {person.name: person for person in Personnel.objects.all()}
+        
+        # 获取请求中的所有人员名称
+        new_personnel_names = {item.get('name') for item in data if item.get('name')}
+        
+        # 删除不在新数据中的人员
+        for person_name, person in existing_personnel.items():
+            if person_name not in new_personnel_names:
+                person.delete()
 
         for item in data:
             try:

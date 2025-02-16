@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useStudentsStore } from "@/stores/studentsStore.js";
+import { useStudentsStore } from "@/stores/studentsStore.ts";
 import FieldSelector from "./FieldSelector.vue";
 import ExportButton from "@/views/management/table/components/ExportButton.vue";
 

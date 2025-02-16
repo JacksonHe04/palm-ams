@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from "vue";
-import { useStudentsStore } from "@/stores/studentsStore.js";
+import { useStudentsStore } from "@/stores/studentsStore";
 import FormSettings from "./FormSettings.vue"; // 引入新的组件
 
 // 数据存储和初始化

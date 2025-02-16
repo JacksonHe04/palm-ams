@@ -1,18 +1,25 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { createFilter, getFilters, updateFilter, deleteFilter } from '@/apis/filter'
+import { useFieldStore } from './fieldStore'
 
 export const useFilterStore = defineStore('filter', () => {
   // 状态
   const savedSchemes = ref([])
-  const availableFields = ref([
-    { name: 'name', label: '姓名', type: 'string' },
-    { name: 'age', label: '年龄', type: 'number' },
-    { name: 'university', label: '学校', type: 'string' },
-    { name: 'major', label: '专业', type: 'string' },
-    { name: 'gpa', label: 'GPA', type: 'number' },
-    { name: 'isRecommended', label: '是否推荐', type: 'boolean' }
-  ])
+  const fieldStore = useFieldStore()
+  
+  // 初始化时获取字段数据
+  fieldStore.fetchFields()
+  
+  const availableFields = computed(() => {
+    return fieldStore.fields
+      .filter(field => field.showInFilter)
+      .map(field => ({
+        name: field.name,
+        label: field.description,
+        type: 'string' // 由于fieldStore中没有type字段，暂时默认为string类型
+      }))
+  })
 
   // 方法
   const fetchSchemes = async () => {

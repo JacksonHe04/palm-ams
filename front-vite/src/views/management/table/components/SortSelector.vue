@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useStudentsStore } from "@/stores/studentsStore.js";
+import { useStudentsStore } from "@/stores/studentsStore.ts";
 
 const store = useStudentsStore();
 

@@ -16,6 +16,9 @@ import {
   getAdmissionPeriod,
   updateAdmissionPeriod,
 } from "@/apis/setting";
+import defaultUniversities from '@/scripts/importSettings/importUniversities/universities.json';
+// 在文件顶部添加导入
+import defaultMajors from '@/scripts/importSettings/importMajors/majors.json';
 
 export const useSettingStore = defineStore("setting", () => {
   const universities = ref<University[]>([]);
@@ -26,6 +29,9 @@ export const useSettingStore = defineStore("setting", () => {
     endDate: "",
   });
 
+  // 添加状态标记
+  const isInitializing = ref(true);
+
   // 院校相关操作
   const fetchUniversities = async () => {
     try {
@@ -34,6 +40,18 @@ export const useSettingStore = defineStore("setting", () => {
     } catch (error) {
       console.error("获取院校配置失败:", error);
     }
+  };
+
+  // 修改所有fetch方法，在完成后将isInitializing设置为false
+  const initializeData = async () => {
+    isInitializing.value = true;
+    await Promise.all([
+      fetchUniversities(),
+      fetchMajors(),
+      fetchPersonnel(),
+      fetchAdmissionPeriod()
+    ]);
+    isInitializing.value = false;
   };
 
   const saveUniversities = async () => {
@@ -69,6 +87,9 @@ export const useSettingStore = defineStore("setting", () => {
     try {
       const response = await getPersonnel();
       personnel.value = response.data;
+      const addPersonnel = () => {
+        personnel.value.push({ name: '', recruitment_type: '' });  // 修改字段名
+      };
     } catch (error) {
       console.error("获取人员配置失败:", error);
     }
@@ -107,11 +128,32 @@ export const useSettingStore = defineStore("setting", () => {
     }
   };
 
+  const initializeUniversities = async () => {
+    try {
+      universities.value = defaultUniversities;
+      await saveUniversities();
+    } catch (error) {
+      console.error("初始化院校配置失败:", error);
+      throw error;
+    }
+  };
+
+  const initializeMajors = async () => {
+    try {
+      majors.value = defaultMajors;
+      await saveMajors();
+    } catch (error) {
+      console.error("初始化专业配置失败:", error);
+      throw error;
+    }
+  };
+
   return {
     universities,
     majors,
     personnel,
     admissionPeriod,
+    isInitializing,
     fetchUniversities,
     saveUniversities,
     fetchMajors,
@@ -120,5 +162,8 @@ export const useSettingStore = defineStore("setting", () => {
     savePersonnel,
     fetchAdmissionPeriod,
     saveAdmissionPeriod,
+    initializeUniversities,
+    initializeMajors,
+    initializeData,
   };
 });
