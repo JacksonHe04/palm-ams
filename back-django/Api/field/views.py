@@ -19,6 +19,8 @@ def add_field(request):
             field = Field.objects.create(
                 name=data['name'],
                 description=data['description'],
+                type=data.get('type', 'string'),
+                variableName=data.get('variableName', ''),
                 showInTable=data.get('showInTable', True),
                 showInFilter=data.get('showInFilter', True),
                 showInApply=data.get('showInApply', True)
@@ -37,6 +39,8 @@ def update_field(request, field_id):
             
             field.name = data.get('name', field.name)
             field.description = data.get('description', field.description)
+            field.type = data.get('type', field.type)
+            field.variableName = data.get('variableName', field.variableName)
             field.showInTable = data.get('showInTable', field.showInTable)
             field.showInFilter = data.get('showInFilter', field.showInFilter)
             field.showInApply = data.get('showInApply', field.showInApply)

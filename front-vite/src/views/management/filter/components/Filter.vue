@@ -1,244 +1,304 @@
-<template>
-  <div class="filter-config-container">
-    <el-card class="filter-card">
-      <template #header>
-        <div class="card-header">
-          <h2>表格过滤配置</h2>
-          <el-button type="primary" @click="saveScheme">保存方案</el-button>
-        </div>
-      </template>
-
-      <el-form :model="filterConfig" label-position="top">
-        <el-form-item label="方案名称">
-          <el-input v-model="schemeName" placeholder="输入方案名称"></el-input>
-        </el-form-item>
-
-        <el-form-item label="选择要过滤的字段">
-          <el-select
-            v-model="selectedFields"
-            multiple
-            collapse-tags
-            collapse-tags-tooltip
-            :max-collapse-tags="3"
-            placeholder="选择字段"
-          >
-            <el-option
-              v-for="field in availableFields"
-              :key="field.name"
-              :label="field.label"
-              :value="field.name"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-collapse v-model="activeNames">
-          <el-collapse-item
-            v-for="field in selectedFields"
-            :key="field"
-            :title="getFieldLabel(field)"
-            :name="field"
-          >
-            <div class="field-filter">
-              <template v-if="getFieldType(field) === 'string'">
-                <el-select
-                  v-model="filterConfig[field].operator"
-                  placeholder="选择操作符"
-                >
-                  <el-option label="包含" value="contains"></el-option>
-                  <el-option label="等于" value="equals"></el-option>
-                  <el-option label="以...开头" value="startsWith"></el-option>
-                  <el-option label="以...结尾" value="endsWith"></el-option>
-                </el-select>
-                <el-input
-                  v-model="filterConfig[field].value"
-                  placeholder="输入值"
-                ></el-input>
-              </template>
-              <template v-else-if="getFieldType(field) === 'number'">
-                <el-select
-                  v-model="filterConfig[field].operator"
-                  placeholder="选择操作符"
-                >
-                  <el-option label="大于" value="gt"></el-option>
-                  <el-option label="小于" value="lt"></el-option>
-                  <el-option label="等于" value="eq"></el-option>
-                  <el-option label="不等于" value="neq"></el-option>
-                </el-select>
-                <el-input-number
-                  v-model="filterConfig[field].value"
-                  :controls="false"
-                  placeholder="输入值"
-                ></el-input-number>
-              </template>
-              <template v-else-if="getFieldType(field) === 'boolean'">
-                <el-select
-                  v-model="filterConfig[field].value"
-                  placeholder="选择值"
-                >
-                  <el-option label="是" :value="true"></el-option>
-                  <el-option label="否" :value="false"></el-option>
-                </el-select>
-              </template>
-            </div>
-          </el-collapse-item>
-        </el-collapse>
-      </el-form>
-    </el-card>
-
-    <el-card class="scheme-card">
-      <template #header>
-        <h3>已保存方案</h3>
-      </template>
-      <el-table :data="savedSchemes" style="width: 100%">
-        <el-table-column prop="name" label="方案名称"></el-table-column>
-        <el-table-column label="操作" width="200">
-          <template #default="{ row }">
-            <el-button @click="loadScheme(row)" type="primary" plain size="small">加载</el-button>
-            <el-button @click="editScheme(row)" type="warning" plain size="small">编辑</el-button>
-            <el-button @click="deleteScheme(row)" type="danger" plain size="small">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
-  </div>
-</template>
-
-<style scoped>
-.filter-config-container {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
-  background-color: #f0f2f5;
-  min-height: 100vh;
-}
-
-.filter-card, .scheme-card {
-  flex: 1;
-  max-width: 600px;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.field-filter {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.el-select {
-  width: 150px;
-}
-
-.el-input, .el-input-number {
-  width: 200px;
-}
-
-.el-collapse-item {
-  margin-bottom: 10px;
-}
-</style>
-<script setup>
-import { ref, reactive, computed, watch} from 'vue'
-import { ElMessage } from 'element-plus'
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
+import { useFieldStore } from '@/stores/fieldStore'
 import { useFilterStore } from '@/stores/filterStore'
+import type { FieldItem } from '@/apis/field'
+import {
+  ElCard,
+  ElButton,
+  ElSwitch,
+  ElDialog,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElSelect,
+  ElOption,
+  ElInputNumber,
+  ElTag,
+} from 'element-plus'
+import { initializeFilterSchemes } from '@/scripts/filterInit/filterInit'
 
-const store = useFilterStore()
-const availableFields = computed(() => store.availableFields)
-const savedSchemes = computed(() => store.savedSchemes)
+const fieldStore = useFieldStore()
+const filterStore = useFilterStore()
 
-// 响应式变量初始化
-const schemeName = ref('')
-const selectedFields = ref([])
-const activeNames = ref([])
-const filterConfig = reactive({})
+// 初始化时获取筛选方案列表
+onMounted(() => {
+  filterStore.fetchSchemes()
+  fieldStore.fetchFields()
+})
 
-// 获取字段标签
-const getFieldLabel = (fieldName) => {
-  const field = availableFields.value.find(f => f.name === fieldName)
-  return field ? field.label : fieldName
+// 筛选方案列表
+const filterSchemes = computed(() => filterStore.schemes)
+
+// 对话框控制
+const dialogVisible = ref(false)
+const dialogTitle = ref('新增筛选方案')
+const isEditing = ref(false)
+
+// 当前编辑的方案
+const currentScheme = ref<FilterScheme>({
+  id: 0,
+  name: '',
+  enabled: true,
+  conditions: []
+})
+
+// 打开新增对话框
+const openAddDialog = () => {
+  dialogTitle.value = '新增筛选方案'
+  currentScheme.value = {
+    id: filterSchemes.value.length + 1,
+    name: '',
+    enabled: true,
+    conditions: []
+  }
+  isEditing.value = false
+  dialogVisible.value = true
 }
+
+// 打开编辑对话框
+const openEditDialog = (scheme: FilterScheme) => {
+  dialogTitle.value = '编辑筛选方案'
+  currentScheme.value = JSON.parse(JSON.stringify(scheme))
+  isEditing.value = true
+  dialogVisible.value = true
+}
+
+// 保存筛选方案
+const saveScheme = async () => {
+  const schemeData = {
+    name: currentScheme.value.name,
+    enabled: currentScheme.value.enabled,
+    conditions: currentScheme.value.conditions
+  }
+
+  if (isEditing.value) {
+    await filterStore.updateScheme(currentScheme.value.id, schemeData)
+  } else {
+    await filterStore.createScheme(schemeData)
+  }
+  dialogVisible.value = false
+}
+
+// 删除筛选方案
+const deleteScheme = async (scheme: FilterScheme) => {
+  await filterStore.deleteScheme(scheme.id)
+}
+
+// 切换方案启用状态
+const toggleScheme = async (scheme: FilterScheme) => {
+  await filterStore.toggleScheme(scheme.id, !scheme.enabled)
+}
+// 初始化筛选方案
+const initializeSchemes = async () => {
+  try {
+    await ElMessageBox.confirm(
+      '确定要初始化筛选方案吗？这将覆盖当前所有数据。',
+      '警告',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    );
+    const success = await initializeFilterSchemes()
+    if (success) {
+      ElMessage.success('筛选方案初始化成功')
+      filterStore.fetchSchemes()
+    } else {
+      ElMessage.error('筛选方案初始化失败')
+    }
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('筛选方案初始化失败')
+    }
+  }
+}
+
+// 操作符选项
+const operatorOptions = [
+  { value: '=', label: '等于' },
+  { value: '!=', label: '不等于' },
+  { value: '>', label: '大于' },
+  { value: '>=', label: '大于等于' },
+  { value: '<', label: '小于' },
+  { value: '<=', label: '小于等于' },
+  { value: 'in', label: '包含' },
+  { value: 'not in', label: '不包含' }
+]
+
+// 可筛选字段
+const filterableFields = computed(() => {
+  return fieldStore.fields.filter(field => field.showInFilter)
+})
 
 // 获取字段类型
-const getFieldType = (fieldName) => {
-  const field = availableFields.value.find(f => f.name === fieldName)
+const getFieldType = (fieldName: string) => {
+  const field = filterableFields.value.find(f => f.name === fieldName)
   return field ? field.type : 'string'
 }
 
-// 保存方案
-const saveScheme = async () => {
-  if (!schemeName.value) {
-    ElMessage.warning('请输入方案名称')
-    return
-  }
-  if (selectedFields.value.length === 0) {
-    ElMessage.warning('请选择至少一个过滤字段')
-    return
-  }
-
-  try {
-    const scheme = {
-      name: schemeName.value,
-      fields: selectedFields.value,
-      config: filterConfig
-    }
-    await store.saveScheme(scheme)
-    ElMessage.success('保存成功')
-    schemeName.value = ''
-  } catch (error) {
-    ElMessage.error('保存失败')
-  }
-}
-
-// 加载方案
-const loadScheme = (scheme) => {
-  schemeName.value = scheme.name
-  selectedFields.value = scheme.fields
-  Object.assign(filterConfig, scheme.config)
-}
-
-// 编辑方案
-const editScheme = async (scheme) => {
-  try {
-    const updatedScheme = {
-      id: scheme.id,
-      name: schemeName.value || scheme.name,
-      fields: selectedFields.value,
-      config: filterConfig
-    }
-    await store.updateScheme(updatedScheme)
-    ElMessage.success('更新成功')
-  } catch (error) {
-    ElMessage.error('更新失败')
-  }
-}
-
-// 删除方案
-const deleteScheme = async (scheme) => {
-  try {
-    await store.removeScheme(scheme.id)
-    ElMessage.success('删除成功')
-  } catch (error) {
-    ElMessage.error('删除失败')
-  }
-}
-
-// 监听选中字段变化，更新过滤配置
-watch(selectedFields, (newFields) => {
-  const newConfig = {}
-  newFields.forEach(field => {
-    if (!filterConfig[field]) {
-      newConfig[field] = { operator: '', value: '' }
-    } else {
-      newConfig[field] = filterConfig[field]
-    }
+// 添加条件
+const addCondition = () => {
+  currentScheme.value.conditions.push({
+    field: '',
+    operator: '=',
+    value: ''
   })
-  Object.assign(filterConfig, newConfig)
-})
+}
 
-// 初始化加载保存的方案
-store.fetchSchemes()
+// 移除条件
+const removeCondition = (index: number) => {
+  currentScheme.value.conditions.splice(index, 1)
+}
 </script>
+
+<template>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold">筛选方案管理</h2>
+      <div class="flex gap-2">
+        <el-button type="info" @click="$router.push('filtered')">进入筛选后的表格</el-button>
+        <el-button type="primary" @click="openAddDialog">新增方案</el-button>
+        <el-button type="success" @click="initializeSchemes">初始化</el-button>
+      </div>
+    </div>
+
+    <div class="grid gap-4">
+      <el-card v-for="scheme in filterSchemes" :key="scheme.id" class="scheme-card">
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex items-center gap-4">
+            <h3 class="text-lg font-semibold">{{ scheme.name }}</h3>
+            <el-switch v-model="scheme.enabled" @change="() => toggleScheme(scheme)" />
+          </div>
+          <div class="flex gap-2">
+            <el-button type="primary" size="small" @click="openEditDialog(scheme)">编辑</el-button>
+            <el-button type="danger" size="small" @click="deleteScheme(scheme)">删除</el-button>
+          </div>
+        </div>
+        <div class="conditions-container">
+          <el-tag
+            v-for="(condition, index) in scheme.conditions"
+            :key="index"
+            class="mr-2 mb-2"
+          >
+            {{ condition.field }} {{ condition.operator }} {{ Array.isArray(condition.value) ? condition.value.join('、') : condition.value }}
+          </el-tag>
+        </div>
+      </el-card>
+    </div>
+
+    <!-- 新增/编辑对话框 -->
+    <el-dialog
+      v-model="dialogVisible"
+      :title="dialogTitle"
+      width="800px"
+      destroy-on-close
+    >
+      <el-form :model="currentScheme" label-width="100px">
+        <el-form-item label="方案名称" required>
+          <el-input v-model="currentScheme.name" placeholder="请输入方案名称" />
+        </el-form-item>
+        <el-form-item label="启用状态">
+          <el-switch v-model="currentScheme.enabled" />
+        </el-form-item>
+        <el-form-item label="筛选条件">
+          <div class="conditions-editor">
+            <div v-for="(condition, index) in currentScheme.conditions" :key="index" class="condition-item">
+              <el-select v-model="condition.field" placeholder="选择字段" class="field-select">
+                <el-option
+                  v-for="field in filterableFields"
+                  :key="field.name"
+                  :label="field.name"
+                  :value="field.name"
+                />
+              </el-select>
+              <el-select v-model="condition.operator" placeholder="选择操作符" class="operator-select">
+                <el-option
+                  v-for="op in operatorOptions"
+                  :key="op.value"
+                  :label="op.label"
+                  :value="op.value"
+                />
+              </el-select>
+              <template v-if="condition.operator === 'in' || condition.operator === 'not in'">
+                <el-select
+                  v-model="condition.value"
+                  multiple
+                  filterable
+                  allow-create
+                  default-first-option
+                  placeholder="输入值"
+                  class="value-input"
+                />
+              </template>
+              <template v-else-if="getFieldType(condition.field) === 'number'">
+                <el-input-number
+                  v-model="condition.value"
+                  :controls="false"
+                  placeholder="输入值"
+                  class="value-input"
+                />
+              </template>
+              <template v-else>
+                <el-input
+                  v-model="condition.value"
+                  placeholder="输入值"
+                  class="value-input"
+                />
+              </template>
+              <el-button
+                type="danger"
+                circle
+                size="small"
+                @click="removeCondition(index)"
+              >
+                <i class="el-icon-delete">×</i>
+              </el-button>
+            </div>
+            <el-button type="primary" plain @click="addCondition">添加条件</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="flex justify-end gap-2">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="saveScheme">确定</el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.scheme-card {
+  @apply bg-white rounded-lg shadow-sm;
+
+  .conditions-container {
+    min-height: 32px;
+  }
+}
+
+.conditions-editor {
+  .condition-item {
+    @apply flex items-center gap-3 mb-3;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: #f5f7fa;
+    border-radius: 8px;
+  }
+
+  .field-select {
+    width: 200px;
+  }
+
+  .operator-select {
+    width: 150px;
+  }
+
+  .value-input {
+    width: 300px;
+    max-width: 100%;
+  }
+}
+</style>

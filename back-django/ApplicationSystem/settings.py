@@ -148,7 +148,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-
+# 设置默认的主键字段类型
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 图片储存根路径
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

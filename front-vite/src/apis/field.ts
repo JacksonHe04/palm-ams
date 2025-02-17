@@ -4,6 +4,8 @@ export interface FieldItem {
   id: number
   name: string
   description: string
+  type: string
+  variableName: string
   showInTable: boolean
   showInFilter: boolean
   showInApply: boolean

@@ -1,81 +1,101 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import { createFilter, getFilters, updateFilter, deleteFilter } from '@/apis/filter'
-import { useFieldStore } from './fieldStore'
+import { ref } from 'vue'
+import type { FilterScheme } from '@/apis/filter'
+import {
+  fetchFilterSchemes,
+  createFilterScheme,
+  updateFilterScheme,
+  deleteFilterScheme,
+  toggleFilterScheme
+} from '@/apis/filter'
+import { ElMessage } from 'element-plus'
 
 export const useFilterStore = defineStore('filter', () => {
-  // 状态
-  const savedSchemes = ref([])
-  const fieldStore = useFieldStore()
-  
-  // 初始化时获取字段数据
-  fieldStore.fetchFields()
-  
-  const availableFields = computed(() => {
-    return fieldStore.fields
-      .filter(field => field.showInFilter)
-      .map(field => ({
-        name: field.name,
-        label: field.description,
-        type: 'string' // 由于fieldStore中没有type字段，暂时默认为string类型
-      }))
-  })
+  // 筛选方案列表
+  const schemes = ref<FilterScheme[]>([])
 
-  // 方法
+  // 获取筛选方案列表
   const fetchSchemes = async () => {
     try {
-      const response = await getFilters()
-      savedSchemes.value = response.data
+      const response = await fetchFilterSchemes()
+      schemes.value = response.data
     } catch (error) {
-      console.error('获取过滤方案失败:', error)
-      throw error
+      ElMessage.error('获取筛选方案失败')
+      console.error('获取筛选方案失败:', error)
     }
   }
 
-  const saveScheme = async (scheme) => {
+  // 创建筛选方案
+  const createScheme = async (scheme: Omit<FilterScheme, 'id'>) => {
     try {
-      const response = await createFilter(scheme)
-      savedSchemes.value.push(response.data)
+      const response = await createFilterScheme(scheme)
+      schemes.value.push(response.data)
+      ElMessage.success('创建筛选方案成功')
       return response.data
     } catch (error) {
-      console.error('保存过滤方案失败:', error)
-      throw error
+      ElMessage.error('创建筛选方案失败')
+      console.error('创建筛选方案失败:', error)
+      return null
     }
   }
 
-  const updateScheme = async (scheme) => {
+  // 更新筛选方案
+  const updateScheme = async (id: number, scheme: Omit<FilterScheme, 'id'>) => {
     try {
-      const response = await updateFilter(scheme)
-      const index = savedSchemes.value.findIndex(s => s.id === scheme.id)
+      const response = await updateFilterScheme(id, scheme)
+      const index = schemes.value.findIndex(s => s.id === id)
       if (index !== -1) {
-        savedSchemes.value[index] = response.data
+        schemes.value[index] = response.data
       }
+      ElMessage.success('更新筛选方案成功')
       return response.data
     } catch (error) {
-      console.error('更新过滤方案失败:', error)
-      throw error
+      ElMessage.error('更新筛选方案失败')
+      console.error('更新筛选方案失败:', error)
+      return null
     }
   }
 
-  const removeScheme = async (schemeId) => {
+  // 删除筛选方案
+  const deleteScheme = async (id: number) => {
     try {
-      await deleteFilter(schemeId)
-      const index = savedSchemes.value.findIndex(s => s.id === schemeId)
+      await deleteFilterScheme(id)
+      const index = schemes.value.findIndex(s => s.id === id)
       if (index !== -1) {
-        savedSchemes.value.splice(index, 1)
+        schemes.value.splice(index, 1)
       }
+      ElMessage.success('删除筛选方案成功')
+      return true
     } catch (error) {
-      console.error('删除过滤方案失败:', error)
-      throw error
+      ElMessage.error('删除筛选方案失败')
+      console.error('删除筛选方案失败:', error)
+      return false
+    }
+  }
+
+  // 切换筛选方案启用状态
+  const toggleScheme = async (id: number, enabled: boolean) => {
+    try {
+      await toggleFilterScheme(id, enabled)
+      const scheme = schemes.value.find(s => s.id === id)
+      if (scheme) {
+        scheme.enabled = enabled
+      }
+      ElMessage.success(`${enabled ? '启用' : '禁用'}筛选方案成功`)
+      return true
+    } catch (error) {
+      ElMessage.error(`${enabled ? '启用' : '禁用'}筛选方案失败`)
+      console.error(`${enabled ? '启用' : '禁用'}筛选方案失败:`, error)
+      return false
     }
   }
 
   return {
-    savedSchemes,
-    availableFields,
+    schemes,
     fetchSchemes,
-    saveScheme,
+    createScheme,
     updateScheme,
-    removeScheme
+    deleteScheme,
+    toggleScheme
   }
 })

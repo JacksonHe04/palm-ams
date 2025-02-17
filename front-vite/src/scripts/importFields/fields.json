@@ -1,0 +1,481 @@
+[
+    {
+      "name": "ID",
+      "description": "学生唯一标识符",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": false,
+      "variableName": "id"
+    },
+    {
+      "name": "姓名",
+      "description": "学生姓名",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "name"
+    },
+    {
+      "name": "报名类型",
+      "description": "申请类型",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "applicationType"
+    },
+    {
+      "name": "毕业年份",
+      "description": "预计毕业年份",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "graduationYear"
+    },
+    {
+      "name": "本科学校",
+      "description": "本科就读学校",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "university"
+    },
+    {
+      "name": "本科等级",
+      "description": "本科学校等级",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "universityLevel"
+    },
+    {
+      "name": "本科专业",
+      "description": "本科就读专业",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "major"
+    },
+    {
+      "name": "专业人数",
+      "description": "专业总人数",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "majorCount"
+    },
+    {
+      "name": "排名",
+      "description": "专业排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "rank"
+    },
+    {
+      "name": "百分比",
+      "description": "专业排名百分比",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "percentage"
+    },
+    {
+      "name": "硕士学校",
+      "description": "硕士就读学校",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "masterUniversity"
+    },
+    {
+      "name": "硕士等级",
+      "description": "硕士学校等级",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "masterUniversityLevel"
+    },
+    {
+      "name": "硕士专业",
+      "description": "硕士就读专业",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "masterMajor"
+    },
+    {
+      "name": "导师",
+      "description": "指导教师",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "tutor"
+    },
+    {
+      "name": "性别",
+      "description": "学生性别",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "gender"
+    },
+    {
+      "name": "出生年月",
+      "description": "出生日期",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "birthDate"
+    },
+    {
+      "name": "照片",
+      "description": "个人照片",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "photo"
+    },
+    {
+      "name": "手机号码",
+      "description": "联系电话",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "phone"
+    },
+    {
+      "name": "电子邮箱",
+      "description": "电子邮件地址",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "email"
+    },
+    {
+      "name": "第一志愿",
+      "description": "第一志愿专业",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "firstChoice"
+    },
+    {
+      "name": "第二志愿",
+      "description": "第二志愿专业",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "secondChoice"
+    },
+    {
+      "name": "第三志愿",
+      "description": "第三志愿专业",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "thirdChoice"
+    },
+    {
+      "name": "是否服从调剂",
+      "description": "是否接受调剂",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "isAdjustable"
+    },
+    {
+      "name": "证明材料",
+      "description": "相关证明文件",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "proofs"
+    },
+    {
+      "name": "状态",
+      "description": "申请状态",
+      "showInTable": true,
+      "showInFilter": false,
+      "showInApply": false,
+      "variableName": "status"
+    },
+    {
+      "name": "论文一发表时间",
+      "description": "第一篇论文发表时间",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper1_publicationTime"
+    },
+    {
+      "name": "论文一期刊会议",
+      "description": "第一篇论文发表期刊或会议名称",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper1_journalConference"
+    },
+    {
+      "name": "论文一名称",
+      "description": "第一篇论文标题",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper1_paperName"
+    },
+    {
+      "name": "论文一CCF等级",
+      "description": "第一篇论文CCF等级",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper1_ccfLevel"
+    },
+    {
+      "name": "论文一获奖类别",
+      "description": "第一篇论文获奖情况",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper1_awardCategory"
+    },
+    {
+      "name": "奖项一是否负责人",
+      "description": "第一个奖项是否为负责人",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award1_isLeader"
+    },
+    {
+      "name": "奖项一获奖时间",
+      "description": "第一个奖项获奖时间",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award1_awardTime"
+    },
+    {
+      "name": "奖项一名称",
+      "description": "第一个奖项名称",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award1_awardName"
+    },
+    {
+      "name": "奖项一等级排名",
+      "description": "第一个奖项等级排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award1_levelRanking"
+    },
+    {
+      "name": "奖项一获奖排名",
+      "description": "第一个奖项获奖排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award1_awardRanking"
+    },
+    {
+      "name": "论文二发表时间",
+      "description": "第二篇论文发表时间",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper2_publicationTime"
+    },
+    {
+      "name": "论文二期刊会议",
+      "description": "第二篇论文发表期刊或会议名称",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper2_journalConference"
+    },
+    {
+      "name": "论文二名称",
+      "description": "第二篇论文标题",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper2_paperName"
+    },
+    {
+      "name": "论文二CCF等级",
+      "description": "第二篇论文CCF等级",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper2_ccfLevel"
+    },
+    {
+      "name": "论文二获奖类别",
+      "description": "第二篇论文获奖情况",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper2_awardCategory"
+    },
+    {
+      "name": "奖项二是否负责人",
+      "description": "第二个奖项是否为负责人",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award2_isLeader"
+    },
+    {
+      "name": "奖项二获奖时间",
+      "description": "第二个奖项获奖时间",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award2_awardTime"
+    },
+    {
+      "name": "奖项二名称",
+      "description": "第二个奖项名称",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award2_awardName"
+    },
+    {
+      "name": "奖项二等级排名",
+      "description": "第二个奖项等级排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award2_levelRanking"},
+    {
+      "name": "奖项二获奖排名",
+      "description": "第二个奖项获奖排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award2_awardRanking"
+    },
+    {
+      "name": "论文三发表时间",
+      "description": "第三篇论文发表时间",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper3_publicationTime"
+    },
+    {
+      "name": "论文三期刊会议",
+      "description": "第三篇论文发表期刊或会议名称",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper3_journalConference"
+    },
+    {
+      "name": "论文三名称",
+      "description": "第三篇论文标题",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper3_paperName"
+    },
+    {
+      "name": "论文三CCF等级",
+      "description": "第三篇论文CCF等级",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper3_ccfLevel"
+    },
+    {
+      "name": "论文三获奖类别",
+      "description": "第三篇论文获奖情况",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "paper3_awardCategory"
+    },
+    {
+      "name": "奖项三是否负责人",
+      "description": "第三个奖项是否为负责人",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award3_isLeader"
+    },
+    {
+      "name": "奖项三获奖时间",
+      "description": "第三个奖项获奖时间",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award3_awardTime"
+    },
+    {
+      "name": "奖项三名称",
+      "description": "第三个奖项名称",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award3_awardName"
+    },
+    {
+      "name": "奖项三等级排名",
+      "description": "第三个奖项等级排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award3_levelRanking"
+    },
+    {
+      "name": "奖项三获奖排名",
+      "description": "第三个奖项获奖排名",
+      "showInTable": false,
+      "showInFilter": false,
+      "showInApply": true,
+      "variableName": "award3_awardRanking"
+    },
+    {
+      "name": "是否为拔尖班",
+      "description": "荣誉学院/强化班/拔尖班/强基班/培优班”等高保研率生源",
+      "showInTable": true,
+      "showInFilter": true,
+      "showInApply": true,
+      "variableName": "isTopClass"
+    },
+    {
+        "name": "第一作者论文等级",
+        "description": "第一作者的论文等级",
+        "showInTable": true,
+        "showInFilter": true,
+        "showInApply": false,
+        "variableName": "firstAuthorLevel"
+    },
+    {
+        "name": "是否满足论文条件",
+        "description": "是否满足论文条件",
+        "showInTable": true,
+        "showInFilter": true,
+        "showInApply": false,
+        "variableName": "isPaperCondition"
+    },
+    {
+        "name": "是否满足奖项条件",
+        "description": "满足奖项条件的要求",
+        "showInTable": true,
+        "showInFilter": true,
+        "showInApply": false,
+        "variableName": "isAwardCondition"
+    },
+    {
+        "name": "是否满足筛选条件",
+        "description": "是否满足筛选条件",
+        "showInTable": true,
+        "showInFilter": true,
+        "showInApply": false,
+        "variableName": "isFilterCondition"
+    }
+  ]

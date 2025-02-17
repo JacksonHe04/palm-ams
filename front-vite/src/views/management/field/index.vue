@@ -9,15 +9,27 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
+  ElSelect,
+  ElOption,
+  ElMessageBox,
 } from "element-plus";
 import { ElMessage } from "element-plus";
 import { useFieldStore } from "@/stores/fieldStore";
 import type { FieldItem } from "@/apis/field";
+import { importFields } from "@/scripts/importFields/importFields";
 
 const store = useFieldStore();
 
 // 初始化获取字段列表
 store.fetchFields();
+
+// 字段类型选项
+const fieldTypes = [
+  { value: 'string', label: '字符串' },
+  { value: 'percent', label: '百分比' },
+  { value: 'boolean', label: '布尔值' },
+  { value: 'select', label: '单选' },
+];
 
 // 对话框相关
 const dialogVisible = ref(false);
@@ -26,6 +38,7 @@ const editingField = ref<FieldItem>({
   id: 0,
   name: "",
   description: "",
+  type: "text",
   showInTable: true,
   showInFilter: true,
   showInApply: true,
@@ -84,24 +97,63 @@ const handleSwitchChange = async (row: FieldItem) => {
     await store.fetchFields();
   }
 };
+
+// 初始化字段
+const initializeFields = async () => {
+  try {
+    const result = await ElMessageBox.confirm(
+      '此操作将清除所有现有字段并导入预设字段，是否继续？',
+      '警告',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    );
+
+    if (result === 'confirm') {
+      // 删除所有现有字段，使用Promise.all等待所有删除操作完成
+      await Promise.all(store.fields.map(field => store.removeField(field.id)));
+      
+      // 导入预设字段
+      await importFields();
+      
+      // 刷新字段列表
+      await store.fetchFields();
+      
+      ElMessage.success('字段初始化完成');
+    }
+  } catch (error) {
+    // 用户取消操作，不做任何处理
+  }
+};
 </script>
 
 <template>
   <div class="p-6">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-bold">字段管理</h2>
-      <el-button type="primary" @click="openAddDialog">新增字段</el-button>
+      <div class="flex gap-2">
+        <el-button type="warning" @click="initializeFields">初始化</el-button>
+        <el-button type="primary" @click="openAddDialog">新增字段</el-button>
+      </div>
     </div>
 
     <el-table :data="store.fields" border class="w-full">
-      <el-table-column prop="id" label="ID" min-width="80" />
+      <el-table-column label="ID" min-width="80" type="index" :index="1" />
       <el-table-column prop="name" label="字段名称" min-width="120" />
       <el-table-column
         prop="description"
         label="描述"
-        min-width="200"
+        min-width="150"
         show-overflow-tooltip
       />
+      <el-table-column prop="variableName" label="变量名" min-width="120" />
+      <el-table-column label="字段类型" min-width="100">
+        <template #default="{ row }">
+          {{ fieldTypes.find(type => type.value === row.type)?.label || row.type }}
+        </template>
+      </el-table-column>
       <el-table-column label="在表格中显示" min-width="120" align="center">
         <template #default="{ row }">
           <el-switch v-model="row.showInTable" @change="() => handleSwitchChange(row)" />
@@ -145,6 +197,16 @@ const handleSwitchChange = async (row: FieldItem) => {
             v-model="editingField.description"
             placeholder="请输入字段描述"
           />
+        </el-form-item>
+        <el-form-item label="字段类型" required>
+          <el-select v-model="editingField.type" placeholder="请选择字段类型">
+            <el-option
+              v-for="type in fieldTypes"
+              :key="type.value"
+              :label="type.label"
+              :value="type.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="显示设置">
           <div class="flex gap-4">

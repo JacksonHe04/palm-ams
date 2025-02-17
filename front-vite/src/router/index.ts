@@ -63,6 +63,13 @@ const router = createRouter({
               component: () => import("@/views/management/filter/index.vue"),
               meta: { title: "筛选器" },
             },
+            // filtered
+            {
+              path: "filtered",
+              name: "filtered",
+              component: () => import("@/views/management/filtered/index.vue"),
+              meta: { title: "筛选器" },
+            },
             {
               path: "interview",
               name: "interview",

@@ -66,6 +66,13 @@ class Apply(models.Model):
     universityLevel = models.CharField(max_length=50, null=True, blank=True)
     masterUniversityLevel = models.CharField(max_length=50, null=True, blank=True)
 
+    # 新增筛选相关字段
+    isTopClass = models.BooleanField(default=False, help_text='是否为拔尖班')
+    firstAuthorPaperLevel = models.CharField(max_length=10, null=True, blank=True, help_text='第一作者论文等级')
+    meetPaperRequirement = models.BooleanField(default=False, help_text='是否满足论文条件')
+    meetAwardRequirement = models.BooleanField(default=False, help_text='是否满足奖项条件')
+    meetScreeningRequirement = models.BooleanField(default=False, help_text='是否满足筛选条件')
+
     class Meta:
         db_table = 'students'
 
