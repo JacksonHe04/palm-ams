@@ -1,0 +1,242 @@
+[
+    {
+        "variableName": "id",
+        "type": "string"
+    },
+    {
+        "variableName": "name",
+        "type": "string"
+    },
+    {
+        "variableName": "applicationType",
+        "type": "select"
+    },
+    {
+        "variableName": "graduationYear",
+        "type": "number"
+    },
+    {
+        "variableName": "university",
+        "type": "select"
+    },
+    {
+        "variableName": "universityLevel",
+        "type": "select"
+    },
+    {
+        "variableName": "major",
+        "type": "select"
+    },
+    {
+        "variableName": "majorCount",
+        "type": "number"
+    },
+    {
+        "variableName": "rank",
+        "type": "number"
+    },
+    {
+        "variableName": "percentage",
+        "type": "string"
+    },
+    {
+        "variableName": "masterUniversity",
+        "type": "select"
+    },
+    {
+        "variableName": "masterUniversityLevel",
+        "type": "select"
+    },
+    {
+        "variableName": "masterMajor",
+        "type": "select"
+    },
+    {
+        "variableName": "tutor",
+        "type": "string"
+    },
+    {
+        "variableName": "gender",
+        "type": "select"
+    },
+    {
+        "variableName": "birthDate",
+        "type": "date"
+    },
+    {
+        "variableName": "photo",
+        "type": "string"
+    },
+    {
+        "variableName": "phone",
+        "type": "number"
+    },
+    {
+        "variableName": "email",
+        "type": "string"
+    },
+    {
+        "variableName": "firstChoice",
+        "type": "select"
+    },
+    {
+        "variableName": "secondChoice",
+        "type": "select"
+    },
+    {
+        "variableName": "thirdChoice",
+        "type": "select"
+    },
+    {
+        "variableName": "isAdjustable",
+        "type": "boolean"
+    },
+    {
+        "variableName": "proofs",
+        "type": "string"
+    },
+    {
+        "variableName": "status",
+        "type": "select"
+    },
+    {
+        "variableName": "paper1_publicationTime",
+        "type": "date"
+    },
+    {
+        "variableName": "paper1_journalConference",
+        "type": "string"
+    },
+    {
+        "variableName": "paper1_paperName",
+        "type": "string"
+    },
+    {
+        "variableName": "paper1_ccfLevel",
+        "type": "select"
+    },
+    {
+        "variableName": "paper1_awardCategory",
+        "type": "boolean"
+    },
+    {
+        "variableName": "award1_isLeader",
+        "type": "boolean"
+    },
+    {
+        "variableName": "award1_awardTime",
+        "type": "date"
+    },
+    {
+        "variableName": "award1_awardName",
+        "type": "string"
+    },
+    {
+        "variableName": "award1_levelRanking",
+        "type": "select"
+    },
+    {
+        "variableName": "award1_awardRanking",
+        "type": "select"
+    },
+    {
+        "variableName": "paper2_publicationTime",
+        "type": "date"
+    },
+    {
+        "variableName": "paper2_journalConference",
+        "type": "string"
+    },
+    {
+        "variableName": "paper2_paperName",
+        "type": "string"
+    },
+    {
+        "variableName": "paper2_ccfLevel",
+        "type": "select"
+    },
+    {
+        "variableName": "paper2_awardCategory",
+        "type": "boolean"
+    },
+    {
+        "variableName": "award2_isLeader",
+        "type": "boolean"
+    },
+    {
+        "variableName": "award2_awardTime",
+        "type": "date"
+    },
+    {
+        "variableName": "award2_awardName",
+        "type": "string"
+    },
+    {
+        "variableName": "award2_levelRanking",
+        "type": "select"
+    },
+    {
+        "variableName": "award2_awardRanking",
+        "type": "select"
+    },
+    {
+        "variableName": "paper3_publicationTime",
+        "type": "date"
+    },
+    {
+        "variableName": "paper3_journalConference",
+        "type": "string"
+    },
+    {
+        "variableName": "paper3_paperName",
+        "type": "string"
+    },
+    {
+        "variableName": "paper3_ccfLevel",
+        "type": "select"
+    },
+    {
+        "variableName": "paper3_awardCategory",
+        "type": "boolean"
+    },
+    {
+        "variableName": "award3_isLeader",
+        "type": "boolean"
+    },
+    {
+        "variableName": "award3_awardTime",
+        "type": "date"
+    },
+    {
+        "variableName": "award3_awardName",
+        "type": "string"
+    },
+    {
+        "variableName": "award3_levelRanking",
+        "type": "select"
+    },
+    {
+        "variableName": "award3_awardRanking",
+        "type": "select"
+    },
+    {
+        "variableName": "isTopClass",
+        "type": "boolean"
+    },
+    {
+        "variableName": "firstAuthorLevel",
+        "type": "select"
+    },
+    {
+        "variableName": "isPaperCondition",
+        "type": "boolean"
+    },
+    {
+        "variableName": "isAwardCondition",
+        "type": "boolean"
+    },
+    {
+        "variableName": "isFilterCondition",
+        "type": "select"
+    }
+]

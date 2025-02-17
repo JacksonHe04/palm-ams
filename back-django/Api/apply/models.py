@@ -2,49 +2,51 @@ from django.db import models
 
 class Apply(models.Model):
     id = models.CharField(primary_key=True, max_length=50)
-    name = models.CharField(max_length=50)
-    graduationYear = models.IntegerField()
-    gender = models.CharField(max_length=10)
-    birthDate = models.CharField(max_length=20)
-    photo = models.ImageField(upload_to='apply/')
-    university = models.CharField(max_length=50)
-    major = models.CharField(max_length=50)
-    majorCount = models.IntegerField()
-    rank = models.IntegerField()
-    percentage = models.CharField(max_length=10)  # 添加 max_length 属性
-    masterUniversity = models.CharField(max_length=50)
-    masterMajor = models.CharField(max_length=50)
-    tutor = models.CharField(max_length=50)
-    phone = models.CharField(max_length=50)
-    email = models.CharField(max_length=100)  # 添加 max_length 属性
-    applicationType = models.CharField(max_length=50)
-    firstChoice = models.CharField(max_length=50)
-    secondChoice = models.CharField(max_length=50)
-    thirdChoice = models.CharField(max_length=50)
-    isAdjustable = models.BooleanField()
-    proofs = models.CharField(max_length=255)  # 添加 max_length 属性
-    status = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=True, blank=True)
+    applicationType = models.CharField(max_length=50, null=True, blank=True)
+    graduationYear = models.IntegerField(null=True, blank=True)
+    university = models.CharField(max_length=50, null=True, blank=True)
+    universityLevel = models.CharField(max_length=50, null=True, blank=True)
+    major = models.CharField(max_length=50, null=True, blank=True)
+    majorCount = models.IntegerField(null=True, blank=True)
+    rank = models.IntegerField(null=True, blank=True)
+    percentage = models.CharField(max_length=10, null=True, blank=True)
+    masterUniversity = models.CharField(max_length=50, null=True, blank=True)
+    masterUniversityLevel = models.CharField(max_length=50, null=True, blank=True)
+    masterMajor = models.CharField(max_length=50, null=True, blank=True)
+    tutor = models.CharField(max_length=50, null=True, blank=True)
+    gender = models.CharField(max_length=10, null=True, blank=True)
+    birthDate = models.CharField(max_length=20, null=True, blank=True)
+    photo = models.ImageField(upload_to='apply/', null=True, blank=True)
+    phone = models.CharField(max_length=50, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    firstChoice = models.CharField(max_length=50, null=True, blank=True)
+    secondChoice = models.CharField(max_length=50, null=True, blank=True)
+    thirdChoice = models.CharField(max_length=50, null=True, blank=True)
+    isAdjustable = models.BooleanField(default=True)
+    proofs = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=50, null=True, blank=True)
 
-    # 新增 paper 相关字段
+    # Paper related fields
     paper1_publicationTime = models.CharField(max_length=7, null=True, blank=True)
     paper1_journalConference = models.CharField(max_length=100, null=True, blank=True)
     paper1_paperName = models.CharField(max_length=100, null=True, blank=True)
     paper1_ccfLevel = models.CharField(max_length=10, null=True, blank=True)
-    paper1_awardCategory = models.CharField(max_length=50, null=True, blank=True)
+    paper1_isFirst = models.BooleanField(null=True, blank=True)
 
     paper2_publicationTime = models.CharField(max_length=7, null=True, blank=True)
     paper2_journalConference = models.CharField(max_length=100, null=True, blank=True)
     paper2_paperName = models.CharField(max_length=100, null=True, blank=True)
     paper2_ccfLevel = models.CharField(max_length=10, null=True, blank=True)
-    paper2_awardCategory = models.CharField(max_length=50, null=True, blank=True)
+    paper2_isFirst = models.BooleanField(null=True, blank=True)
 
     paper3_publicationTime = models.CharField(max_length=7, null=True, blank=True)
     paper3_journalConference = models.CharField(max_length=100, null=True, blank=True)
     paper3_paperName = models.CharField(max_length=100, null=True, blank=True)
     paper3_ccfLevel = models.CharField(max_length=10, null=True, blank=True)
-    paper3_awardCategory = models.CharField(max_length=50, null=True, blank=True)
+    paper3_isFirst = models.BooleanField(null=True, blank=True)
 
-    # 新增 award 相关字段
+    # Award related fields
     award1_isLeader = models.BooleanField(null=True, blank=True)
     award1_awardTime = models.CharField(max_length=7, null=True, blank=True)
     award1_awardName = models.CharField(max_length=100, null=True, blank=True)
@@ -63,15 +65,12 @@ class Apply(models.Model):
     award3_levelRanking = models.CharField(max_length=50, null=True, blank=True)
     award3_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
-    universityLevel = models.CharField(max_length=50, null=True, blank=True)
-    masterUniversityLevel = models.CharField(max_length=50, null=True, blank=True)
-
-    # 新增筛选相关字段
-    isTopClass = models.BooleanField(default=False, help_text='是否为拔尖班')
-    firstAuthorPaperLevel = models.CharField(max_length=10, null=True, blank=True, help_text='第一作者论文等级')
-    meetPaperRequirement = models.BooleanField(default=False, help_text='是否满足论文条件')
-    meetAwardRequirement = models.BooleanField(default=False, help_text='是否满足奖项条件')
-    meetScreeningRequirement = models.BooleanField(default=False, help_text='是否满足筛选条件')
+    # Additional fields from fieldsInApply.json
+    isTopClass = models.BooleanField(null=True, blank=True)
+    firstAuthorLevel = models.CharField(max_length=50, null=True, blank=True)
+    isPaperCondition = models.BooleanField(null=True, blank=True)
+    isAwardCondition = models.BooleanField(null=True, blank=True)
+    isFilterCondition = models.CharField(max_length=50, null=True, blank=True)
 
     class Meta:
         db_table = 'students'

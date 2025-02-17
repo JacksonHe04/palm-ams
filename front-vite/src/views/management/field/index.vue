@@ -21,7 +21,13 @@ import { importFields } from "@/scripts/importFields/importFields";
 const store = useFieldStore();
 
 // 初始化获取字段列表
-store.fetchFields();
+store.fetchFields().then(() => {
+  const fieldsInfo = store.fields.map(field => ({
+    variableName: field.variableName,
+    type: field.type
+  }));
+  console.log('Fields Info:', fieldsInfo);
+});
 
 // 字段类型选项
 const fieldTypes = [
@@ -29,6 +35,8 @@ const fieldTypes = [
   { value: 'percent', label: '百分比' },
   { value: 'boolean', label: '布尔值' },
   { value: 'select', label: '单选' },
+  { value: 'date', label: '日期' },
+  { value: 'number', label: '数字' },
 ];
 
 // 对话框相关
@@ -127,6 +135,8 @@ const initializeFields = async () => {
     // 用户取消操作，不做任何处理
   }
 };
+
+
 </script>
 
 <template>

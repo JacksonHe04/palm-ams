@@ -27,6 +27,12 @@ const router = createRouter({
           component: Apply,
           meta: { title: "申请 PALM 实验室" },
         },
+        // new_apply
+        {
+          path: "/new_apply",
+          component: () => import("@/views/new_apply/index.vue"),
+          meta: { title: "申请 PALM 实验室" },
+        },
         {
           path: "/login",
           component: Login,
@@ -68,7 +74,7 @@ const router = createRouter({
               path: "filtered",
               name: "filtered",
               component: () => import("@/views/management/filtered/index.vue"),
-              meta: { title: "筛选器" },
+              meta: { title: "筛选结果" },
             },
             {
               path: "interview",
