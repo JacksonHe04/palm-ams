@@ -6,13 +6,23 @@
         <div class="field-description">{{ field.description }}</div>
         
         <input
-          v-if="field.type === 'text' || field.type === 'number' || field.type === 'email'"
+          v-if="(field.type === 'text' || field.type === 'number' || field.type === 'email') && field.variableName !== 'percentage'"
           :type="field.type"
           :id="field.variableName"
           v-model="formData[field.variableName]"
           :name="field.variableName"
           class="form-input"
           :required="isFieldRequired(field.variableName)"
+          @input="field.variableName === 'rank' || field.variableName === 'majorCount' ? calculatePercentage() : null"
+        />
+        <input
+          v-else-if="field.variableName === 'percentage'"
+          type="text"
+          :id="field.variableName"
+          :value="formData[field.variableName]"
+          :name="field.variableName"
+          class="form-input"
+          disabled
         />
         
         <textarea
@@ -196,6 +206,23 @@ const applyStore = useApplyStore()
 const formData = computed(() => applyStore.formData)
 
 // 初始化表单数据
+const calculatePercentage = () => {
+  const rank = Number(formData.value.rank)
+  const majorCount = Number(formData.value.majorCount)
+  if (!isNaN(rank) && !isNaN(majorCount) && majorCount !== 0) {
+    const percentage = (rank / majorCount * 100).toFixed(2)
+    applyStore.setFormData({
+      ...formData.value,
+      percentage: `${percentage}%`
+    })
+  } else {
+    applyStore.setFormData({
+      ...formData.value,
+      percentage: ''
+    })
+  }
+}
+
 const initFormData = () => {
   const initialData = {}
   applyFields.value.forEach(field => {

@@ -1,7 +1,7 @@
 [
     {
-        "id": 39,
-        "name": "本科A类前20%",
+        "id": 1,
+        "name": "A类前20%",
         "enabled": true,
         "conditions": [
             {
@@ -17,8 +17,8 @@
         ]
     },
     {
-        "id": 40,
-        "name": "本科B类限制专业前20%",
+        "id": 2,
+        "name": "B类限制专业前20%",
         "enabled": true,
         "conditions": [
             {
@@ -41,8 +41,8 @@
         ]
     },
     {
-        "id": 41,
-        "name": "本科C类限制专业前10%",
+        "id": 3,
+        "name": "C类限制专业前10%",
         "enabled": true,
         "conditions": [
             {
@@ -65,8 +65,8 @@
         ]
     },
     {
-        "id": 42,
-        "name": "本科B类拔尖班前30%",
+        "id": 4,
+        "name": "B类拔尖班前30%",
         "enabled": true,
         "conditions": [
             {
@@ -87,8 +87,8 @@
         ]
     },
     {
-        "id": 43,
-        "name": "本科C类拔尖班前20%",
+        "id": 5,
+        "name": "C类拔尖班前20%",
         "enabled": true,
         "conditions": [
             {
@@ -109,8 +109,8 @@
         ]
     },
     {
-        "id": 44,
-        "name": "本科B类论文AB前30%",
+        "id": 6,
+        "name": "B类论文AB前30%",
         "enabled": true,
         "conditions": [
             {
@@ -134,8 +134,8 @@
         ]
     },
     {
-        "id": 45,
-        "name": "本科C类论文AB前20%",
+        "id": 7,
+        "name": "C类论文AB前20%",
         "enabled": true,
         "conditions": [
             {
@@ -159,8 +159,8 @@
         ]
     },
     {
-        "id": 46,
-        "name": "本科B类竞赛获奖前30%",
+        "id": 8,
+        "name": "B类竞赛前30%",
         "enabled": true,
         "conditions": [
             {
@@ -193,8 +193,8 @@
         ]
     },
     {
-        "id": 47,
-        "name": "本科C类竞赛获奖前20%",
+        "id": 9,
+        "name": "C类竞赛前20%",
         "enabled": true,
         "conditions": [
             {

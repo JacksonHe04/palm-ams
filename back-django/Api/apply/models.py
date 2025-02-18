@@ -28,19 +28,19 @@ class Apply(models.Model):
     status = models.CharField(max_length=50, null=True, blank=True)
 
     # Paper related fields
-    paper1_publicationTime = models.CharField(max_length=7, null=True, blank=True)
+    paper1_publicationTime = models.CharField(max_length=100, null=True, blank=True)
     paper1_journalConference = models.CharField(max_length=100, null=True, blank=True)
     paper1_paperName = models.CharField(max_length=100, null=True, blank=True)
     paper1_ccfLevel = models.CharField(max_length=10, null=True, blank=True)
     paper1_isFirst = models.BooleanField(null=True, blank=True)
 
-    paper2_publicationTime = models.CharField(max_length=7, null=True, blank=True)
+    paper2_publicationTime = models.CharField(max_length=100, null=True, blank=True)
     paper2_journalConference = models.CharField(max_length=100, null=True, blank=True)
     paper2_paperName = models.CharField(max_length=100, null=True, blank=True)
     paper2_ccfLevel = models.CharField(max_length=10, null=True, blank=True)
     paper2_isFirst = models.BooleanField(null=True, blank=True)
 
-    paper3_publicationTime = models.CharField(max_length=7, null=True, blank=True)
+    paper3_publicationTime = models.CharField(max_length=100, null=True, blank=True)
     paper3_journalConference = models.CharField(max_length=100, null=True, blank=True)
     paper3_paperName = models.CharField(max_length=100, null=True, blank=True)
     paper3_ccfLevel = models.CharField(max_length=10, null=True, blank=True)
@@ -48,19 +48,19 @@ class Apply(models.Model):
 
     # Award related fields
     award1_isLeader = models.BooleanField(null=True, blank=True)
-    award1_awardTime = models.CharField(max_length=7, null=True, blank=True)
+    award1_awardTime = models.CharField(max_length=100, null=True, blank=True)
     award1_awardName = models.CharField(max_length=100, null=True, blank=True)
     award1_levelRanking = models.CharField(max_length=50, null=True, blank=True)
     award1_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     award2_isLeader = models.BooleanField(null=True, blank=True)
-    award2_awardTime = models.CharField(max_length=7, null=True, blank=True)
+    award2_awardTime = models.CharField(max_length=100, null=True, blank=True)
     award2_awardName = models.CharField(max_length=100, null=True, blank=True)
     award2_levelRanking = models.CharField(max_length=50, null=True, blank=True)
     award2_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     award3_isLeader = models.BooleanField(null=True, blank=True)
-    award3_awardTime = models.CharField(max_length=7, null=True, blank=True)
+    award3_awardTime = models.CharField(max_length=100, null=True, blank=True)
     award3_awardName = models.CharField(max_length=100, null=True, blank=True)
     award3_levelRanking = models.CharField(max_length=50, null=True, blank=True)
     award3_awardRanking = models.CharField(max_length=50, null=True, blank=True)
