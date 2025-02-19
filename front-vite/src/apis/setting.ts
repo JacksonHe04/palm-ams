@@ -22,6 +22,17 @@ export interface AdmissionPeriod {
   endDate: string;
 }
 
+export interface Award {
+  name: string;
+  level: string;
+  category: string;
+}
+
+export interface Year {
+  year: string;
+  status: string;
+}
+
 // 获取所有院校配置
 export const getUniversities = () => {
   return http.get<University[]>('/api/settings/universities/');
@@ -64,4 +75,24 @@ export const updateAdmissionPeriod = (period: AdmissionPeriod) => {
     end_date: period.endDate
   };
   return http.post('/api/settings/admission-period/', transformedData);
+};
+
+// 获取所有奖项配置
+export const getAwards = () => {
+  return http.get<Award[]>('/api/settings/awards/');
+};
+
+// 更新奖项配置
+export const updateAwards = (awards: Award[]) => {
+  return http.post('/api/settings/awards/', awards);
+};
+
+// 获取所有年份配置
+export const getYears = () => {
+  return http.get<Year[]>('/api/settings/years/');
+};
+
+// 更新年份配置
+export const updateYears = (years: Year[]) => {
+  return http.post('/api/settings/years/', years);
 };

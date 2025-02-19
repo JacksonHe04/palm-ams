@@ -45,7 +45,6 @@
             <template #default="{ row }">
               <el-select v-model="row.category" placeholder="选择分类">
                 <el-option label="限制专业" value="限制专业"></el-option>
-                <!-- 数学类 -->
                 <el-option label="数学类" value="数学类"></el-option>
                 <el-option label="电子信息类" value="电子信息类"></el-option>
                 <el-option label="自动化类" value="自动化类"></el-option>
@@ -139,6 +138,66 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
+
+      <el-tab-pane label="奖项配置">
+        <el-table :data="store.awards" style="width: 100%">
+          <el-table-column prop="name" label="奖项名称">
+            <template #default="{ row }">
+              <el-input v-model="row.name" placeholder="请输入奖项名称"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column prop="level" label="奖项等级">
+            <template #default="{ row }">
+              <el-select v-model="row.level" placeholder="选择奖项等级">
+                <el-option label="国家级" value="国家级"></el-option>
+                <el-option label="省部级" value="省部级"></el-option>
+                <el-option label="校级" value="校级"></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column prop="category" label="奖项类别">
+            <template #default="{ row }">
+              <el-input v-model="row.category" placeholder="请输入奖项类别"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template #default="{ $index }">
+              <el-button type="danger" @click="removeAward($index)" size="small">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="mt-4 flex justify-between">
+          <el-button type="primary" @click="addAward">新增奖项</el-button>
+          <el-button type="success" @click="handleSaveAwards">提交更改</el-button>
+        </div>
+      </el-tab-pane>
+
+      <el-tab-pane label="年份配置">
+        <el-table :data="store.years" style="width: 100%">
+          <el-table-column prop="year" label="年份">
+            <template #default="{ row }">
+              <el-input v-model="row.year" placeholder="请输入年份"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="状态">
+            <template #default="{ row }">
+              <el-select v-model="row.status" placeholder="选择状态">
+                <el-option label="启用" value="启用"></el-option>
+                <el-option label="禁用" value="禁用"></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template #default="{ $index }">
+              <el-button type="danger" @click="removeYear($index)" size="small">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="mt-4 flex justify-between">
+          <el-button type="primary" @click="addYear">新增年份</el-button>
+          <el-button type="success" @click="handleSaveYears">提交更改</el-button>
+        </div>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -146,7 +205,7 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 const store = useSettingStore();
 
@@ -177,12 +236,42 @@ const removeMajor = async (index: number) => {
 
 // 人员相关操作
 const addPersonnel = () => {
-  store.personnel.push({ name: '', recruitment_Type: '' });
+  store.personnel.push({ name: '', recruitment_type: '', department: '', research_direction: '' });
 };
 
 const removePersonnel = async (index: number) => {
   store.personnel.splice(index, 1);
   await store.savePersonnel();
+};
+
+// 奖项相关操作
+const addAward = () => {
+  store.awards.push({ name: '', level: '', category: '' });
+};
+
+const removeAward = async (index: number) => {
+  store.awards.splice(index, 1);
+  await store.saveAwards();
+};
+
+const handleSaveAwards = async () => {
+  await store.saveAwards();
+  ElMessage.success('奖项配置保存成功');
+};
+
+// 年份相关操作
+const addYear = () => {
+  store.years.push({ year: '', status: '' });
+};
+
+const removeYear = async (index: number) => {
+  store.years.splice(index, 1);
+  await store.saveYears();
+};
+
+const handleSaveYears = async () => {
+  await store.saveYears();
+  ElMessage.success('年份配置保存成功');
 };
 
 const handleInitialize = async () => {

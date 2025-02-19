@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from Api.apply.models import Apply
 from Api.setting.models import Major, Award, Year
-from .models import Percent
+from Api.percent.models import Percent
 
 def filter_talent(student):
     # 检查论文条件
@@ -27,10 +27,9 @@ def filter_talent(student):
         if is_leader:
             award = Award.objects.filter(
                 name=award_name,
-                category='限制奖项',
-                ranking__in=['特等奖', '金奖']
+                category='限制奖项'
             ).first()
-            if award:
+            if award and award_ranking in ['特等奖', '金奖']:
                 student.isAwardCondition = True
                 break
 

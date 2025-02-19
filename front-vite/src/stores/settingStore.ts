@@ -5,6 +5,8 @@ import type {
   Major,
   Personnel,
   AdmissionPeriod,
+  Award,
+  Year
 } from "@/apis/setting";
 import {
   getUniversities,
@@ -15,6 +17,10 @@ import {
   updatePersonnel,
   getAdmissionPeriod,
   updateAdmissionPeriod,
+  getAwards,
+  updateAwards,
+  getYears,
+  updateYears
 } from "@/apis/setting";
 import defaultUniversities from '@/scripts/importSettings/importUniversities/universities.json';
 // 在文件顶部添加导入
@@ -30,6 +36,8 @@ export const useSettingStore = defineStore("setting", () => {
     startDate: "",
     endDate: "",
   });
+  const awards = ref<Award[]>([]);
+  const years = ref<Year[]>([]);
 
   // 添加状态标记
   const isInitializing = ref(true);
@@ -51,7 +59,9 @@ export const useSettingStore = defineStore("setting", () => {
       fetchUniversities(),
       fetchMajors(),
       fetchPersonnel(),
-      fetchAdmissionPeriod()
+      fetchAdmissionPeriod(),
+      fetchAwards(),
+      fetchYears()
     ]);
     isInitializing.value = false;
   };
@@ -89,9 +99,6 @@ export const useSettingStore = defineStore("setting", () => {
     try {
       const response = await getPersonnel();
       personnel.value = response.data;
-      const addPersonnel = () => {
-        personnel.value.push({ name: '', recruitment_type: '' });  // 修改字段名
-      };
     } catch (error) {
       console.error("获取人员配置失败:", error);
     }
@@ -130,6 +137,44 @@ export const useSettingStore = defineStore("setting", () => {
     }
   };
 
+  // 奖项相关操作
+  const fetchAwards = async () => {
+    try {
+      const response = await getAwards();
+      awards.value = response.data;
+    } catch (error) {
+      console.error("获取奖项配置失败:", error);
+    }
+  };
+
+  const saveAwards = async () => {
+    try {
+      await updateAwards(awards.value);
+    } catch (error) {
+      console.error("保存奖项配置失败:", error);
+      throw error;
+    }
+  };
+
+  // 年份相关操作
+  const fetchYears = async () => {
+    try {
+      const response = await getYears();
+      years.value = response.data;
+    } catch (error) {
+      console.error("获取年份配置失败:", error);
+    }
+  };
+
+  const saveYears = async () => {
+    try {
+      await updateYears(years.value);
+    } catch (error) {
+      console.error("保存年份配置失败:", error);
+      throw error;
+    }
+  };
+
   const initializeUniversities = async () => {
     try {
       universities.value = defaultUniversities;
@@ -162,7 +207,6 @@ export const useSettingStore = defineStore("setting", () => {
   
   const initializePersonnel = async () => {
     try {
-      // 转换数据格式以匹配后端要求
       const formattedPersonnel = defaultPersons.map(person => ({
         name: person.name,
         recruitment_type: person.recruitmentType,
@@ -182,6 +226,8 @@ export const useSettingStore = defineStore("setting", () => {
     majors,
     personnel,
     admissionPeriod,
+    awards,
+    years,
     isInitializing,
     fetchUniversities,
     saveUniversities,
@@ -191,6 +237,10 @@ export const useSettingStore = defineStore("setting", () => {
     savePersonnel,
     fetchAdmissionPeriod,
     saveAdmissionPeriod,
+    fetchAwards,
+    saveAwards,
+    fetchYears,
+    saveYears,
     initializeUniversities,
     initializeMajors,
     initializeData,
