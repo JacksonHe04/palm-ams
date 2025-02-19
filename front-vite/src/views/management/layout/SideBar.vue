@@ -75,6 +75,13 @@ const menuItems = ref([
         path: "percent",
         icon: "🔍",
       },
+      // result
+      {
+        name: "result",
+        label: "筛选结果",
+        path: "result",
+        icon: "📇",
+      },
       {
         name: "setting",
         label: "规则设置",

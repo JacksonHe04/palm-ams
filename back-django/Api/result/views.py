@@ -81,14 +81,24 @@ def filter_students(request):
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    print(f'学生{student.name}未通过A类院校基本条件筛选：百分比{p}% > {percent.pOfA}%')
                 if student.isTopClass and p <= percent.pOfATop:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if student.isTopClass:
+                        print(f'学生{student.name}未通过A类院校拔尖班条件筛选：百分比{p}% > {percent.pOfATop}%')
                 if filter_talent(student) and p <= percent.pOfATalent:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if filter_talent(student):
+                        print(f'学生{student.name}未通过A类院校人才计划条件筛选：百分比{p}% > {percent.pOfATalent}%')
+                    else:
+                        print(f'学生{student.name}未通过A类院校人才计划条件筛选：未满足论文或奖项要求')
 
             # 检查B类院校条件
             elif student.universityLevel == 'B' or student.masterUniversityLevel == 'B':
@@ -96,14 +106,27 @@ def filter_students(request):
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if p > percent.pOfB:
+                        print(f'学生{student.name}未通过B类院校基本条件筛选：百分比{p}% > {percent.pOfB}%')
+                    if not filter_major(student):
+                        print(f'学生{student.name}未通过B类院校基本条件筛选：专业{student.major}不在限制专业列表中')
                 if student.isTopClass and p <= percent.pOfBTop:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if student.isTopClass:
+                        print(f'学生{student.name}未通过B类院校拔尖班条件筛选：百分比{p}% > {percent.pOfBTop}%')
                 if filter_talent(student) and p <= percent.pOfBTalent:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if filter_talent(student):
+                        print(f'学生{student.name}未通过B类院校人才计划条件筛选：百分比{p}% > {percent.pOfBTalent}%')
+                    else:
+                        print(f'学生{student.name}未通过B类院校人才计划条件筛选：未满足论文或奖项要求')
 
             # 检查C类院校条件
             elif student.universityLevel == 'C' or student.masterUniversityLevel == 'C':
@@ -111,14 +134,27 @@ def filter_students(request):
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if p > percent.pOfC:
+                        print(f'学生{student.name}未通过C类院校基本条件筛选：百分比{p}% > {percent.pOfC}%')
+                    if not filter_major(student):
+                        print(f'学生{student.name}未通过C类院校基本条件筛选：专业{student.major}不在限制专业列表中')
                 if student.isTopClass and p <= percent.pOfCTop:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if student.isTopClass:
+                        print(f'学生{student.name}未通过C类院校拔尖班条件筛选：百分比{p}% > {percent.pOfCTop}%')
                 if filter_talent(student) and p <= percent.pOfCTalent:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
+                else:
+                    if filter_talent(student):
+                        print(f'学生{student.name}未通过C类院校人才计划条件筛选：百分比{p}% > {percent.pOfCTalent}%')
+                    else:
+                        print(f'学生{student.name}未通过C类院校人才计划条件筛选：未满足论文或奖项要求')
 
         # 序列化结果
         from django.forms.models import model_to_dict
