@@ -82,6 +82,13 @@ const router = createRouter({
               component: () => import("@/views/percent/index.vue"),
               meta: { title: "百分比" },
             },
+            // result
+            {
+              path: "result",
+              name: "result",
+              component: () => import("@/views/management/result/index.vue"),
+              meta: { title: "录取结果" },
+            },
             {
               path: "interview",
               name: "interview",

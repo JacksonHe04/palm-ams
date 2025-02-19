@@ -70,9 +70,9 @@ const menuItems = ref([
     category: "招生自定义",
     items: [
       {
-        name: "filter",
+        name: "percent",
         label: "筛选方案",
-        path: "filter",
+        path: "percent",
         icon: "🔍",
       },
       {

@@ -15,5 +15,6 @@ urlpatterns = [
     path('api/filter/', include('Api.filter.urls',)),
     path('api/test/', include('Api.testapp.urls',)),
     path('api/field/', include('Api.field.urls',)),
+    path('api/percent/', include('Api.percent.urls',)),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
