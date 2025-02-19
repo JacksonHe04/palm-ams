@@ -76,62 +76,53 @@ def filter_students(request):
                 continue
 
             # 检查A类院校条件
-            if student.universityLevel == 'A' or student.masterLevel == 'A':
-                if p <= percent.percentOfA:
+            if student.universityLevel == 'A' or student.masterUniversityLevel == 'A':
+                if p <= percent.pOfA:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
-                if student.isTopClass and p <= percent.percentOfATop:
+                if student.isTopClass and p <= percent.pOfATop:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
-                if filter_talent(student) and p <= percent.percentOfATalent:
+                if filter_talent(student) and p <= percent.pOfATalent:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
 
             # 检查B类院校条件
-            elif student.universityLevel == 'B' or student.masterLevel == 'B':
-                if p <= percent.percentOfB and filter_major(student):
+            elif student.universityLevel == 'B' or student.masterUniversityLevel == 'B':
+                if p <= percent.pOfB and filter_major(student):
                     student.isFilterCondition = True
                     result.append(student)
                     continue
-                if student.isTopClass and p <= percent.percentOfBTop:
+                if student.isTopClass and p <= percent.pOfBTop:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
-                if filter_talent(student) and p <= percent.percentOfBTalent:
+                if filter_talent(student) and p <= percent.pOfBTalent:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
 
             # 检查C类院校条件
-            elif student.universityLevel == 'C' or student.masterLevel == 'C':
-                if p <= percent.percentOfC and filter_major(student):
+            elif student.universityLevel == 'C' or student.masterUniversityLevel == 'C':
+                if p <= percent.pOfC and filter_major(student):
                     student.isFilterCondition = True
                     result.append(student)
                     continue
-                if student.isTopClass and p <= percent.percentOfCTop:
+                if student.isTopClass and p <= percent.pOfCTop:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
-                if filter_talent(student) and p <= percent.percentOfCTalent:
+                if filter_talent(student) and p <= percent.pOfCTalent:
                     student.isFilterCondition = True
                     result.append(student)
                     continue
 
         # 序列化结果
-        response_data = [{
-            'id': student.id,
-            'name': student.name,
-            'universityLevel': student.universityLevel,
-            'percentage': student.percentage,
-            'major': student.major,
-            'isTopClass': student.isTopClass,
-            'isPaperCondition': getattr(student, 'isPaperCondition', False),
-            'isAwardCondition': getattr(student, 'isAwardCondition', False),
-            'isFilterCondition': getattr(student, 'isFilterCondition', False)
-        } for student in result]
+        from django.forms.models import model_to_dict
+        response_data = [model_to_dict(student) for student in result]
 
         return JsonResponse(response_data, safe=False)
 
