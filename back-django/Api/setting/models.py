@@ -41,3 +41,23 @@ class AdmissionPeriod(models.Model):
     class Meta:
         verbose_name = '招生时间'
         verbose_name_plural = '招生时间'
+
+class Award(models.Model):
+    name = models.CharField(max_length=100, verbose_name='奖项名称')
+    level = models.CharField(max_length=50, verbose_name='奖项等级')
+    category = models.CharField(max_length=50, verbose_name='奖项类别')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = '奖项信息'
+        verbose_name_plural = '奖项信息'
+
+class Year(models.Model):
+    year = models.IntegerField(verbose_name='年份')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = '年份信息'
+        verbose_name_plural = '年份信息'

@@ -76,6 +76,12 @@ const router = createRouter({
               component: () => import("@/views/management/filtered/index.vue"),
               meta: { title: "筛选结果" },
             },
+            // percent
+            {
+              path: "percent",
+              component: () => import("@/views/percent/index.vue"),
+              meta: { title: "百分比" },
+            },
             {
               path: "interview",
               name: "interview",
@@ -94,14 +100,14 @@ const router = createRouter({
               component: () => import("@/views/management/setting/index.vue"),
               meta: { title: "规则设置" },
             },
-          //   字段配置
+            //   字段配置
             {
               path: "field",
               name: "field",
               component: () => import("@/views/management/field/index.vue"),
               meta: { title: "字段配置" },
             },
-          //   account
+            //   account
             {
               path: "account",
               name: "account",
@@ -120,37 +126,37 @@ const router = createRouter({
           component: Test,
           meta: { title: "开发者测试页面" },
         },
-      //   read
+        //   read
         {
           path: "/read",
           component: () => import("@/views/front-desk/read/index.vue"),
           meta: { title: "PALM实验室申请说明" },
         },
-      //   introduction
+        //   introduction
         {
           path: "/introduction",
           component: () => import("@/views/front-desk/introduction/index.vue"),
           meta: { title: "PALM实验室介绍" },
         },
-      //   news
+        //   news
         {
           path: "/news",
           component: () => import("@/views/front-desk/news/index.vue"),
           meta: { title: "PALM实验室新闻" },
         },
-      //   members
+        //   members
         {
           path: "/members",
           component: () => import("@/views/front-desk/members/index.vue"),
           meta: { title: "PALM实验室成员" },
         },
-      //   academics
+        //   academics
         {
           path: "/academics",
           component: () => import("@/views/front-desk/academics/index.vue"),
           meta: { title: "PALM实验室学术" },
         },
-      //   login
+        //   login
         {
           path: "/login",
           component: () => import("@/views/login/index.vue"),

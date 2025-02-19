@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'Api.auth',
     'Api.filter',
     'Api.setting',
-    'Api.field'
+    'Api.field',
+    'Api.percent',
 ]
 
 MIDDLEWARE = [

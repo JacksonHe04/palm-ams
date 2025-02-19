@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import {
   ElCard,
   ElTable,
@@ -7,31 +7,37 @@ import {
   ElButton,
   ElTag,
 } from 'element-plus'
+import { useFilterProcessorStore } from '@/stores/filterProcessorStore'
 
-// 模拟的表格数据
-const tableData = ref([
-  {
-    id: 1,
-    name: '张三',
-    gender: '男',
-    age: 18,
-    grade: 12,
-    score: 89,
-    class: '高三(1)班',
-    status: '已录取',
-  },
-  {
-    id: 2,
-    name: '李四',
-    gender: '女',
-    age: 17,
-    grade: 12,
-    score: 92,
-    class: '高三(2)班',
-    status: '待审核',
-  },
-  // 这里只是示例数据，实际使用时需要通过 API 获取真实数据
-])
+const filterStore = useFilterProcessorStore()
+const tableData = ref([])
+
+// 在组件挂载时获取筛选结果
+onMounted(async () => {
+  try {
+    const filteredData = await filterStore.executeFilters()
+    // 确保filteredData是数组类型
+    if (!Array.isArray(filteredData)) {
+      console.error('筛选数据格式错误：期望数组类型')
+      return
+    }
+    // 处理数据中的null值和格式化，确保所有字段都有默认值
+    tableData.value = filteredData.map(item => ({
+      id: item.id || '',
+      name: item.name || '',
+      universityLevel: item.universityLevel || '',
+      percentage: item.percentage || '0%',
+      major: item.major || '未设置',
+      isTopClass: item.isTopClass ?? false,
+      isPaperCondition: item.isPaperCondition ?? false,
+      isAwardCondition: item.isAwardCondition ?? false,
+      isFilterCondition: item.isFilterCondition || 'false'
+    }))
+    console.log('处理后的表格数据:', tableData.value) // 添加日志以便调试
+  } catch (error) {
+    console.error('获取筛选数据失败:', error)
+  }
+})
 
 // 根据状态返回不同的标签类型
 const getStatusType = (status: string) => {
@@ -83,42 +89,40 @@ const getStatusType = (status: string) => {
           width="120"
         />
         <el-table-column
-          prop="gender"
-          label="性别"
-          width="80"
-          align="center"
-        />
-        <el-table-column
-          prop="age"
-          label="年龄"
-          width="80"
-          align="center"
-        />
-        <el-table-column
-          prop="grade"
-          label="年级"
-          width="100"
-          align="center"
-        />
-        <el-table-column
-          prop="class"
-          label="班级"
+          prop="universityLevel"
+          label="本科等级"
           width="120"
+          align="center"
         />
         <el-table-column
-          prop="score"
-          label="分数"
+          prop="percentage"
+          label="百分比"
           width="100"
           align="center"
         />
         <el-table-column
-          prop="status"
-          label="状态"
+          prop="major"
+          label="专业"
+          width="150"
+        />
+        <el-table-column
+          label="是否拔尖班"
+          width="120"
           align="center"
         >
           <template #default="{ row }">
-            <el-tag :type="getStatusType(row.status)">
-              {{ row.status }}
+            <el-tag :type="row.isTopClass ? 'success' : 'info'">
+              {{ row.isTopClass ? '是' : '否' }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="筛选状态"
+          align="center"
+        >
+          <template #default="{ row }">
+            <el-tag :type="row.isFilterCondition === 'true' ? 'success' : 'info'">
+              {{ row.isFilterCondition === 'true' ? '通过筛选' : '未通过' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -134,13 +138,6 @@ const getStatusType = (status: string) => {
               @click="() => {}"
             >
               查看详情
-            </el-button>
-            <el-button
-              size="small"
-              type="success"
-              @click="() => {}"
-            >
-              编辑
             </el-button>
           </template>
         </el-table-column>
