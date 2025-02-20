@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Api.setting',
     'Api.field',
     'Api.percent',
+    'Api.files'
 ]
 
 MIDDLEWARE = [

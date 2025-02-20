@@ -39,8 +39,9 @@ export const useApplyStore = defineStore('apply', () => {
         ...formData.value
       }
       const response = await submitApplication(dataWithId)
+      const responseData = response.data
       resetForm()
-      return response
+      return responseData
     } catch (error: any) {
       submitError.value = error.message || '提交失败，请稍后重试'
       throw error
