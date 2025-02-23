@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view
 from Api.apply.models import Apply
 from Api.setting.models import Major, Award, Year
 from Api.percent.models import Percent
+from Api.files.models import File
+from django.forms.models import model_to_dict
 
 def filter_talent(student):
     # 检查论文条件
@@ -156,9 +158,19 @@ def filter_students(request):
                     else:
                         print(f'学生{student.name}未通过C类院校人才计划条件筛选：未满足论文或奖项要求')
 
-        # 序列化结果
-        from django.forms.models import model_to_dict
-        response_data = [model_to_dict(student) for student in result]
+        # 序列化结果并添加文件信息
+        response_data = []
+        for student in result:
+            student_dict = model_to_dict(student)
+            # 查找该学生对应的文件
+            student_file = File.objects.filter(applicant_id=str(student.id), is_deleted=False).first()
+            if student_file:
+                student_dict['file_name'] = student_file.name
+                student_dict['file_path'] = f'/api/files/download/{student_file.id}'
+            else:
+                student_dict['file_name'] = None
+                student_dict['file_path'] = None
+            response_data.append(student_dict)
 
         return JsonResponse(response_data, safe=False)
 

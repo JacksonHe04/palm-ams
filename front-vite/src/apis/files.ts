@@ -22,6 +22,11 @@ export const deleteFile = (fileId: number) => {
   return http.delete(`/api/files/${fileId}`)
 }
 
+// 获取文件下载链接
+export const getFileDownloadUrl = (filePath: string) => {
+  return `${http.defaults.baseURL}${filePath}`
+}
+
 // 上传文件的配置
 export const uploadConfig = {
   action: `${http.defaults.baseURL}/api/files/upload/`,
