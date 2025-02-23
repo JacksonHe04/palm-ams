@@ -33,40 +33,6 @@ const emit = defineEmits(["toggle"]);
 
 const menuItems = ref([
   {
-    category: "可视化",
-    items: [
-      {
-        name: "dashboard",
-        label: "仪表盘",
-        path: "dashboard",
-        icon: "📊",
-      },
-      {
-        name: "analytics",
-        label: "数据分析",
-        path: "analysis",
-        icon: "📈",
-      },
-    ],
-  },
-  {
-    category: "表格总览",
-    items: [
-      {
-        name: "users",
-        label: "学生表格",
-        path: "students",
-        icon: "👤",
-      },
-      {
-        name: "interview",
-        label: "面试打分",
-        path: "interview",
-        icon: "📋",
-      },
-    ],
-  },
-  {
     category: "招生自定义",
     items: [
       {
@@ -90,6 +56,43 @@ const menuItems = ref([
       },
     ],
   },
+
+  {
+    category: "表格总览",
+    items: [
+      {
+        name: "users",
+        label: "学生表格",
+        path: "students",
+        icon: "👤",
+      },
+      {
+        name: "interview",
+        label: "面试打分",
+        path: "interview",
+        icon: "📋",
+      },
+    ],
+  },
+
+  {
+    category: "可视化",
+    items: [
+      {
+        name: "dashboard",
+        label: "仪表盘",
+        path: "dashboard",
+        icon: "📊",
+      },
+      {
+        name: "analytics",
+        label: "数据分析",
+        path: "analysis",
+        icon: "📈",
+      },
+    ],
+  },
+
   {
     category: "系统设置",
     items: [

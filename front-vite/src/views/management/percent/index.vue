@@ -2,7 +2,7 @@
   <div class="percent-editor-container p-6">
     <el-card class="mb-6">
       <template #header>
-        <div class="card-header">
+        <div class="card-header text-left">
           <span class="text-xl font-bold">百分比设置</span>
           <div class="text-gray-500 text-sm mt-1">
             设置不同类别院校的录取百分比阈值
@@ -21,8 +21,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -33,8 +34,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -45,8 +47,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -64,8 +67,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -76,8 +80,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -88,8 +93,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -107,8 +113,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -119,8 +126,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -131,8 +139,9 @@
                 :min="0"
                 :max="100"
                 :precision="2"
-                :step="0.1"
+                :step="1"
                 class="w-full"
+                @change="handleDataChange"
               >
                 <template #suffix>%</template>
               </el-input-number>
@@ -141,7 +150,7 @@
         </div>
 
         <div class="flex justify-end mt-6">
-          <el-button type="primary" @click="handleSubmit">保存设置</el-button>
+          <el-button type="primary" :class="{ 'is-changed': isDataChanged }" @click="handleSubmit">保存设置</el-button>
         </div>
       </el-form>
     </el-card>
@@ -149,17 +158,29 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { usePercentStore } from '@/stores/percentStore'
+import { ElMessage } from 'element-plus'
 
 const percentStore = usePercentStore()
+const isDataChanged = ref(false)
 
 onMounted(() => {
   percentStore.fetchPercentData()
 })
 
+const handleDataChange = () => {
+  isDataChanged.value = true
+  ElMessage({
+    message: '请记得点击保存按钮使配置生效',
+    type: 'warning',
+    duration: 3000
+  })
+}
+
 const handleSubmit = async () => {
   await percentStore.updatePercentData(percentStore.percentData)
+  isDataChanged.value = false
 }
 </script>
 
@@ -191,6 +212,10 @@ const handleSubmit = async () => {
     .el-input__inner {
       @apply text-right;
     }
+  }
+
+  .is-changed {
+    @apply animate-pulse;
   }
 }
 </style>

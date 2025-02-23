@@ -1,25 +1,36 @@
 <template>
-  <div class="interview-block">
-    <!-- 添加文件输入元素，并隐藏它 -->
-    <input type="file" ref="fileInput" @change="handleFileUpload" style="display: none;" />
+  <div class="interview-block p-6">
+    <el-card class="mb-6">
+      <template #header>
+        <div class="card-header text-left">
+          <span class="text-xl font-bold">面试评分</span>
+          <div class="text-gray-500 text-sm mt-1">
+            导入面试评分表格并进行归一化处理
+          </div>
+        </div>
+      </template>
 
-    <!-- 将按钮的点击事件改为触发文件输入元素的点击 -->
-    <el-button type="primary" @click="triggerFileInput">导入表格</el-button>
-    <el-button type="success" @click="normalizeScores">归一化</el-button>
+      <!-- 添加文件输入元素，并隐藏它 -->
+      <input type="file" ref="fileInput" @change="handleFileUpload" style="display: none;" />
 
-    <el-table
-      :data="tableData"
-      style="width: 100%; margin-top: 20px;"
-      :default-sort="{ prop: 'normalizedScore', order: 'descending' }"
-    >
-      <el-table-column type="index" label="序号" width="50"></el-table-column>
-      <el-table-column prop="student" label="学生" width="120"></el-table-column>
-      <el-table-column prop="scoreTeacher1" label="老师一打分" width="120"></el-table-column>
-      <el-table-column prop="scoreTeacher2" label="老师二打分" width="120"></el-table-column>
-      <el-table-column prop="scoreTeacher3" label="老师三打分" width="120"></el-table-column>
-      <el-table-column prop="normalizedScore" label="归一化打分" width="120" sortable></el-table-column>
-      <el-table-column prop="resumeScore" label="简历分数" width="120"></el-table-column>
-    </el-table>
+      <!-- 将按钮的点击事件改为触发文件输入元素的点击 -->
+      <el-button type="primary" @click="triggerFileInput">导入表格</el-button>
+      <el-button type="success" @click="normalizeScores">归一化</el-button>
+
+      <el-table
+        :data="tableData"
+        style="width: 100%; margin-top: 20px;"
+        :default-sort="{ prop: 'normalizedScore', order: 'descending' }"
+      >
+        <el-table-column type="index" label="序号" width="50"></el-table-column>
+        <el-table-column prop="student" label="学生" width="120"></el-table-column>
+        <el-table-column prop="scoreTeacher1" label="老师一打分" width="120"></el-table-column>
+        <el-table-column prop="scoreTeacher2" label="老师二打分" width="120"></el-table-column>
+        <el-table-column prop="scoreTeacher3" label="老师三打分" width="120"></el-table-column>
+        <el-table-column prop="normalizedScore" label="归一化打分" width="120" sortable></el-table-column>
+        <el-table-column prop="resumeScore" label="简历分数" width="120"></el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 

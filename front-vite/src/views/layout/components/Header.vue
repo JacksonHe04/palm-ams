@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-cover bg-center" style="background-image: url('/home-bg-m.png');">
+  <nav class="bg-cover bg-center" :style="navStyle">
     <div class="container mx-auto px-4 flex justify-between items-center py-3 md:py-6">
       <RouterLink to="/" class="flex items-center gap-2 text-2xl font-bold text-gray-800">
         <img src="/palm_logo_cicle.png" alt="Palm Logo" class="logo">
@@ -40,9 +40,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const isMenuOpen = ref(false);
+
+const navStyle = computed(() => {
+  return route.path.startsWith('/admin')
+    ? { backgroundColor: 'white' }
+    : { backgroundImage: "url('/home-bg-m.png')" };
+});
 const navItems = [
   { name: 'Introduction', to: '/introduction' },
   { name: 'News', to: '/news' },
