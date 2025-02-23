@@ -77,11 +77,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(mentor, index) in mentors" :key="index">
-              <td>{{ mentor.name }}</td>
-              <td>{{ mentor.recruitmentType }}</td>
-              <td>{{ mentor.department }}</td>
-              <td>{{ mentor.researchDirection }}</td>
+            <tr v-for="(person, index) in personnel" :key="index">
+              <td>{{ person.name }}</td>
+              <td>{{ person.recruitment_type }}</td>
+              <td>{{ person.department }}</td>
+              <td>{{ person.research_direction }}</td>
             </tr>
           </tbody>
         </table>
@@ -90,156 +90,18 @@
   </FrontMain>
 </template>
 
-<script>
+<script setup>
 import FrontMain from "@/views/front-desk/components/FrontMain.vue";
+import { useSettingStore } from "@/stores/settingStore";
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
 
-export default {
-  components: { FrontMain },
-  data() {
-    return {
-      mentors: [
-        {
-          name: "耿新",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、模式识别、计算机视觉",
-        },
-        {
-          name: "张敏灵",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、数据挖掘、模式识别",
-        },
-        {
-          name: "薛晖",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、模式识别、计算机视觉",
-        },
-        {
-          name: "周德宇",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "自然语言处理",
-        },
-        {
-          name: "张宇",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、机器学习",
-        },
-        {
-          name: "魏秀参",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、机器学习、机器人",
-        },
-        {
-          name: "宋沫飞",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机图形学、计算机视觉",
-        },
-        {
-          name: "贾育衡",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、数据挖掘、模式识别",
-        },
-        {
-          name: "陈浩",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、机器学习",
-        },
-        {
-          name: "杨旭",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "视觉语言多模态、因果推断",
-        },
-        {
-          name: "周毅",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、模式识别、医学影像分析",
-        },
-        {
-          name: "魏通",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、数据挖掘",
-        },
-        {
-          name: "王洪松",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、多媒体内容理解",
-        },
-        {
-          name: "方鹏飞",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、机器学习",
-        },
-        {
-          name: "李竹颖",
-          recruitmentType: "博士生、直博生、硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "人机交互、普适计算",
-        },
-        {
-          name: "闫亚萍",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、机器学习",
-        },
-        {
-          name: "时霄",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "电子设计自动化",
-        },
-        {
-          name: "祁磊",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "计算机视觉、机器学习",
-        },
-        {
-          name: "徐宁",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、数据挖掘",
-        },
-        {
-          name: "乔伊果",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "多模态视觉感知、计算机视觉、机器学习",
-        },
-        {
-          name: "吕佳祺",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、数据挖掘、模式识别",
-        },
-        {
-          name: "王靖",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "机器学习、数据挖掘",
-        },
-        {
-          name: "石楚涵",
-          recruitmentType: "硕士生",
-          department: "计算机学院、软件学院、东蒙联合研究生院",
-          researchDirection: "数据可视化、可视分析、人机交互",
-        },
-      ],
-    };
-  },
-};
+const settingStore = useSettingStore();
+const { personnel } = storeToRefs(settingStore);
+
+onMounted(async () => {
+  await settingStore.fetchPersonnel();
+});
 </script>
 
 <style scoped>

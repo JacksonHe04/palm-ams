@@ -9,7 +9,7 @@
       :before-upload="beforeUpload"
       multiple
     >
-      <el-button type="primary">点击上传文件</el-button>
+      <el-button type="primary">上传证明材料</el-button>
       <template #tip>
         <div class="el-upload__tip">
           请上传ZIP格式的压缩文件，文件大小不超过100MB

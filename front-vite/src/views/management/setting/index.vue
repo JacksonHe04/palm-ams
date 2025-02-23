@@ -9,16 +9,16 @@
         <MajorCategory />
       </el-tab-pane>
 
-      <el-tab-pane label="人员身份调整">
+      <el-tab-pane label="奖项配置">
+        <AwardSetting />
+      </el-tab-pane>
+
+      <el-tab-pane label="导师信息调整">
         <PersonnelManagement />
       </el-tab-pane>
 
       <el-tab-pane label="招生年份和时间调整">
         <AdmissionPeriod />
-      </el-tab-pane>
-
-      <el-tab-pane label="奖项配置">
-        <AwardSetting />
       </el-tab-pane>
 
       <el-tab-pane label="年份配置">

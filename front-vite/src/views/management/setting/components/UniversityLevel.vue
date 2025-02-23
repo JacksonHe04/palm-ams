@@ -1,28 +1,25 @@
 <template>
   <div>
-    <el-table :data="store.universities" style="width: 100%" :empty-text="store.isInitializing ? '加载中...' : '暂无数据'">
-      <el-table-column prop="name" label="院校名称">
-        <template #default="{ row }">
-          <el-input v-model="row.name" placeholder="请输入院校名称"></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column prop="level" label="等级">
-        <template #default="{ row }">
-          <el-select v-model="row.level" placeholder="选择等级">
+    <div class="grid grid-cols-3 gap-4">
+      <div v-for="(university, index) in store.universities" :key="index" class="border p-4 rounded">
+        <div class="flex items-center gap-2">
+          <el-input v-model="university.name" placeholder="请输入院校名称"></el-input>
+          <el-select v-model="university.level" placeholder="选择等级" style="width: 120px">
             <el-option label="A" value="A"></el-option>
             <el-option label="B" value="B"></el-option>
             <el-option label="C" value="C"></el-option>
             <el-option label="国际前100" value="国际前100"></el-option>
             <el-option label="国际前200" value="国际前200"></el-option>
           </el-select>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template #default="{ $index }">
-          <el-button type="danger" @click="removeUniversity($index)" size="small">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+          <el-button type="danger" @click="removeUniversity(index)" size="small">删除</el-button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="store.universities.length === 0" class="text-center py-8 text-gray-500">
+      {{ store.isInitializing ? '加载中...' : '暂无数据' }}
+    </div>
+
     <div class="mt-4 flex justify-between">
       <div class="flex gap-4">
         <el-button type="primary" @click="addUniversity">新增院校</el-button>
