@@ -3,6 +3,7 @@
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore.ts";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 export default {
   setup() {
@@ -17,7 +18,10 @@ export default {
         password.value,
       );
       if (loginSuccess) {
-        await router.push("/admin/dashboard");
+        ElMessage.success("登录成功");
+        await router.push("/admin");
+      } else {
+        ElMessage.error("登录失败，请检查用户名和密码");
       }
     };
 
@@ -63,7 +67,7 @@ export default {
         <div class="form-row">
           <label class="remember-me">
             <input type="checkbox" />
-            <span>Remember for 30 days</span>
+            <span>Remember for 7 days</span>
           </label>
         </div>
 

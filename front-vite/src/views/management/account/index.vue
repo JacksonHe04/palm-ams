@@ -1,15 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import { ElMessage } from 'element-plus'
 
 const userStore = useUserStore()
 const showPasswordCard = ref(false)
-const autoLoginDays = ref(7)
+const autoLoginDays = ref(userStore.autoLoginDays)
 
 const userForm = ref({
-  username: 'admin',
-  phone: '',
-  email: '',
+  username: userStore.user?.username || '',
+  phone: userStore.userInfo.phone || '',
+  email: userStore.userInfo.email || '',
   oldPassword: '',
   newPassword: '',
   confirmPassword: ''
@@ -17,26 +18,38 @@ const userForm = ref({
 
 const handleSave = async () => {
   try {
+    const updateData = {
+      phone: userForm.value.phone,
+      email: userForm.value.email,
+      auto_login_days: autoLoginDays.value
+    }
+
     if (showPasswordCard.value && userForm.value.newPassword) {
       if (userForm.value.newPassword !== userForm.value.confirmPassword) {
-        alert('两次输入的密码不一致')
+        ElMessage.error('两次输入的密码不一致')
         return
       }
-      // 这里添加修改密码的逻辑
+      updateData.old_password = userForm.value.oldPassword
+      updateData.new_password = userForm.value.newPassword
     }
-    // 这里添加保存用户信息的逻辑
-    alert('保存成功')
-    if (showPasswordCard.value) {
-      resetPasswordForm()
+
+    const success = await userStore.updateUserInfo(updateData)
+    if (success) {
+      ElMessage.success('保存成功')
+      if (showPasswordCard.value) {
+        resetPasswordForm()
+      }
+    } else {
+      ElMessage.error('保存失败')
     }
   } catch (error) {
-    alert('保存失败')
+    ElMessage.error('保存失败')
   }
 }
 
 const handleLogout = () => {
-  // 添加登出逻辑
   userStore.logout()
+  ElMessage.success('退出登录成功')
 }
 
 const resetPasswordForm = () => {
@@ -57,187 +70,180 @@ const decrementDays = () => {
     autoLoginDays.value--
   }
 }
+
+onMounted(async () => {
+  await userStore.fetchUserInfo()
+  userForm.value.phone = userStore.userInfo.phone
+  userForm.value.email = userStore.userInfo.email
+  autoLoginDays.value = userStore.autoLoginDays
+})
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- 基本信息卡片 -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100">
-          <div class="p-6 border-b border-gray-100">
-            <h2 class="text-xl font-semibold text-gray-800">基本信息</h2>
-            <p class="text-gray-500 text-sm mt-1">管理您的个人资料</p>
+  <div class="p-6">
+    <el-card>
+      <template #header>
+        <div class="flex justify-between items-center">
+          <div class="flex items-start flex-col">
+            <span class="text-xl font-bold">账号设置</span>
+            <div class="text-gray-500 text-sm mt-1">
+              管理您的账户信息和安全设置
+            </div>
           </div>
-          <div class="p-6">
-            <form @submit.prevent="handleSave">
-              <div class="flex flex-col items-center space-y-6">
-                <div class="w-full flex flex-col items-center">
-                  <label class="text-gray-700 font-medium mb-2 text-center w-full">用户名</label>
-                  <div class="flex justify-center"> <!-- 添加此行 -->
-                    <input
-                      v-model="userForm.username"
-                      type="text"
-                      disabled
-                      class="max-w-xs w-full px-4 py-2 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div class="w-full flex flex-col items-center">
-                  <label class="text-gray-700 font-medium mb-2 text-center w-full">手机号码</label>
-                  <div class="flex justify-center"> <!-- 添加此行 -->
-                    <input
-                      v-model="userForm.phone"
-                      type="tel"
-                      placeholder="请输入手机号码"
-                      class="max-w-xs w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-blue-500 hover:border-gray-300"
-                    />
-                  </div>
-                </div>
-
-                <div class="w-full flex flex-col items-center">
-                  <label class="text-gray-700 font-medium mb-2 text-center w-full">邮箱地址</label>
-                  <div class="flex justify-center"> <!-- 添加此行 -->
-                    <input
-                      v-model="userForm.email"
-                      type="email"
-                      placeholder="请输入邮箱"
-                      class="max-w-xs w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-blue-500 hover:border-gray-300"
-                    />
-                  </div>
-                </div>
-
-                <div class="w-full flex flex-col items-center">
-                  <label class="text-gray-700 font-medium mb-2 text-center w-full">自动登录设置</label>
-                  <div class="flex items-center justify-center">
-                    <div class="flex items-center border border-gray-200 rounded-lg bg-gray-50">
-                      <button
-                        type="button"
-                        @click="decrementDays"
-                        class="px-3 py-2 hover:bg-gray-100 rounded-l-lg"
-                      >
-                        -
-                      </button>
-                      <input
-                        v-model="autoLoginDays"
-                        type="number"
-                        min="1"
-                        max="30"
-                        class="w-16 text-center bg-transparent border-0 focus:outline-none"
-                      />
-                      <button
-                        type="button"
-                        @click="incrementDays"
-                        class="px-3 py-2 hover:bg-gray-100 rounded-r-lg"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <span class="ml-2 text-gray-600">天</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between mt-8 pt-4 border-t border-gray-100 w-full">
-                <button
-                  type="button"
-                  @click="showPasswordCard = true"
-                  :disabled="showPasswordCard"
-                  class="flex-1 mr-4 max-w-[160px] px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  修改密码
-                </button>
-                <button
-                  type="button"
-                  @click="handleLogout"
-                  class="flex-1 max-w-[160px] px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  退出登录
-                </button>
-              </div>
-            </form>
+          <div class="flex gap-2">
+            <el-button 
+              type="primary" 
+              @click="() => {
+                showPasswordCard = true
+                ElMessage.info('请填写密码信息')
+              }"
+              :disabled="showPasswordCard"
+            >
+              修改密码
+            </el-button>
+            <el-button type="danger" @click="handleLogout">
+              退出登录
+            </el-button>
           </div>
         </div>
+      </template>
 
-        <!-- 修改密码卡片 -->
-        <Transition
-          enter-active-class="transition ease-out duration-200"
-          enter-from-class="opacity-0 translate-x-4"
-          enter-to-class="opacity-100 translate-x-0"
-          leave-active-class="transition ease-in duration-150"
-          leave-from-class="opacity-100 translate-x-0"
-          leave-to-class="opacity-0 translate-x-4"
-        >
-          <div v-if="showPasswordCard" class="relative bg-white rounded-xl shadow-sm border border-gray-100">
-            <div class="p-6 border-b border-gray-100 flex justify-center">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h2 class="text-xl font-semibold text-gray-800">修改密码</h2>
-                  <p class="text-gray-500 text-sm mt-1">设置新的账号密码</p>
-                </div>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <!-- 基本信息卡片 -->
+          <el-card class="box-card">
+            <template #header>
+              <div class="card-header">
+                <h3>基本信息</h3>
+                <p class="text-secondary">管理您的个人资料</p>
               </div>
-            </div>
-            <div class="p-6">
-              <form @submit.prevent="handleSave">
-                <div class="flex flex-col items-center space-y-6">
-                  <div class="w-full flex flex-col items-center">
-                    <label class="text-gray-700 font-medium mb-2 text-center w-full">原密码</label>
-                    <div class="flex justify-center"> <!-- 添加此行 -->
-                      <input
-                        v-model="userForm.oldPassword"
-                        type="password"
-                        placeholder="请输入原密码"
-                        class="w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-blue-500 hover:border-gray-300"
-                      />
-                    </div>
-                  </div>
+            </template>
+            
+            <el-form @submit.prevent="handleSave" label-position="top">
+              <el-form-item label="用户名">
+                <el-input v-model="userForm.username" disabled />
+              </el-form-item>
 
-                  <div class="w-full flex flex-col items-center">
-                    <label class="text-gray-700 font-medium mb-2 text-center w-full">新密码</label>
-                    <div class="flex justify-center"> <!-- 添加此行 -->
-                      <input
-                        v-model="userForm.newPassword"
-                        type="password"
-                        placeholder="请输入新密码"
-                        class="w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-blue-500 hover:border-gray-300"
-                      />
-                    </div>
-                  </div>
+              <el-form-item label="手机号码">
+                <el-input v-model="userForm.phone" placeholder="请输入手机号码" />
+              </el-form-item>
 
-                  <div class="w-full flex flex-col items-center">
-                    <label class="text-gray-700 font-medium mb-2 text-center w-full">确认新密码</label>
-                    <div class="flex justify-center"> <!-- 添加此行 -->
-                      <input
-                        v-model="userForm.confirmPassword"
-                        type="password"
-                        placeholder="请再次输入新密码"
-                        class="w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-blue-500 hover:border-gray-300"
-                      />
-                    </div>
-                  </div>
-                </div>
+              <el-form-item label="邮箱地址">
+                <el-input v-model="userForm.email" placeholder="请输入邮箱" type="email" />
+              </el-form-item>
 
-                <div class="absolute bottom-6 right-0 flex items-center justify-end gap-4 mt-8 pt-4 border-t border-gray-100 w-full"> <!-- 添加 w-full -->
-                  <button
-                    type="button"
-                    @click="resetPasswordForm"
-                    class="min-w-[100px] mr-6 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50"
-                  >
-                    取消修改
-                  </button>
-                  <button
-                    type="submit"
-                    class="min-w-[100px] mr-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                  >
-                    确认修改
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </Transition>
-      </div>
-    </div>
+                  <div class="flex justify-between items-center mb-4">
+                    <span class="text-base font-medium">自动登录设置</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                  <el-form-item>
+                    <el-input-number 
+                      v-model="autoLoginDays"
+                      :min="1"
+                      :max="30"
+                      controls-position="right"
+                    />
+                    <span class="days-text">天</span>
+                  </el-form-item>
+                <el-button type="primary" @click="handleSave">保存修改</el-button>
+              </div>
+            </el-form>
+          </el-card>
+        </el-col>
+
+        <el-col :span="12">
+          <!-- 修改密码卡片 -->
+          <el-card v-if="showPasswordCard" class="box-card password-card">
+            <template #header>
+              <div class="card-header">
+                <h3>修改密码</h3>
+                <p class="text-secondary">设置新的账号密码</p>
+              </div>
+            </template>
+
+            <el-form @submit.prevent="handleSave" label-position="top">
+              <el-form-item label="原密码">
+                <el-input 
+                  v-model="userForm.oldPassword" 
+                  type="password"
+                  placeholder="请输入原密码"
+                  show-password
+                />
+              </el-form-item>
+
+              <el-form-item label="新密码">
+                <el-input 
+                  v-model="userForm.newPassword" 
+                  type="password"
+                  placeholder="请输入新密码"
+                  show-password
+                />
+              </el-form-item>
+
+              <el-form-item label="确认新密码">
+                <el-input 
+                  v-model="userForm.confirmPassword" 
+                  type="password"
+                  placeholder="请再次输入新密码"
+                  show-password
+                />
+              </el-form-item>
+
+              <div class="button-group">
+                <el-button @click="resetPasswordForm">取消修改</el-button>
+                <el-button type="primary" native-type="submit">确认修改</el-button>
+              </div>
+            </el-form>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
+
+<style scoped>
+.container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.box-card {
+  margin-bottom: 20px;
+}
+
+.card-header {
+  margin-bottom: 20px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #303133;
+}
+
+.text-secondary {
+  color: #909399;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #ebeef5;
+}
+
+.days-text {
+  margin-left: 8px;
+  color: #606266;
+}
+
+.password-card {
+  transition: all 0.3s ease-in-out;
+}
+</style>

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
 import Login from "@/views/login/index.vue";
 import Layout from "@/views/layout/index.vue";
 import Home from "@/views/front-desk/home/index.vue";
@@ -8,6 +9,7 @@ import Test from "@/views/test/index.vue";
 
 const hash = createWebHistory();
 const router = createRouter({
+
   history: hash,
   routes: [
     {
@@ -36,7 +38,7 @@ const router = createRouter({
         },
         {
           path: "/admin",
-          redirect: "/admin/dashboard",
+          redirect: "/admin/result",
           component: Admin,
           meta: { title: "PALM实验室后台管理" },
           children: [
@@ -150,6 +152,28 @@ const router = createRouter({
       top: 0,
     };
   },
+});
+
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  const isAdminRoute = to.path.startsWith('/admin');
+
+  // 初始化用户状态
+  userStore.initializeFromStorage();
+
+  if (isAdminRoute) {
+    // 检查是否是有效的登录会话
+    if (userStore.isValidSession) {
+      next();
+    } else {
+      // 未登录或会话过期，重定向到登录页
+      next('/login');
+    }
+  } else {
+    // 非管理员路由，直接放行
+    next();
+  }
 });
 
 export default router;

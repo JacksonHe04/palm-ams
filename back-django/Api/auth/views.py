@@ -1,4 +1,4 @@
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -93,3 +93,55 @@ def jwt_auth_required(view_func):
             }, status=401)
             
     return wrapped_view
+
+@csrf_exempt
+@require_http_methods(['GET', 'PUT'])
+@jwt_auth_required
+def user_info(request):
+    try:
+        user = User.objects.get(id=request.user['user_id'])
+        
+        if request.method == 'GET':
+            return JsonResponse({
+                'success': True,
+                'data': {
+                    'username': user.username,
+                    'phone': user.phone,
+                    'email': user.email,
+                    'auto_login_days': user.auto_login_days
+                }
+            })
+        
+        elif request.method == 'PUT':
+            data = json.loads(request.body)
+            
+            if 'phone' in data:
+                user.phone = data['phone']
+            if 'email' in data:
+                user.email = data['email']
+            if 'auto_login_days' in data:
+                user.auto_login_days = data['auto_login_days']
+            if 'old_password' in data and 'new_password' in data:
+                if not check_password(data['old_password'], user.password):
+                    return JsonResponse({
+                        'success': False,
+                        'message': '原密码错误'
+                    }, status=400)
+                user.set_password(data['new_password'])
+            
+            user.save()
+            return JsonResponse({
+                'success': True,
+                'message': '更新成功'
+            })
+            
+    except User.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'message': '用户不存在'
+        }, status=404)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': str(e)
+        }, status=500)
