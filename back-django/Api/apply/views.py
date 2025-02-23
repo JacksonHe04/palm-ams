@@ -4,9 +4,11 @@ from django.http import JsonResponse
 from .models import Apply
 from ..field.models import Field
 from ..setting.models import University
+from ..files.models import File
 from django.core.exceptions import ObjectDoesNotExist
 import json
 import uuid
+import os
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
@@ -52,6 +54,29 @@ def apply_post(request):
                 id=id,
                 defaults=field_values
             )
+
+            # 重命名相关文件
+            try:
+                files = File.objects.filter(applicant_id=id, is_deleted=False)
+                for file in files:
+                    # 生成新的文件名
+                    file_ext = os.path.splitext(file.original_name)[1]
+                    new_filename = f"{apply_obj.applicationType}_{apply_obj.university}_{apply_obj.name}{file_ext}"
+                    
+                    # 获取文件的目录路径
+                    dir_path = os.path.dirname(file.file_path)
+                    new_file_path = os.path.join(dir_path, new_filename)
+                    
+                    # 重命名文件
+                    if os.path.exists(file.file_path):
+                        os.rename(file.file_path, new_file_path)
+                        
+                        # 更新文件记录
+                        file.name = new_filename
+                        file.file_path = new_file_path
+                        file.save()
+            except Exception as e:
+                print(f"文件重命名失败：{str(e)}")
 
             response_data = {
                 'message': '申请表单提交成功',

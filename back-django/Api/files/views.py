@@ -20,23 +20,14 @@ def upload_file(request):
 
     try:
         file = request.FILES.get('file')
-        applicant_id = request.POST.get('applicant_id')
+        applicant_id = request.headers.get('X-Applicant-ID', None)
 
         if not file:
             return JsonResponse({'error': '未找到上传文件'}, status=400)
-        if not applicant_id:
-            return JsonResponse({'error': '未提供申请者ID'}, status=400)
 
-        # 获取申请者信息
-        try:
-            apply = Apply.objects.get(id=applicant_id)
-        except Apply.DoesNotExist:
-            return JsonResponse({'error': '未找到对应的申请信息'}, status=404)
-
-        # 生成文件名
+        # 使用原始文件名
         file_ext = os.path.splitext(file.name)[1]
-        applicant_info = f"{apply.applicationType or '未知类型'}_{apply.name or '未知姓名'}_{apply.university or '未知本科'}_{apply.masterUniversity or '未知硕士'}_{apply.year or '未知年份'}"
-        new_filename = f"{applicant_info}{file_ext}"
+        new_filename = file.name
         
         # 如果是需要压缩的文件类型
         if file_ext.lower() in ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png']:
@@ -49,7 +40,7 @@ def upload_file(request):
                         destination.write(chunk)
                 
                 # 创建ZIP文件
-                zip_filename = f"{applicant_info}.zip"
+                zip_filename = f"{os.path.splitext(file.name)[0]}.zip"
                 zip_path = os.path.join(FILE_STORAGE_PATH, zip_filename)
                 
                 with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:

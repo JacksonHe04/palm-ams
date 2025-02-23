@@ -63,6 +63,26 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'x-applicant-id',
+]
 
 ROOT_URLCONF = 'ApplicationSystem.urls'
 
@@ -154,6 +174,9 @@ USE_TZ = True
 
 # 设置默认的主键字段类型
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 静态文件根路径
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 # 图片储存根路径
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

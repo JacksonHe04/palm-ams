@@ -72,6 +72,8 @@
         />
       </div>
       
+      <UploadFile :applicant-id="formData.id" />
+      
       <button type="submit" class="submit-button">提交申请</button>
     </form>
   </div>
@@ -84,6 +86,7 @@ import { useSettingStore } from '@/stores/settingStore'
 import { ElSwitch } from 'element-plus'
 import type { FieldItem } from '@/apis/field'
 import { useApplyStore } from '@/stores/applyStore'
+import UploadFile from '@/components/UploadFile.vue'
 
 const fieldStore = useFieldStore()
 const settingStore = useSettingStore()
@@ -224,7 +227,9 @@ const calculatePercentage = () => {
 }
 
 const initFormData = () => {
-  const initialData = {}
+  const initialData = {
+    id: uuidv4() // 在初始化时就生成一个临时ID
+  }
   applyFields.value.forEach(field => {
     initialData[field.variableName] = field.type === 'boolean' ? false : ''
   })
