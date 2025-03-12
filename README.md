@@ -1,4 +1,4 @@
-# Palm招生系统
+# 东南大学 PALM 实验室研究生招生管理系统
 
 <p align="center">
   <img src="front-vite/public/palm_logo.png" width="200" alt="Palm Logo" />
@@ -6,7 +6,7 @@
 
 ## 项目简介
 
-Palm招生系统是一个现代化的教育机构招生管理平台，采用前后端分离架构设计，提供完整的招生流程管理、学生信息管理、数据分析等功能。系统致力于提升招生工作效率，优化管理流程，为教育机构提供专业的招生解决方案。
+东南大学 PALM 实验室研究生招生管理系统 PALM AMS (Pattern Learning and Mining Lab Admissions Management System) 是一个现代化的教育机构招生管理平台，采用前后端分离架构设计，提供完整的招生流程管理、学生信息管理、数据分析等功能。系统致力于提升招生工作效率，优化管理流程，为教育机构提供专业的招生解决方案。
 
 ## 技术栈
 
@@ -16,7 +16,6 @@ Palm招生系统是一个现代化的教育机构招生管理平台，采用前�
 - Tailwind CSS
 
 ### 后端
-- NestJS (Node.js)
 - Django (Python)
 - MySQL
 
@@ -25,7 +24,6 @@ Palm招生系统是一个现代化的教育机构招生管理平台，采用前�
 项目采用微服务架构，包含三个主要模块：
 
 - `front-vite/`: 基于Vue 3的前端应用
-- `palm_nest/`: 基于NestJS的后端服务
 - `back-django/`: 基于Django的后端服务
 
 ## 环境要求
@@ -96,7 +94,6 @@ python manage.py runserver
 
 ```
 ├── front-vite/          # Vue 3前端项目
-├── palm_nest/           # NestJS后端服务
 ├── back-django/         # Django后端服务
 ├── docs/                # 项目文档
 └── README.md           # 项目说明

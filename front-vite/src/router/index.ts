@@ -1,20 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "@/stores/userStore";
-import Login from "@/views/login/index.vue";
-import Layout from "@/views/layout/index.vue";
-import Home from "@/views/front-desk/home/index.vue";
-import Admin from "@/views/management/index.vue";
-import About from "@/views/front-desk/about/index.vue";
-import Test from "@/views/test/index.vue";
 
-const hash = createWebHistory();
 const router = createRouter({
-
-  history: hash,
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
-      component: Layout,
+      component: () => import("@/views/layout/index.vue"),
       children: [
         {
           path: "/:pathMatch(.*)*",
@@ -23,23 +15,23 @@ const router = createRouter({
         },
         {
           path: "",
-          component: Home,
+          component: () => import("@/views/front-desk/home/index.vue"),
           meta: { title: "欢迎申请 PALM 实验室！" },
         },
         {
           path: "/apply",
-          component: () => import("@/views/new_apply/index.vue"),
+          component: () => import("@/views/front-desk/new_apply/index.vue"),
           meta: { title: "申请 PALM 实验室" },
         },
         {
           path: "/login",
-          component: Login,
-          meta: { title: "登录PALM实验室" },
+          component: () => import("@/views/login/index.vue"),
+          meta: { title: "登录 PALM 实验室" },
         },
         {
           path: "/admin",
           redirect: "/admin/result",
-          component: Admin,
+          component: () => import("@/views/management/index.vue"),
           meta: { title: "PALM实验室后台管理" },
           children: [
             {
@@ -105,13 +97,8 @@ const router = createRouter({
         },
         {
           path: "/about",
-          component: About,
+          component: () => import("@/views/front-desk/about/index.vue"),
           meta: { title: "关于开发者" },
-        },
-        {
-          path: "/test",
-          component: Test,
-          meta: { title: "开发者测试页面" },
         },
         {
           path: "/read",
@@ -139,9 +126,9 @@ const router = createRouter({
           meta: { title: "PALM实验室学术" },
         },
         {
-          path: "/login",
-          component: () => import("@/views/login/index.vue"),
-          meta: { title: "PALM 实验室登录" },
+          path: "/test",
+          component: () => import("@/views/test/index.vue"),
+          meta: { title: "开发者测试页面" },
         },
       ],
     },

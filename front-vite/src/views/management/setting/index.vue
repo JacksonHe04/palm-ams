@@ -1,49 +1,51 @@
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
-    <el-tabs type="border-card" class="bg-white rounded-lg shadow-lg" v-loading="store.isLoading">
-      <el-tab-pane label="院校等级调整">
-        <UniversityLevel />
+    <el-tabs type="border-card" class="bg-white rounded-lg shadow-lg" v-loading="store.isLoading" v-model="activeTab">
+      <el-tab-pane label="院校等级调整" name="university">
+        <component :is="currentComponent" v-if="activeTab === 'university'"/>
       </el-tab-pane>
 
-      <el-tab-pane label="专业分类调整">
-        <MajorCategory />
+      <el-tab-pane label="专业分类调整" name="major">
+        <component :is="currentComponent" v-if="activeTab === 'major'"/>
       </el-tab-pane>
 
-      <el-tab-pane label="奖项配置">
-        <AwardSetting />
+      <el-tab-pane label="奖项配置" name="award">
+        <component :is="currentComponent" v-if="activeTab === 'award'"/>
       </el-tab-pane>
 
-      <el-tab-pane label="导师信息调整">
-        <PersonnelManagement />
+      <el-tab-pane label="导师信息调整" name="personnel">
+        <component :is="currentComponent" v-if="activeTab === 'personnel'"/>
       </el-tab-pane>
 
-      <el-tab-pane label="招生年份和时间调整">
-        <AdmissionPeriod />
+      <el-tab-pane label="招生年份和时间调整" name="admission">
+        <component :is="currentComponent" v-if="activeTab === 'admission'"/>
       </el-tab-pane>
 
-      <el-tab-pane label="年份配置">
-        <YearSetting />
+      <el-tab-pane label="年份配置" name="year">
+        <component :is="currentComponent" v-if="activeTab === 'year'"/>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, shallowRef, computed, defineAsyncComponent } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
-import UniversityLevel from './components/UniversityLevel.vue';
-import MajorCategory from './components/MajorCategory.vue';
-import PersonnelManagement from './components/PersonnelManagement.vue';
-import AdmissionPeriod from './components/AdmissionPeriod.vue';
-import AwardSetting from './components/AwardSetting.vue';
-import YearSetting from './components/YearSetting.vue';
 
 const store = useSettingStore();
+const activeTab = ref('university');
 
-// 初始化数据
-onMounted(async () => {
-  await store.initializeData();
+// 使用defineAsyncComponent来包装异步组件
+const components = shallowRef({
+  university: defineAsyncComponent(() => import('./components/UniversityLevel.vue')),
+  major: defineAsyncComponent(() => import('./components/MajorCategory.vue')),
+  personnel: defineAsyncComponent(() => import('./components/PersonnelManagement.vue')),
+  admission: defineAsyncComponent(() => import('./components/AdmissionPeriod.vue')),
+  award: defineAsyncComponent(() => import('./components/AwardSetting.vue')),
+  year: defineAsyncComponent(() => import('./components/YearSetting.vue'))
 });
+
+const currentComponent = computed(() => components.value[activeTab.value]);
 </script>
 
 <style scoped>

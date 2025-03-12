@@ -34,8 +34,17 @@
 import { watch } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { onMounted } from 'vue';
 
 const store = useSettingStore();
+
+onMounted(async () => {
+  try {
+    await store.fetchUniversities();
+  } catch (error) {
+    ElMessage.error('加载院校数据失败');
+  }
+});
 
 const addUniversity = () => {
   store.universities.push({ name: '', level: '' });

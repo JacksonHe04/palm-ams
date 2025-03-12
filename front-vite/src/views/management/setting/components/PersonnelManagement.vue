@@ -43,11 +43,19 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import { watch, onMounted} from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 const store = useSettingStore();
+
+onMounted(async () => {
+  try {
+    await store.fetchPersonnel();
+  } catch (error) {
+    ElMessage.error('加载专业数据失败');
+  }
+});
 
 const addPersonnel = () => {
   store.personnel.push({ name: '', recruitment_type: '', department: '', research_direction: '' });

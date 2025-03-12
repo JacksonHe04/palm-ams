@@ -1,5 +1,104 @@
-# Vue 3 + Vite
+# PALM 实验室招生系统前端
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+本项目使用 Vue 3 + Vite 构建，是PALM实验室招生系统的前端部分。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 项目结构
+
+### 前台页面 (`/front-desk`)
+- **首页** (`/`)
+  - 实验室主页展示
+  - 最新招生信息
+  
+- **申请说明** (`/read`)
+  - 招生要求详细说明
+  - 重要日期信息
+  - 申请流程指南
+  
+- **实验室介绍** (`/introduction`)
+  - 实验室概况
+  - 研究方向
+  - 发展历程
+
+- **新闻动态** (`/news`)
+  - 实验室新闻
+  - 学术活动
+  - 招生通知
+
+- **实验室成员** (`/members`)
+  - 教师团队
+  - 学生团队
+  - 毕业学生
+
+- **学术成果** (`/academics`)
+  - 发表论文
+  - 科研项目
+  - 获奖情况
+
+- **关于我们** (`/about`)
+  - 联系方式
+  - 地理位置
+  - 开发团队
+
+### 后台管理 (`/management`)
+> 需要登录验证
+
+- **仪表盘** (`/dashboard`)
+  - 申请数据统计
+  - 实时数据展示
+  - 图表可视化
+
+- **学生管理** (`/students`)
+  - 申请学生列表
+  - 信息查看与编辑
+  - 数据筛选与排序
+
+- **筛选管理** (`/filter`)
+  - 条件筛选设置
+  - 筛选规则配置
+  - 结果导出
+
+- **面试管理** (`/interview`)
+  - 面试安排
+  - 评分记录
+  - 结果统计
+
+- **数据分析** (`/analysis`)
+  - 数据可视化
+  - 统计报表
+  - 趋势分析
+
+- **系统设置** (`/setting`)
+  - 招生时间设置
+  - 院校等级配置
+  - 系统参数设置
+
+- **个人中心** (`/profile`)
+  - 个人信息
+  - 密码修改
+  - 操作日志
+
+### 其他功能
+
+- **登录系统** (`/login`)
+  - 管理员登录
+  - 身份验证
+  - 权限控制
+
+- **404页面**
+  - 错误页面提示
+  - 返回首页导航
+
+## 技术特点
+
+- 使用 Vue 3 Composition API
+- Vite 构建工具
+- Vue Router 路由管理
+- Element Plus UI 组件库
+- 响应式设计，支持移动端
+- 模块化的项目结构
+
+## 权限控制
+
+- 前台页面：所有用户可访问
+- 后台功能：需要登录验证
+- 路由守卫：自动跳转未登录用户

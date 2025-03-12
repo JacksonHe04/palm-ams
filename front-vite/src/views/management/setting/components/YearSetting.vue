@@ -28,11 +28,19 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import { watch, onMounted } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
 import { ElMessage } from 'element-plus';
 
 const store = useSettingStore();
+
+onMounted(async () => {
+  try {
+    await store.fetchYears();
+  } catch (error) {
+    ElMessage.error('加载年份数据失败');
+  }
+});
 
 const addYear = () => {
   store.years.push({ year: '', status: '' });

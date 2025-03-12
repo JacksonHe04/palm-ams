@@ -34,11 +34,19 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import { watch, onMounted } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
 import { ElMessage } from 'element-plus';
 
 const store = useSettingStore();
+
+onMounted(async () => {
+  try {
+    await store.fetchAwards();
+  } catch (error) {
+    ElMessage.error('加载奖项数据失败');
+  }
+});
 
 const addAward = () => {
   store.awards.push({ name: '', level: '', category: '' });
