@@ -16,7 +16,7 @@ export default {
     // 监听滚动事件，判断是否显示按钮
     window.addEventListener("scroll", this.toggleVisibility);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("scroll", this.toggleVisibility);
   },
   methods: {

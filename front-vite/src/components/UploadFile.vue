@@ -98,8 +98,8 @@ const fetchFileList = async () => {
   try {
     const { data } = await getFileList(applicantId.value)
     fileList.value = data
-  } catch (error) {
-    console.error('获取文件列表失败：', error)
+  } catch (error: any) {
+    console.error('获取文件列表失败：', error.message)
   }
 }
 

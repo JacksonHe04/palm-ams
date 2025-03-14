@@ -3,9 +3,7 @@
 </script>
 
 <template>
-
+    学术
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

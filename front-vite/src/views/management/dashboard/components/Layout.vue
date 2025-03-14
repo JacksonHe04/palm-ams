@@ -22,7 +22,7 @@
 <script>
 import SchoolLevelDashboard from "@/views/management/dashboard/components/SchoolLevelDashboard.vue";
 import MajorDistributionDashboard from "@/views/management/dashboard/components/MajorDistributionDashboard.vue";
-import DataCountDashboard from "@/views/management/dashboard/components/DataCountDashboard.vue";
+
 import SchoolDistributionDashboard from "@/views/management/dashboard/components/SchoolDistributionDashboard.vue";
 import EnrollmentTypeDashboard from "@/views/management/dashboard/components/EnrollmentTypeDashboard.vue";
 
@@ -31,7 +31,6 @@ export default {
   components: {
     SchoolLevelDashboard,
     MajorDistributionDashboard,
-    DataCountDashboard,
     SchoolDistributionDashboard,
     EnrollmentTypeDashboard,
   },

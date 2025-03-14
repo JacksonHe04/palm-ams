@@ -113,6 +113,7 @@ import { useResultStore } from '@/stores/resultStore';
 import { getFileDownloadUrl } from '@/apis/files';
 import { useFieldStore } from '@/stores/fieldStore';
 import * as XLSX from 'xlsx';
+import { ElMessage } from 'element-plus';
 
 // 初始化 store
 const store = useResultStore();

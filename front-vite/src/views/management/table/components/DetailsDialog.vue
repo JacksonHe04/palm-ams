@@ -2,9 +2,11 @@
 <template>
   <el-dialog :value="isVisible" title="详细信息" :width="dialogWidth" @update:value="emitUpdate">
     <pre>{{ details }}</pre>
-    <span slot="footer" class="dialog-footer">
+    <template v-slot:footer>
+<span  class="dialog-footer">
       <el-button @click="closeDialog">关闭</el-button>
     </span>
+</template>
   </el-dialog>
 </template>
 

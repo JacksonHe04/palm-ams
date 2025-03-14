@@ -3,9 +3,7 @@
 </script>
 
 <template>
-
+    成员
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

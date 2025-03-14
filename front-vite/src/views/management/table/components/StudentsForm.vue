@@ -1,57 +1,32 @@
 <template>
-  <form-settings
-    :fields="store.allFields"
-    :visible-fields="store.visibleFields"
-    :table-data="filteredStudents"
-    :field-props="store.fieldProps"
-    :onFilter="onFilter"
-    @update-visible-fields="updateVisibleFields"
-    @update-sort="updateSort"
-  />
+  <form-settings :fields="store.allFields" :visible-fields="store.visibleFields" :table-data="filteredStudents"
+    :field-props="store.fieldProps" :onFilter="onFilter" @update-visible-fields="updateVisibleFields"
+    @update-sort="updateSort" />
 
   <div class="students-form">
     <div class="table-container">
-      <el-table
-        :data="filteredStudents"
-        style="width: 100%"
-        border
-        :table-layout="'auto'"
-        :default-sort="{ prop: selectedSort, order: 'ascending' }"
-      >
+      <el-table :data="filteredStudents" style="width: 100%" border :table-layout="'auto'"
+        :default-sort="{ prop: selectedSort, order: 'ascending' }">
         <!-- 写一个序号列，从1开始 -->
         <el-table-column type="index" label="#" width="50" />
         <!-- 动态生成常规列 -->
-        <el-table-column
-          v-for="field in store.visibleFields"
-          :key="field"
-          :prop="store.fieldProps[field]"
-          :label="field"
-          v-if="!store.isPaperOrAwardField(field)"
-          :min-width="150"
-        >
+        <el-table-column v-for="field in visibleRegularFields" :key="field" :prop="store.fieldProps[field]"
+          :label="field" :min-width="150">
           <template #default="{ row }">
-            <span>{{
-              row[store.fieldProps[field]] !== undefined &&
+            <span>{{row[store.fieldProps[field]] !== undefined &&
               row[store.fieldProps[field]] !== null &&
               row[store.fieldProps[field]] !== ""
-                ? row[store.fieldProps[field]]
-                : ""
-            }}</span>
+              ? row[store.fieldProps[field]]
+              : ""}}</span>
           </template>
         </el-table-column>
 
         <!-- 论文列 -->
-        <template
-          v-for="(paperField, index) in store.paperFields"
-          :key="`论文-${index}`"
-        >
+        <template v-for="(paperField, index) in store.paperFields" :key="`论文-${index}`">
           <el-table-column :label="`论文${index + 1}`">
             <template #default="{ row }">
-              <span
-                v-if="row.papers && row.papers[index]"
-                @click="showDetails('paper', row.papers[index])"
-                class="expandable-cell"
-              >
+              <span v-if="row.papers && row.papers[index]" @click="showDetails('paper', row.papers[index])"
+                class="expandable-cell">
                 {{ row.papers[index].ccfLevel }}
               </span>
               <span v-else>无</span>
@@ -60,17 +35,11 @@
         </template>
 
         <!-- 奖项列 -->
-        <template
-          v-for="(awardField, index) in store.awardFields"
-          :key="`奖项-${index}`"
-        >
+        <template v-for="(awardField, index) in store.awardFields" :key="`奖项-${index}`">
           <el-table-column :label="`奖项${index + 1}`">
             <template #default="{ row }">
-              <span
-                v-if="row.awards && row.awards[index]"
-                @click="showDetails('award', row.awards[index])"
-                class="expandable-cell"
-              >
+              <span v-if="row.awards && row.awards[index]" @click="showDetails('award', row.awards[index])"
+                class="expandable-cell">
                 {{ row.awards[index].levelRanking }}
               </span>
               <span v-else>无</span>
@@ -82,18 +51,16 @@
     <!-- 详情弹窗 -->
     <el-dialog v-model="dialogVisible" title="详细信息" :width="dialogWidth">
       <div v-if="selectedDetails">
-        <div
-          v-for="(value, key) in selectedDetails"
-          :key="key"
-          class="detail-item"
-        >
+        <div v-for="(value, key) in selectedDetails" :key="key" class="detail-item">
           <strong>{{ key }}:</strong> {{ value }}
         </div>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <h1 />
-        <el-button @click="dialogVisible = false">关闭</el-button>
-      </span>
+      <template v-slot:footer>
+        <span class="dialog-footer">
+          <h1 />
+          <el-button @click="dialogVisible = false">关闭</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -115,6 +82,9 @@ const selectedSort = ref("ID"); // 初始化默认排序字段
 
 // 计算属性
 const students = computed(() => store.students || []);
+const visibleRegularFields = computed(() => {
+  return store.visibleFields.filter(field => !store.isPaperOrAwardField(field));
+});
 const filteredStudents = computed(() => {
   // 首先过滤掉“硕士等级”为“无”的记录（仅在排序字段为“硕士等级”时生效）
   let filtered = students.value;
