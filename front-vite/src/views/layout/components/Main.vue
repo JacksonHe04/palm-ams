@@ -1,5 +1,5 @@
 <template>
-  <div class="main mt-14 md:mt-20">
+  <div class="main mt-14 md:mt-16">
     <RouterView />
   </div>
 </template>

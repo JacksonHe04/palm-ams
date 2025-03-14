@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-cover bg-center" :style="navStyle">
-    <div class="container mx-auto px-4 flex justify-between items-center py-3 md:py-6">
+    <div class="container mx-auto flex justify-between items-center py-3 md:py-4">
       <RouterLink to="/" class="flex items-center gap-2 text-2xl font-bold text-gray-800">
         <img src="/palm_logo_cicle.png" alt="Palm Logo" class="logo">
         <div class="nav-title">SEU PALM Lab</div>

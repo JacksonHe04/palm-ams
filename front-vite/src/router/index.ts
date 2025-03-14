@@ -47,12 +47,6 @@ const router = createRouter({
               meta: { title: "学生表格" },
             },
             {
-              path: "filtered",
-              name: "filtered",
-              component: () => import("@/views/management/filtered/index.vue"),
-              meta: { title: "筛选结果" },
-            },
-            {
               path: "percent",
               component: () => import("@/views/management/percent/index.vue"),
               meta: { title: "百分比" },

@@ -139,11 +139,6 @@ onMounted(async () => {
   await store.fetchFilteredStudents();
 });
 
-// 组件挂载时获取数据
-onMounted(() => {
-  store.fetchFilteredStudents();
-});
-
 // 添加下载状态和下载方法
 const downloading = ref(false);
 const exporting = ref(false);
