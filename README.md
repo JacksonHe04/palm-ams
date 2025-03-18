@@ -48,19 +48,6 @@ pnpm install
 pnpm dev
 ```
 
-### NestJS服务启动
-
-```bash
-# 进入NestJS目录
-cd palm_nest
-
-# 安装依赖
-pnpm install
-
-# 启动开发服务器
-pnpm run start:dev
-```
-
 ### Django服务启动
 
 ```bash
@@ -89,6 +76,42 @@ python manage.py runserver
 - 📊 数据统计分析
 - 📱 响应式界面设计
 - 🔍 高级搜索过滤
+
+## 系统截图
+
+### 系统主页
+<p align="center">
+  <img src="docs/images/home.png" width="800" alt="系统主页" />
+</p>
+
+
+### 登录界面
+<p align="center">
+  <img src="docs/images/login.png" width="800" alt="登录界面" />
+</p>
+
+### 筛选功能
+<p align="center">
+  <img src="docs/images/filter_page.png" width="800" alt="筛选页面" />
+  <img src="docs/images/filter_result.png" width="800" alt="筛选结果" />
+</p>
+
+### 面试评分
+<p align="center">
+  <img src="docs/images/interview_score.png" width="800" alt="面试评分" />
+</p>
+
+### 数据统计
+<p align="center">
+  <img src="docs/images/echarts.png" width="800" alt="数据统计" />
+</p>
+
+### 系统设置
+<p align="center">
+  <img src="docs/images/account_setting.png" width="800" alt="账户设置" />
+  <img src="docs/images/field_setting.png" width="800" alt="字段设置" />
+  <img src="docs/images/rule_setting.png" width="800" alt="规则设置" />
+</p>
 
 ## 项目结构
 

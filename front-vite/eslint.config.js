@@ -20,7 +20,7 @@ export default [{
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
+      // '@typescript-eslint/no-non-null-assertion': 'off',
       'no-prototype-builtins': 'off'
     }
   },
@@ -35,7 +35,6 @@ export default [{
     rules: {
       'vue/no-multiple-template-root': 'off',
       'vue/valid-template-root': 'off',
-      'vue/no-use-v-if-with-v-for': 'off',
       'vue/multi-word-component-names': ['error', {
         ignores: ['index', 'Header', 'Footer', 'Main', 'Layout', 'View', 'Content', 'Percent', 'Home', 'About', 'Login']
       }]
