@@ -103,11 +103,11 @@ const fetchFileList = async () => {
   }
 }
 
-onMounted(() => {
-  if (applicantId.value) {
-    fetchFileList()
-  }
-})
+// onMounted(() => {
+//   if (applicantId.value) {
+//     fetchFileList()
+//   }
+// })
 </script>
 
 <style scoped>

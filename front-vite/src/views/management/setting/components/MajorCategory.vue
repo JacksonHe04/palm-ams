@@ -9,7 +9,7 @@
       <el-table-column prop="category" label="分类">
         <template #default="{ row }">
           <el-select v-model="row.category" placeholder="选择分类">
-            <el-option label="限制专业" value="限制专业"></el-option>
+            <el-option label="目标专业" value="目标专业"></el-option>
             <el-option label="数学类" value="数学类"></el-option>
             <el-option label="电子信息类" value="电子信息类"></el-option>
             <el-option label="自动化类" value="自动化类"></el-option>

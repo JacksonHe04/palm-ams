@@ -18,7 +18,7 @@
     },
     {
         "id": 94,
-        "name": "B类限制专业前20%",
+        "name": "B类目标专业前20%",
         "enabled": true,
         "conditions": [
             {
@@ -35,14 +35,14 @@
                 "field": "专业",
                 "operator": "in",
                 "value": [
-                    "限制专业"
+                    "目标专业"
                 ]
             }
         ]
     },
     {
         "id": 95,
-        "name": "C类限制专业前10%",
+        "name": "C类目标专业前10%",
         "enabled": true,
         "conditions": [
             {
@@ -59,7 +59,7 @@
                 "field": "专业",
                 "operator": "in",
                 "value": [
-                    "限制专业"
+                    "目标专业"
                 ]
             }
         ]

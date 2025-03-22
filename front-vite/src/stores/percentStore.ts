@@ -20,9 +20,12 @@ export const usePercentStore = defineStore('percent', () => {
   const fetchPercentData = async () => {
     try {
       const response = await getPercent();
-      percentData.value = response.data;
+      if (!response) return;
+
+      if (response.data) {
+        percentData.value = response.data;
+      }
     } catch (error) {
-      console.error('获取百分比数据失败:', error);
       ElMessage.error('获取百分比数据失败');
     }
   };
@@ -31,10 +34,11 @@ export const usePercentStore = defineStore('percent', () => {
   const updatePercentData = async (data: PercentData) => {
     try {
       const response = await updatePercent(data);
-      percentData.value = response.data;
+      if (response.data) {
+        percentData.value = response.data;
+      }
       ElMessage.success('更新百分比数据成功');
     } catch (error) {
-      console.error('更新百分比数据失败:', error);
       ElMessage.error('更新百分比数据失败');
     }
   };

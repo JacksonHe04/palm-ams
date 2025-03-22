@@ -2,47 +2,47 @@
   {
     "id": 1,
     "name": "计算机科学与技术",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 2,
     "name": "软件工程",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 3,
     "name": "网络工程",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 4,
     "name": "网络空间安全",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 5,
     "name": "信息安全",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 6,
     "name": "数据科学与大数据技术",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 7,
     "name": "物联网工程",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 8,
     "name": "智能科学与技术",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 9,
     "name": "数字媒体技术",
-    "category": "限制专业"
+    "category": "目标专业"
   },
   {
     "id": 10,

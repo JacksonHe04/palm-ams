@@ -26,7 +26,7 @@ def process_filters(request):
                 scheme_query &= Q(percentage__regex=r'^\d+')
             elif field == '专业':
                 # 获取所有限制专业的专业名称
-                restricted_majors = Major.objects.filter(category='限制专业').values_list('name', flat=True)
+                restricted_majors = Major.objects.filter(category='目标专业').values_list('name', flat=True)
                 scheme_query &= Q(major__in=restricted_majors)
             elif field == '是否为拔尖班':
                 is_top = True if value == '是' else False

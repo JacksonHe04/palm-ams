@@ -15,6 +15,8 @@
           :required="isFieldRequired(field.variableName)"
           @input="field.variableName === 'rank' || field.variableName === 'majorCount' ? calculatePercentage() : null"
         />
+
+        <!-- 百分比 -->
         <input
           v-else-if="field.variableName === 'percentage'"
           type="text"
@@ -25,6 +27,7 @@
           disabled
         />
         
+        <!-- 文本域 -->
         <textarea
           v-else-if="field.type === 'textarea'"
           :id="field.variableName"
@@ -34,6 +37,15 @@
           :required="isFieldRequired(field.variableName)"
         ></textarea>
         
+        <!-- 自动搜索下拉框 -->
+        <AutoCompleteInput
+          v-if="field.type === 'select' && ['本科学校', '硕士学校', '本科专业', '硕士专业'].includes(field.name)"
+          v-model="formData[field.variableName]"
+          :options="getSelectOptions(field.name)"
+          :placeholder="'请输入' + field.name"
+        />
+        
+        <!-- 普通单选下拉框 -->
         <select
           v-else-if="field.type === 'select'"
           :id="field.variableName"
@@ -52,6 +64,7 @@
           </option>
         </select>
 
+        <!-- 开关 -->
         <el-switch
           v-else-if="field.type === 'boolean'"
           :id="field.variableName"
@@ -61,8 +74,9 @@
           :required="isFieldRequired(field.variableName)"
         />
         
+        <!-- 其他类型 -->
         <input
-          v-else
+          v-else-if="(field.type === 'string' || field.type === 'date') && field.variableName !== 'percentage'"
           :type="field.type"
           :id="field.variableName"
           v-model="formData[field.variableName]"
@@ -72,6 +86,7 @@
         />
       </div>
       
+      <!-- 文件上传 -->
       <UploadFile :applicant-id="formData.id" />
       
       <button type="submit" class="submit-button">提交申请</button>
@@ -80,6 +95,9 @@
 </template>
 
 <script setup lang="ts">
+// 在现有的 imports 后添加
+import AutoCompleteInput from '@/components/AutoCompleteInput.vue'
+
 import { ref, onMounted, computed } from 'vue'
 import { useFieldStore } from '@/stores/fieldStore'
 import { useSettingStore } from '@/stores/settingStore'
