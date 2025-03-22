@@ -125,55 +125,27 @@
 </template>
 
 <script setup lang="ts">
-// 在现有的 imports 后添加
-import AutoCompleteInput from '@/components/AutoCompleteInput.vue'
-import UploadResume from '@/components/UploadResume.vue'
-
 import { ref, onMounted, computed } from 'vue'
+import router from '@/router'
 import { useFieldStore } from '@/stores/fieldStore'
 import { useSettingStore } from '@/stores/settingStore'
+
 import { ElSwitch, ElMessage } from 'element-plus'
 import { v4 as uuidv4 } from 'uuid'
-import type { FieldItem } from '@/apis/field'
 import { useApplyStore } from '@/stores/applyStore'
-import UploadFile from '@/components/UploadFile.vue'
-import router from '@/router'
+import UploadFile from './components/UploadFile.vue'
+import AutoCompleteInput from './components/AutoCompleteInput.vue'
+import UploadResume from './components/UploadResume.vue'
+
 
 const fieldStore = useFieldStore()
 const settingStore = useSettingStore()
 
-const ccfLevel = [
-    { value: 'A', label: 'A' },
-    { value: 'B', label: 'B' },
-    { value: 'C', label: 'C' },
-    { value: '其他', label: '其他' }
-  ]
-const awardLevel = [
-    { value: '国家级', label: '国家级' },
-    { value: '省级', label: '省级' },
-    { value: '校级', label: '校级' },
-    { value: '其他', label: '其他' }
-]
-const awardRanking = [
-    { value: '特等奖', label: '特等奖' },
-    { value: '一等奖', label: '一等奖' },
-    { value: '二等奖', label: '二等奖' },
-    { value: '三等奖', label: '三等奖' },
-    { value: '金奖', label: '金奖' },
-    { value: '银奖', label: '银奖' },
-    { value: '铜奖', label: '铜奖' },
-]
+import { ccfLevel, awardLevel, awardRanking, applicationType, gender } from './composables/formConfig'
 // 选项配置对象
 const selectOptions = computed(() => ({
-  '报名类型': [
-    { value: '硕士', label: '硕士' },
-    { value: '博士', label: '博士' },
-    { value: '直博', label: '直博' }
-  ],
-  '性别': [
-    { value: '男', label: '男' },
-    { value: '女', label: '女' }
-  ],
+  '报名类型': applicationType,
+  '性别': gender,
   '论文一CCF等级': ccfLevel,
   '论文二CCF等级': ccfLevel,
   '论文三CCF等级': ccfLevel,
@@ -323,81 +295,6 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped>
-.new-apply-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.apply-form {
-  background: #ffffffa8;
-  padding: 24px;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.form-item {
-  margin-bottom: 24px;
-}
-
-label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #333;
-}
-
-.field-description {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 8px;
-}
-
-.form-input,
-.form-textarea,
-.form-select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.3s;
-}
-
-.form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
-  outline: none;
-  border-color: #409eff;
-}
-
-.form-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.form-switch {
-  display: block;
-  margin-top: 8px;
-}
-
-.submit-button {
-  background-color: #409eff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #66b1ff;
-}
-
-.submit-button:active {
-  background-color: #3a8ee6;
-}
+<style lang="scss" scoped>
+@use '@/styles/views/front-desk/new_apply/index.scss';
 </style>
