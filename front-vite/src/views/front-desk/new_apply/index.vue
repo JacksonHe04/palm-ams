@@ -193,8 +193,11 @@ const getSelectOptions = (fieldName: string) => {
 }
 
 // 获取需要在申请表单中显示的字段
+import { useFieldsSort } from './composables/useFieldsSort'
+
 const applyFields = computed(() => {
-  return fieldStore.fields.filter(field => field.showInApply)
+  const fields = fieldStore.fields.filter(field => field.showInApply)
+  return useFieldsSort(fields).sortedFields.value
 })
 
 // 导入表单验证组合式函数
