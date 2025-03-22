@@ -74,6 +74,33 @@
           :required="isFieldRequired(field.variableName)"
         />
         
+        <!-- 奖项贡献字段 -->
+        <div v-else-if="['award1_contribution', 'award2_contribution', 'award3_contribution'].includes(field.variableName)" class="flex gap-4 items-center">
+          <div class="flex-1">
+            <input
+              type="number"
+              :id="`${field.variableName}_rank`"
+              v-model="contributionData[field.variableName].rank"
+              class="form-input"
+              placeholder="贡献排名"
+              min="1"
+              @input="updateContribution(field.variableName)"
+            />
+          </div>
+          <span class="text-gray-500">/</span>
+          <div class="flex-1">
+            <input
+              type="number"
+              :id="`${field.variableName}_total`"
+              v-model="contributionData[field.variableName].total"
+              class="form-input"
+              placeholder="团队人数"
+              min="1"
+              @input="updateContribution(field.variableName)"
+            />
+          </div>
+        </div>
+        
         <!-- 其他类型 -->
         <input
           v-else-if="(field.type === 'string' || field.type === 'date') && field.variableName !== 'percentage'"
@@ -86,7 +113,10 @@
         />
       </div>
       
-      <!-- 文件上传 -->
+      <!-- 上传简历 -->
+      <UploadResume />
+      
+      <!-- 证明文件上传 -->
       <UploadFile :applicant-id="formData.id" />
       
       <button type="submit" class="submit-button">提交申请</button>
@@ -97,6 +127,7 @@
 <script setup lang="ts">
 // 在现有的 imports 后添加
 import AutoCompleteInput from '@/components/AutoCompleteInput.vue'
+import UploadResume from '@/components/UploadResume.vue'
 
 import { ref, onMounted, computed } from 'vue'
 import { useFieldStore } from '@/stores/fieldStore'
@@ -106,6 +137,7 @@ import { v4 as uuidv4 } from 'uuid'
 import type { FieldItem } from '@/apis/field'
 import { useApplyStore } from '@/stores/applyStore'
 import UploadFile from '@/components/UploadFile.vue'
+import router from '@/router'
 
 const fieldStore = useFieldStore()
 const settingStore = useSettingStore()
@@ -219,6 +251,8 @@ const handleSubmit = async () => {
     validateForm()
     await applyStore.submitForm()
     ElMessage.success('申请提交成功')
+    router.push('/wait')
+    
   } catch (error) {
     ElMessage.error(error.message || applyStore.submitError || '提交失败')
   }
@@ -245,12 +279,35 @@ const calculatePercentage = () => {
   }
 }
 
+// 在script setup部分添加
+const contributionData = ref({
+  award1_contribution: { rank: '', total: '' },
+  award2_contribution: { rank: '', total: '' },
+  award3_contribution: { rank: '', total: '' }
+})
+
+const updateContribution = (fieldName) => {
+  const { rank, total } = contributionData.value[fieldName]
+  if (rank && total) {
+    formData.value[fieldName] = `${rank}/${total}`
+  } else {
+    formData.value[fieldName] = ''
+  }
+}
+
 const initFormData = () => {
   const initialData = {
-    id: uuidv4() // 在初始化时就生成一个临时ID
+    id: uuidv4()
   }
   applyFields.value.forEach(field => {
-    initialData[field.variableName] = field.type === 'boolean' ? false : ''
+    if (['award1_contribution', 'award2_contribution', 'award3_contribution'].includes(field.variableName)) {
+      contributionData.value[field.variableName] = { rank: '', total: '' }
+      initialData[field.variableName] = ''
+    } else if (field.variableName === 'isAdjustable') {
+      initialData[field.variableName] = true
+    } else {
+      initialData[field.variableName] = field.type === 'boolean' ? false : '';
+    }
   })
   applyStore.setFormData(initialData)
 }

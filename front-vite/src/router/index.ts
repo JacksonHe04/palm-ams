@@ -23,6 +23,12 @@ const router = createRouter({
           component: () => import("@/views/front-desk/new_apply/index.vue"),
           meta: { title: "申请 PALM 实验室" },
         },
+        // /wait
+        {
+          path: "/wait",
+          component: () => import("@/views/front-desk/wait/index.vue"),
+          meta: { title: "申请提交成功，请等待回复" },
+        },
         {
           path: "/login",
           component: () => import("@/views/login/index.vue"),

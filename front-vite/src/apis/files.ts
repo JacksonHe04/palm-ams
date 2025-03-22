@@ -34,3 +34,11 @@ export const uploadConfig = {
     'X-Applicant-ID': applicantId
   })
 }
+
+// 上传简历的配置
+export const resumeUploadConfig = {
+  action: `${http.defaults.baseURL}/api/files/upload-resume/`,
+  headers: (applicantId: string) => ({
+    'X-Applicant-ID': applicantId
+  })
+}

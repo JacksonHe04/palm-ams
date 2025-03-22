@@ -18,7 +18,6 @@ class Apply(models.Model):
     tutor = models.CharField(max_length=50, null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
     birthDate = models.CharField(max_length=20, null=True, blank=True)
-    # photo = models.ImageField(upload_to='apply/', null=True, blank=True)
     photo = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=50, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
@@ -50,18 +49,21 @@ class Apply(models.Model):
 
     # Award related fields
     award1_isLeader = models.BooleanField(null=True, blank=True)
+    award1_contribution = models.CharField(max_length=50, null=True, blank=True)
     award1_awardTime = models.CharField(max_length=100, null=True, blank=True)
     award1_awardName = models.CharField(max_length=100, null=True, blank=True)
     award1_levelRanking = models.CharField(max_length=50, null=True, blank=True)
     award1_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     award2_isLeader = models.BooleanField(null=True, blank=True)
+    award2_contribution = models.CharField(max_length=50, null=True, blank=True)
     award2_awardTime = models.CharField(max_length=100, null=True, blank=True)
     award2_awardName = models.CharField(max_length=100, null=True, blank=True)
     award2_levelRanking = models.CharField(max_length=50, null=True, blank=True)
     award2_awardRanking = models.CharField(max_length=50, null=True, blank=True)
 
     award3_isLeader = models.BooleanField(null=True, blank=True)
+    award3_contribution = models.CharField(max_length=50, null=True, blank=True)
     award3_awardTime = models.CharField(max_length=100, null=True, blank=True)
     award3_awardName = models.CharField(max_length=100, null=True, blank=True)
     award3_levelRanking = models.CharField(max_length=50, null=True, blank=True)
@@ -76,6 +78,3 @@ class Apply(models.Model):
 
     class Meta:
         db_table = 'students'
-
-    # def __str__(self):
-    #     return self.name

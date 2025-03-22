@@ -12,7 +12,8 @@ class File(models.Model):
     upload_time = models.DateTimeField(default=timezone.now, verbose_name='上传时间')
     uploader = models.CharField(max_length=100, null=True, blank=True, verbose_name='上传者')
     is_deleted = models.BooleanField(default=False, verbose_name='是否删除')
-
+    is_resume = models.BooleanField(default=False, verbose_name='是否为简历文件')
+    
     class Meta:
         db_table = 'files'
         verbose_name = '文件'

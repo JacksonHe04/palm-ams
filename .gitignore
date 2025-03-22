@@ -4,4 +4,4 @@ __pycache__/
 /.vscode
 .DS_Store
 **/.DS_Store
-
+/back-django/static_root
