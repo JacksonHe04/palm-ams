@@ -27,6 +27,7 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         // JS入口文件
@@ -46,8 +47,35 @@ export default defineConfig({
           }
           return `assets/${extType}/[name].[hash][extname]`
         },
-      },
-    },
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            // UI框架相关
+            if (id.includes('element-plus') || id.includes('@element-plus')) {
+              // 将 element-plus 的 icons 单独打包，因为可能不是所有页面都需要
+              if (id.includes('@element-plus/icons')) {
+                return 'vendor-icons'
+              }
+              return 'vendor-element-plus'
+            }
+            // 按需加载的大型库
+            if (id.includes('echarts')) {
+              return 'vendor-echarts'
+            }
+            if (id.includes('xlsx')) {
+              return 'vendor-xlsx'
+            }
+            // 核心框架保持不变
+            if (id.includes('@vue') || id.includes('vue') || id.includes('pinia')) {
+              return 'vendor-core'
+            }
+            // 其他小型依赖合并
+            return 'vendors'
+          }
+          // 业务代码保持当前的分包策略
+          return id.includes('/views/') ? 'views' : 'common'
+        }
+      }
+    }
   },
   css: {
     preprocessorOptions: {

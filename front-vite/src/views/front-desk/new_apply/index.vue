@@ -125,18 +125,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import router from '@/router'
-import { useFieldStore } from '@/stores/fieldStore'
-import { useSettingStore } from '@/stores/settingStore'
-
 import { ElSwitch, ElMessage } from 'element-plus'
 import { v4 as uuidv4 } from 'uuid'
+
+import { useFieldStore } from '@/stores/fieldStore'
+import { useSettingStore } from '@/stores/settingStore'
+import { useFormValidation } from './composables/useFormValidation'
+import { usePercentageCalculation } from './composables/usePercentageCalculation'
 import { useApplyStore } from '@/stores/applyStore'
+
 import UploadFile from './components/UploadFile.vue'
 import AutoCompleteInput from './components/AutoCompleteInput.vue'
 import UploadResume from './components/UploadResume.vue'
-
 
 const fieldStore = useFieldStore()
 const settingStore = useSettingStore()
@@ -190,37 +192,18 @@ const getSelectOptions = (fieldName: string) => {
   return selectOptions.value[fieldName] || []
 }
 
-const requiredFields = ref([
-  'name',
-  'applicationType'
-])
-
 // 获取需要在申请表单中显示的字段
 const applyFields = computed(() => {
   return fieldStore.fields.filter(field => field.showInApply)
 })
 
-// 判断字段是否必填
-const isFieldRequired = (fieldName: string) => {
-  return requiredFields.value.includes(fieldName)
-}
-
-// 验证表单数据
-const validateForm = () => {
-  for (const fieldName of requiredFields.value) {
-    const value = formData.value[fieldName]
-    if (value === undefined || value === '' || (Array.isArray(value) && value.length === 0)) {
-      const field = applyFields.value.find(f => f.variableName === fieldName)
-      throw new Error(`${field?.name || fieldName}是必填项`)
-    }
-  }
-  return true
-}
+// 导入表单验证组合式函数
+const { isFieldRequired, validateForm } = useFormValidation()
 
 // 提交表单
 const handleSubmit = async () => {
   try {
-    validateForm()
+    validateForm(formData.value, applyFields.value)
     await applyStore.submitForm()
     ElMessage.success('申请提交成功')
     router.push('/wait')
@@ -233,47 +216,22 @@ const handleSubmit = async () => {
 const applyStore = useApplyStore()
 const formData = computed(() => applyStore.formData)
 
-// 初始化表单数据
-const calculatePercentage = () => {
-  const rank = Number(formData.value.rank)
-  const majorCount = Number(formData.value.majorCount)
-  if (!isNaN(rank) && !isNaN(majorCount) && majorCount !== 0) {
-    const percentage = (rank / majorCount * 100).toFixed(2)
-    applyStore.setFormData({
-      ...formData.value,
-      percentage: `${percentage}%`
-    })
-  } else {
-    applyStore.setFormData({
-      ...formData.value,
-      percentage: ''
-    })
-  }
-}
-
-// 在script setup部分添加
-const contributionData = ref({
-  award1_contribution: { rank: '', total: '' },
-  award2_contribution: { rank: '', total: '' },
-  award3_contribution: { rank: '', total: '' }
-})
-
-const updateContribution = (fieldName) => {
-  const { rank, total } = contributionData.value[fieldName]
-  if (rank && total) {
-    formData.value[fieldName] = `${rank}/${total}`
-  } else {
-    formData.value[fieldName] = ''
-  }
-}
+// 导入百分比计算组合式函数
+const { calculatePercentage, contributionData, updateContribution } = usePercentageCalculation(formData)
 
 const initFormData = () => {
   const initialData = {
     id: uuidv4()
   }
+  // 先初始化贡献度数据
+  contributionData.value = {
+    award1_contribution: { rank: '', total: '' },
+    award2_contribution: { rank: '', total: '' },
+    award3_contribution: { rank: '', total: '' }
+  }
+  
   applyFields.value.forEach(field => {
     if (['award1_contribution', 'award2_contribution', 'award3_contribution'].includes(field.variableName)) {
-      contributionData.value[field.variableName] = { rank: '', total: '' }
       initialData[field.variableName] = ''
     } else if (field.variableName === 'isAdjustable') {
       initialData[field.variableName] = true

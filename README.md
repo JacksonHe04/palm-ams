@@ -1,7 +1,8 @@
-# 东南大学 PALM 实验室研究生招生管理系统
+<h1 align="center">东南大学 PALM 实验室研究生招生管理系统</h1>
 
 <p align="center">
-  <img src="front-vite/public/palm_logo.png" width="200" alt="Palm Logo" />
+  <img src="front-vite/public/csa_logo.png" width="200" alt="CSA Logo" style="margin-right: 20px" />
+  <img src="front-vite/public/palm_logo.png" width="200" alt="PALM Logo" />
 </p>
 
 ## 项目简介
