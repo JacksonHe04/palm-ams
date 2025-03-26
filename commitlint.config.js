@@ -14,10 +14,11 @@ module.exports = {
         'test',     // 增加测试
         'chore',    // 构建过程或辅助工具的变动
         'revert',   // 回退
-        'build'     // 打包
+        'build',    // 打包
+        'ci'        // CI/CD 相关变更
       ]
     ],
-    'type-case': [2, 'always', 'lower'],
+    'type-case': [2, 'always', 'lowerCase'],
     'subject-case': [0]
   }
 };
