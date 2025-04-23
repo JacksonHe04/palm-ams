@@ -76,6 +76,10 @@ $hover-bg-color: wheat;
   gap: 16px;
   margin-bottom: 16px;
   max-width: 480px;
+
+  :deep(.el-button) {
+    transition: all 0.3s ease;
+  }
 }
 
 .trial-text {
