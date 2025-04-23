@@ -13,10 +13,12 @@ export default {
     const router = useRouter();
 
     const handleLogin = async () => {
+      // console.log('开始登录，用户名:', username.value);
       const loginSuccess = await userStore.login(
         username.value,
         password.value,
       );
+      // console.log('登录请求返回结果:', loginSuccess);
       if (loginSuccess) {
         ElMessage.success("登录成功");
         await router.push("/admin");

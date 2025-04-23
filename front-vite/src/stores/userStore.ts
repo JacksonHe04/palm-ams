@@ -31,9 +31,13 @@ export const useUserStore = defineStore("user", {
     async login(username, password) {
       try {
         const response = await login(username, password);
-        if (response.status >= 200 && response.status < 300) {
+        console.log('登录API响应:', response);
+        // 修改判断逻辑，检查 response.data.success
+        if (response.data && response.data.success) {
           const token = response.data.token;
           const user = response.data.user;
+          // console.log('获取到的token:', token);
+          // console.log('获取到的用户信息:', user);
           
           // 存储登录信息
           localStorage.setItem("token", token);
@@ -45,16 +49,23 @@ export const useUserStore = defineStore("user", {
           this.user = user;
           this.loginTime = new Date().toISOString();
           
+          // console.log('状态更新完成，当前状态:', {
+          //   isAuthenticated: this.isAuthenticated,
+          //   user: this.user,
+          //   loginTime: this.loginTime
+          // });
+          
           // 获取用户详细信息
           await this.fetchUserInfo();
           
           await nextTick();
           return true;
         }
+        return false;
       } catch (error) {
         console.error("登录失败:", error);
+        return false;
       }
-      return false;
     },
 
     async fetchUserInfo() {

@@ -87,14 +87,31 @@
         >
           <template #default="scope">
             <el-link
-              v-if="scope.row.file_path"
+              v-if="scope.row.resume_file_path"
               type="primary"
-              :href="getFileDownloadUrl(scope.row.file_path)"
+              :href="getFileDownloadUrl(scope.row.resume_file_path)"
               target="_blank"
             >
-              {{ scope.row.file_name }}
+              {{ scope.row.resume_file_name || '证明文件' }}
             </el-link>
-            <span v-else>无文件</span>
+            <span v-else>无证明文件</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          label="简历文件"
+          min-width="80"
+        >
+          <template #default="scope">
+            <el-link
+              v-if="scope.row.proof_file_path"
+              type="primary"
+              :href="getFileDownloadUrl(scope.row.proof_file_path)"
+              target="_blank"
+            >
+              {{ scope.row.proof_file_name || '简历文件' }}
+            </el-link>
+            <span v-else>无简历</span>
           </template>
         </el-table-column>
       </el-table>

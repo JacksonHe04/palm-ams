@@ -162,14 +162,24 @@ def filter_students(request):
         response_data = []
         for student in result:
             student_dict = model_to_dict(student)
-            # 查找该学生对应的文件
-            student_file = File.objects.filter(applicant_id=str(student.id), is_deleted=False).first()
-            if student_file:
-                student_dict['file_name'] = student_file.name
-                student_dict['file_path'] = f'/api/files/download/{student_file.id}'
-            else:
-                student_dict['file_name'] = None
-                student_dict['file_path'] = None
+            # 查找该学生对应的所有文件
+            student_files = File.objects.filter(applicant_id=str(student.id), is_deleted=False)
+            
+            # 初始化简历和证明材料字段
+            student_dict['resume_file_name'] = None
+            student_dict['resume_file_path'] = None
+            student_dict['proof_file_name'] = None
+            student_dict['proof_file_path'] = None
+            
+            # 遍历所有文件，根据文件类型分别设置
+            for file in student_files:
+                if file.file_type == 'application/zip':
+                    student_dict['resume_file_name'] = file.name
+                    student_dict['resume_file_path'] = f'/api/files/download/{file.id}'
+                elif file.file_type == 'application/pdf':
+                    student_dict['proof_file_name'] = file.name
+                    student_dict['proof_file_path'] = f'/api/files/download/{file.id}'
+            
             response_data.append(student_dict)
 
         return JsonResponse(response_data, safe=False)
