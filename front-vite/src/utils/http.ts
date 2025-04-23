@@ -47,22 +47,27 @@ instance.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
 
-    // 处理重试逻辑保持不变
+    // 处理请求重试逻辑
     if (config && retryConfig.retry > 0) {
+      // 初始化重试计数器，如果不存在则设为0
       config.__retryCount = config.__retryCount || 0;
+      // 判断是否还可以继续重试（当前重试次数小于最大重试次数）
       if (config.__retryCount < retryConfig.retry) {
+        // 重试计数器加1
         config.__retryCount++;
+        // 延迟指定时间后再次重试，避免频繁请求
         await new Promise(resolve => setTimeout(resolve, retryConfig.retryDelay));
+        // 使用 axios 实例重新发起请求
         return instance(config);
       }
     }
 
-    // 错误处理逻辑保持不变
+    // 错误处理逻辑
     if (response) {
       switch (response.status) {
         case 401:
           ElMessage.error('未授权，请重新登录');
-          // 可以在这里处理登出逻辑
+          // 在这里处理登出逻辑
           localStorage.removeItem('token');
           window.location.href = '/login';
           break;

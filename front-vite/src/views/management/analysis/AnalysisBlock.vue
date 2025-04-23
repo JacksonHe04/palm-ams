@@ -9,7 +9,6 @@
         <div ref="applicationTypeChart" class="chart"></div>
         <div ref="universityChart" class="chart"></div>
         <div ref="interviewScoreChart" class="chart"></div>
-        <!-- 可以继续添加其他图表 -->
       </div>
     </el-card>
   </div>
