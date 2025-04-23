@@ -63,6 +63,13 @@ const router = createRouter({
               component: () => import("@/views/management/result/index.vue"),
               meta: { title: "录取结果" },
             },
+            // failed
+            {
+              path: "failed",
+              name: "failed",
+              component: () => import("@/views/management/failed/index.vue"),
+              meta: { title: "录取失败" },
+            },
             {
               path: "interview",
               name: "interview",

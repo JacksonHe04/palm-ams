@@ -68,26 +68,38 @@ def filter_students(request):
             return JsonResponse({'error': '未找到百分比设置'}, status=400)
 
         result = []
+        failed_ids = []  # 新增：存储未通过筛选的学生ID
         students = Apply.objects.filter(year=curr_year)
 
         for student in students:
+            # 如果是博士或直博，直接通过筛选
+            if student.applicationType in ['博士', '直博']:
+                student.isFilterCondition = True
+                result.append(student)
+                continue
+
+            # 对硕士进行筛选
             # 转换百分比为数字
             try:
                 p = float(student.percentage.rstrip('%'))
             except (ValueError, AttributeError):
                 continue
 
+            passed_filter = False  # 新增：标记是否通过筛选
+
             # 检查A类院校条件
             if student.universityLevel == 'A' or student.masterUniversityLevel == 'A':
                 if p <= percent.pOfA:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     print(f'学生{student.name}未通过A类院校基本条件筛选：百分比{p}% > {percent.pOfA}%')
                 if student.isTopClass and p <= percent.pOfATop:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if student.isTopClass:
@@ -95,6 +107,7 @@ def filter_students(request):
                 if filter_talent(student) and p <= percent.pOfATalent:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if filter_talent(student):
@@ -107,6 +120,7 @@ def filter_students(request):
                 if p <= percent.pOfB and filter_major(student):
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if p > percent.pOfB:
@@ -116,6 +130,7 @@ def filter_students(request):
                 if student.isTopClass and p <= percent.pOfBTop:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if student.isTopClass:
@@ -123,6 +138,7 @@ def filter_students(request):
                 if filter_talent(student) and p <= percent.pOfBTalent:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if filter_talent(student):
@@ -135,6 +151,7 @@ def filter_students(request):
                 if p <= percent.pOfC and filter_major(student):
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if p > percent.pOfC:
@@ -144,6 +161,7 @@ def filter_students(request):
                 if student.isTopClass and p <= percent.pOfCTop:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if student.isTopClass:
@@ -151,12 +169,17 @@ def filter_students(request):
                 if filter_talent(student) and p <= percent.pOfCTalent:
                     student.isFilterCondition = True
                     result.append(student)
+                    passed_filter = True
                     continue
                 else:
                     if filter_talent(student):
                         print(f'学生{student.name}未通过C类院校人才计划条件筛选：百分比{p}% > {percent.pOfCTalent}%')
                     else:
                         print(f'学生{student.name}未通过C类院校人才计划条件筛选：未满足论文或奖项要求')
+
+            # 如果学生没有通过任何筛选条件，将其ID添加到failed_ids数组中
+            if not passed_filter:
+                failed_ids.append(str(student.id))
 
         # 序列化结果并添加文件信息
         response_data = []
@@ -182,7 +205,60 @@ def filter_students(request):
             
             response_data.append(student_dict)
 
-        return JsonResponse(response_data, safe=False)
+        # 返回筛选通过的学生信息和未通过筛选的学生ID
+        return JsonResponse({
+            'passed_students': response_data,
+            'failed_student_ids': failed_ids
+        }, safe=False)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+        
+@api_view(['GET'])
+def get_failed_students(request):
+    try:
+        # 调用 filter_students 获取筛选结果
+        filter_response = filter_students(request)
+        
+        # 如果筛选过程出错，直接返回错误
+        if filter_response.status_code != 200:
+            return filter_response
+            
+        # 获取失败的学生ID列表
+        response_data = filter_response.data
+        failed_ids = response_data.get('failed_student_ids', [])
+        
+        # 获取这些失败学生的详细信息
+        failed_students = Apply.objects.filter(id__in=failed_ids)
+        
+        # 序列化结果并添加文件信息
+        response_data = []
+        for student in failed_students:
+            student_dict = model_to_dict(student)
+            # 查找该学生对应的所有文件
+            student_files = File.objects.filter(applicant_id=str(student.id), is_deleted=False)
+            
+            # 初始化简历和证明材料字段
+            student_dict['resume_file_name'] = None
+            student_dict['resume_file_path'] = None
+            student_dict['proof_file_name'] = None
+            student_dict['proof_file_path'] = None
+            
+            # 遍历所有文件，根据文件类型分别设置
+            for file in student_files:
+                if file.file_type == 'application/zip':
+                    student_dict['resume_file_name'] = file.name
+                    student_dict['resume_file_path'] = f'/api/files/download/{file.id}'
+                elif file.file_type == 'application/pdf':
+                    student_dict['proof_file_name'] = file.name
+                    student_dict['proof_file_path'] = f'/api/files/download/{file.id}'
+            
+            response_data.append(student_dict)
+
+        return JsonResponse({
+            'failed_students': response_data
+        }, safe=False)
 
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

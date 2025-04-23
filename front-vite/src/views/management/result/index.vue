@@ -28,9 +28,10 @@
         </div>
       </template>
 
+      <!-- 硕士申请表格 -->
       <el-table
         v-loading="store.loading"
-        :data="store.filteredStudents"
+        :data="masterStudents"
         style="width: 100%"
         border
         :table-layout="'auto'"
@@ -115,6 +116,190 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 博士申请表格 -->
+      <div class="mb-4">
+        <h3 class="text-lg font-bold mb-2">博士申请</h3>
+        <el-table
+          v-loading="store.loading"
+          :data="doctorStudents"
+          style="width: 100%"
+          border
+          :table-layout="'auto'"
+        >
+          <!-- 序号列 -->
+          <el-table-column type="index" label="#" width="50" />
+
+          <!-- 动态生成列 -->
+          <el-table-column
+            v-for="(value, key) in columnConfig"
+            :key="key"
+            :prop="key"
+            :label="value.label"
+            :min-width="value.width"
+          >
+            <template #default="scope">
+              <template v-if="scope.row[key] === true || scope.row[key] === false">
+                {{ scope.row[key] ? '是' : '否' }}
+              </template>
+              <template v-else>
+                {{ scope.row[key] || '无' }}
+              </template>
+            </template>
+          </el-table-column>
+          
+          <!-- 论文列 -->
+          <el-table-column
+            label="论文"
+            min-width="80"
+          >
+            <template #default="scope">
+              {{ [scope.row.paper1_journalConference, scope.row.paper2_journalConference, scope.row.paper3_journalConference]
+                  .filter(journal => journal && journal.trim() !== '')
+                  .join(';') || '无' }}
+            </template>
+          </el-table-column>
+
+          <!-- 奖项列 -->
+          <el-table-column
+            label="奖项"
+            min-width="80"
+          >
+            <template #default="scope">
+              {{ [scope.row.award1_awardName, scope.row.award2_awardName, scope.row.award3_awardName]
+                  .filter(award => award && award.trim() !== '')
+                  .join(';') || '无' }}
+            </template>
+          </el-table-column>
+
+          <!-- 文件下载列 -->
+          <el-table-column
+            label="证明文件"
+            min-width="80"
+          >
+            <template #default="scope">
+              <el-link
+                v-if="scope.row.resume_file_path"
+                type="primary"
+                :href="getFileDownloadUrl(scope.row.resume_file_path)"
+                target="_blank"
+              >
+                {{ scope.row.resume_file_name || '证明文件' }}
+              </el-link>
+              <span v-else>无证明文件</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="简历文件"
+            min-width="80"
+          >
+            <template #default="scope">
+              <el-link
+                v-if="scope.row.proof_file_path"
+                type="primary"
+                :href="getFileDownloadUrl(scope.row.proof_file_path)"
+                target="_blank"
+              >
+                {{ scope.row.proof_file_name || '简历文件' }}
+              </el-link>
+              <span v-else>无简历</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+
+      <!-- 直博申请表格 -->
+      <div>
+        <h3 class="text-lg font-bold mb-2">直博申请</h3>
+        <el-table
+          v-loading="store.loading"
+          :data="directDoctorStudents"
+          style="width: 100%"
+          border
+          :table-layout="'auto'"
+        >
+          <!-- 序号列 -->
+          <el-table-column type="index" label="#" width="50" />
+
+          <!-- 动态生成列 -->
+          <el-table-column
+            v-for="(value, key) in columnConfig"
+            :key="key"
+            :prop="key"
+            :label="value.label"
+            :min-width="value.width"
+          >
+            <template #default="scope">
+              <template v-if="scope.row[key] === true || scope.row[key] === false">
+                {{ scope.row[key] ? '是' : '否' }}
+              </template>
+              <template v-else>
+                {{ scope.row[key] || '无' }}
+              </template>
+            </template>
+          </el-table-column>
+          
+          <!-- 论文列 -->
+          <el-table-column
+            label="论文"
+            min-width="80"
+          >
+            <template #default="scope">
+              {{ [scope.row.paper1_journalConference, scope.row.paper2_journalConference, scope.row.paper3_journalConference]
+                  .filter(journal => journal && journal.trim() !== '')
+                  .join(';') || '无' }}
+            </template>
+          </el-table-column>
+
+          <!-- 奖项列 -->
+          <el-table-column
+            label="奖项"
+            min-width="80"
+          >
+            <template #default="scope">
+              {{ [scope.row.award1_awardName, scope.row.award2_awardName, scope.row.award3_awardName]
+                  .filter(award => award && award.trim() !== '')
+                  .join(';') || '无' }}
+            </template>
+          </el-table-column>
+
+          <!-- 文件下载列 -->
+          <el-table-column
+            label="证明文件"
+            min-width="80"
+          >
+            <template #default="scope">
+              <el-link
+                v-if="scope.row.resume_file_path"
+                type="primary"
+                :href="getFileDownloadUrl(scope.row.resume_file_path)"
+                target="_blank"
+              >
+                {{ scope.row.resume_file_name || '证明文件' }}
+              </el-link>
+              <span v-else>无证明文件</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="简历文件"
+            min-width="80"
+          >
+            <template #default="scope">
+              <el-link
+                v-if="scope.row.proof_file_path"
+                type="primary"
+                :href="getFileDownloadUrl(scope.row.proof_file_path)"
+                target="_blank"
+              >
+                {{ scope.row.proof_file_name || '简历文件' }}
+              </el-link>
+              <span v-else>无简历</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
 
       <!-- 错误提示 -->
       <div v-if="store.error" class="error-message">
@@ -245,6 +430,19 @@ async function exportToExcel() {
     exporting.value = false;
   }
 }
+
+// 添加计算属性来分类学生
+const masterStudents = computed(() => {
+  return store.filteredStudents.filter(student => student.applicationType === '硕士');
+});
+
+const doctorStudents = computed(() => {
+  return store.filteredStudents.filter(student => student.applicationType === '博士');
+});
+
+const directDoctorStudents = computed(() => {
+  return store.filteredStudents.filter(student => student.applicationType === '直博');
+});
 </script>
 
 <style lang="scss" scoped>
