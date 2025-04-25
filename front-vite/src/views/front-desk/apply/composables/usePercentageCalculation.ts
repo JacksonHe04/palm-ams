@@ -26,10 +26,13 @@ export const usePercentageCalculation = (formData: ComputedRef<Record<string, an
   })
 
   // 更新贡献度
-  const updateContribution = (fieldName: string) => {
-    const contribution = contributionData.value[fieldName]
-    if (contribution.rank && contribution.total) {
-      const formattedValue = `${contribution.rank}/${contribution.total}`
+  const updateContribution = (fieldName: string, data: { rank: string | number, total: string | number }) => {
+    // 更新本地数据
+    contributionData.value[fieldName] = data
+    
+    // 更新 store 中的值
+    if (data.rank && data.total) {
+      const formattedValue = `${data.rank}/${data.total}`
       applyStore.updateField(fieldName, formattedValue)
       return formattedValue
     }
