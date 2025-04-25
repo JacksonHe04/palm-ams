@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ElSwitch, ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 import { v4 as uuidv4 } from "uuid";
 
 import { useFieldStore } from "@/stores/fieldStore";
@@ -77,6 +77,7 @@ import {
   applicationType,
   gender,
 } from "./composables/formConfig";
+
 // 选项配置对象
 const selectOptions = computed(() => ({
   报名类型: applicationType,
@@ -131,10 +132,10 @@ import { useFieldsSort } from "./composables/useFieldsSort";
 const route = useRoute();
 const router = useRouter();
 
+// 根据路由路径选择对应显示的字段
 const applyFields = computed(() => {
   const routePath = route.path;
   const fields = fieldStore.fields.filter((field) => {
-    // 根据路由路径选择对应的字段显示标志
     switch (routePath) {
       case "/apply/recommend-master":
         return field.showInRecommendMaster;
@@ -180,6 +181,7 @@ const formData = computed(() => applyStore.formData);
 const { calculatePercentage, contributionData, updateContribution } =
   usePercentageCalculation(formData);
 
+// 初始化表单数据
 const initFormData = () => {
   const initialData = {
     id: uuidv4(),
@@ -209,6 +211,7 @@ const initFormData = () => {
   applyStore.setFormData(initialData);
 };
 
+// 初始化表单字段
 onMounted(async () => {
   await Promise.all([
     fieldStore.fetchFields(),

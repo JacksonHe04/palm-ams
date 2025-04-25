@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import {
   ElTable,
   ElTableColumn,
@@ -157,6 +157,17 @@ const initializeFields = async () => {
 };
 
 
+// 计算不同区域的字段
+const groupedFields = computed(() => {
+  const groups: Record<string, FieldItem[]> = {};
+  regionOptions.forEach(option => {
+    groups[option.value] = store.fields.filter(field => field.regionInForm === option.value);
+  });
+  return groups;
+});
+
+// 当前激活的标签
+const activeTab = ref('个人信息');
 </script>
 
 <template>
@@ -167,7 +178,7 @@ const initializeFields = async () => {
           <div class="flex items-start flex-col">
             <span class="text-xl font-bold">字段管理</span>
             <div class="text-gray-500 text-sm mt-1">
-              管理系统中使用的所有字段及其显示设置
+              前台申请表单与后台管理系统中使用的所有字段及其显示设置
             </div>
           </div>
           <div class="flex gap-2">
@@ -177,43 +188,46 @@ const initializeFields = async () => {
         </div>
       </template>
 
-      <el-table :data="store.fields" border class="w-full">
-        <el-table-column label="ID" min-width="80" type="index" :index="1" />
-        <el-table-column prop="name" label="字段名称" min-width="120" />
-        <el-table-column
-          prop="description"
-          label="描述"
-          min-width="150"
-          show-overflow-tooltip
-        />
-        <!-- <el-table-column prop="variableName" label="变量名" min-width="120" /> -->
-        <el-table-column label="字段类型" min-width="100">
-          <template #default="{ row }">
-            {{ fieldTypes.find(type => type.value === row.type)?.label || row.type }}
-          </template>
-        </el-table-column>
-        <el-table-column label="在表格中显示" min-width="120" align="center">
-          <template #default="{ row }">
-            <el-switch v-model="row.showInTable" @change="() => handleSwitchChange(row)" />
-          </template>
-        </el-table-column>
-        <!-- <el-table-column label="在筛选方案中显示" min-width="150" align="center">
-          <template #default="{ row }">
-            <el-switch v-model="row.showInFilter" @change="() => handleSwitchChange(row)" />
-          </template>
-        </el-table-column> -->
-        <el-table-column label="在申请页面显示" min-width="150" align="center">
-          <template #default="{ row }">
-            <el-switch v-model="row.showInApply" @change="() => handleSwitchChange(row)" />
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" min-width="150" align="center">
-          <template #default="{ row }">
-            <el-button type="primary" size="small" @click="openEditDialog(row)">编辑</el-button>
-            <el-button type="danger" size="small" @click="deleteField(row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-tabs v-model="activeTab">
+        <el-tab-pane
+          v-for="option in regionOptions"
+          :key="option.value"
+          :label="option.label"
+          :name="option.value"
+        >
+          <el-table :data="groupedFields[option.value]" border class="w-full">
+            <el-table-column label="ID" min-width="80" type="index" :index="1" />
+            <el-table-column prop="name" label="字段名称" min-width="120" />
+            <el-table-column
+              prop="description"
+              label="描述"
+              min-width="150"
+              show-overflow-tooltip
+            />
+            <el-table-column label="字段类型" min-width="100">
+              <template #default="{ row }">
+                {{ fieldTypes.find(type => type.value === row.type)?.label || row.type }}
+              </template>
+            </el-table-column>
+            <el-table-column label="在表格中显示" min-width="120" align="center">
+              <template #default="{ row }">
+                <el-switch v-model="row.showInTable" @change="() => handleSwitchChange(row)" />
+              </template>
+            </el-table-column>
+            <el-table-column label="在申请页面显示" min-width="150" align="center">
+              <template #default="{ row }">
+                <el-switch v-model="row.showInApply" @change="() => handleSwitchChange(row)" />
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" min-width="150" align="center">
+              <template #default="{ row }">
+                <el-button type="primary" size="small" @click="openEditDialog(row)">编辑</el-button>
+                <el-button type="danger" size="small" @click="deleteField(row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
     </el-card>
 
     <!-- 新增/编辑对话框 -->
@@ -313,6 +327,12 @@ const initializeFields = async () => {
 .el-dialog {
   :deep(.el-form-item__label) {
     font-weight: 500;
+  }
+}
+
+.el-tabs {
+  :deep(.el-tabs__header) {
+    margin-bottom: 16px;
   }
 }
 </style>
