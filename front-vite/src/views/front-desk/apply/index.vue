@@ -1,7 +1,10 @@
 <template>
   <div class="new-apply-container">
     <form @submit.prevent="handleSubmit" class="apply-form">
-      <div v-for="field in applyFields" :key="field.id" class="form-item">
+      <template v-for="region in ['个人信息', '学历信息', '申请信息', '论文', '奖项', '其他', 'other']" :key="region">
+        <div v-if="getFieldsByRegion(region).length > 0" class="form-region">
+          <h2 class="region-title">{{ region }}</h2>
+          <div v-for="field in getFieldsByRegion(region)" :key="field.id" class="form-item">
         <label :for="field.variableName">{{ field.name }}</label>
         <div class="field-description">{{ field.description }}</div>
         
@@ -111,7 +114,9 @@
           class="form-input"
           :required="isFieldRequired(field.variableName)"
         />
-      </div>
+          </div>
+        </div>
+      </template>
       
       <!-- 上传简历 -->
       <UploadResume />
@@ -126,7 +131,7 @@
 
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
-import router from '@/router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElSwitch, ElMessage } from 'element-plus'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -195,10 +200,35 @@ const getSelectOptions = (fieldName: string) => {
 // 获取需要在申请表单中显示的字段
 import { useFieldsSort } from './composables/useFieldsSort'
 
+const route = useRoute()
+const router = useRouter()
+
 const applyFields = computed(() => {
-  const fields = fieldStore.fields.filter(field => field.showInApply)
+  const routePath = route.path
+  const fields = fieldStore.fields.filter(field => {
+    // 根据路由路径选择对应的字段显示标志
+    switch (routePath) {
+      case '/apply/recommend-master':
+        return field.showInRecommendMaster
+      case '/apply/exam-master':
+        return field.showInExamMaster
+      case '/apply/phd':
+        return field.showInPhd
+      case '/apply/direct-phd':
+        return field.showInDirectPhd
+      default:
+        return false
+    }
+  })
+  
+  // 按照 regionInForm 对字段进行排序
   return useFieldsSort(fields).sortedFields.value
 })
+
+// 根据区域获取字段
+const getFieldsByRegion = (region: string) => {
+  return applyFields.value.filter(field => field.regionInForm === region)
+}
 
 // 导入表单验证组合式函数
 const { isFieldRequired, validateForm } = useFormValidation()
@@ -258,4 +288,16 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 @use '@/styles/views/front-desk/new_apply/index.scss';
+
+.form-region {
+  @apply mb-8 p-6 bg-white rounded-lg shadow;
+
+  .region-title {
+    @apply text-xl font-bold mb-6 text-gray-800 pb-2 border-b border-gray-200;
+  }
+
+  .form-item {
+    @apply mb-4;
+  }
+}
 </style>

@@ -23,7 +23,12 @@ def add_field(request):
                 variableName=data.get('variableName', ''),
                 showInTable=data.get('showInTable', True),
                 showInFilter=data.get('showInFilter', True),
-                showInApply=data.get('showInApply', True)
+                showInApply=data.get('showInApply', True),
+                showInRecommendMaster=data.get('showInRecommendMaster', True),
+                showInExamMaster=data.get('showInExamMaster', True),
+                showInPhd=data.get('showInPhd', True),
+                showInDirectPhd=data.get('showInDirectPhd', True),
+                regionInForm=data.get('regionInForm', '其他')
             )
             return JsonResponse(field.to_dict())
         except Exception as e:
@@ -44,6 +49,11 @@ def update_field(request, field_id):
             field.showInTable = data.get('showInTable', field.showInTable)
             field.showInFilter = data.get('showInFilter', field.showInFilter)
             field.showInApply = data.get('showInApply', field.showInApply)
+            field.showInRecommendMaster = data.get('showInRecommendMaster', field.showInRecommendMaster)
+            field.showInExamMaster = data.get('showInExamMaster', field.showInExamMaster)
+            field.showInPhd = data.get('showInPhd', field.showInPhd)
+            field.showInDirectPhd = data.get('showInDirectPhd', field.showInDirectPhd)
+            field.regionInForm = data.get('regionInForm', field.regionInForm)
             
             field.save()
             return JsonResponse(field.to_dict())

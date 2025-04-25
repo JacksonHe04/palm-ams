@@ -39,6 +39,16 @@ const fieldTypes = [
   { value: 'number', label: '数字' },
 ];
 
+// 表单区域选项
+const regionOptions = [
+  { value: '个人信息', label: '个人信息' },
+  { value: '学历信息', label: '学历信息' },
+  { value: '申请信息', label: '申请信息' },
+  { value: '论文', label: '论文' },
+  { value: '奖项', label: '奖项' },
+  { value: '其他', label: '其他' },
+];
+
 // 对话框相关
 const dialogVisible = ref(false);
 const dialogTitle = ref("新增字段");
@@ -50,8 +60,12 @@ const editingField = ref<FieldItem>({
   showInTable: true,
   showInFilter: true,
   showInApply: true,
+  showInRecommendMaster: true,
+  showInExamMaster: true,
+  showInPhd: true,
+  showInDirectPhd: true,
+  regionInForm: "其他",
 });
-const isEditing = ref(false);
 
 // 打开新增对话框
 const openAddDialog = () => {
@@ -63,10 +77,16 @@ const openAddDialog = () => {
     showInTable: true,
     showInFilter: true,
     showInApply: true,
+    showInRecommendMaster: true,
+    showInExamMaster: true,
+    showInPhd: true,
+    showInDirectPhd: true,
+    regionInForm: "其他",
   };
   isEditing.value = false;
   dialogVisible.value = true;
 };
+const isEditing = ref(false);
 
 // 打开编辑对话框
 const openEditDialog = (row: FieldItem) => {
@@ -224,7 +244,7 @@ const initializeFields = async () => {
           </el-select>
         </el-form-item>
         <el-form-item label="显示设置">
-          <div class="flex gap-4">
+          <div class="flex gap-4 flex-wrap">
             <el-switch
               v-model="editingField.showInTable"
               active-text="表格显示"
@@ -237,7 +257,36 @@ const initializeFields = async () => {
               v-model="editingField.showInApply"
               active-text="申请显示"
             />
+            <el-switch
+              v-model="editingField.showInRecommendMaster"
+              active-text="推免显示"
+            />
+            <el-switch
+              v-model="editingField.showInExamMaster"
+              active-text="考研显示"
+            />
+            <el-switch
+              v-model="editingField.showInPhd"
+              active-text="博士显示"
+            />
+            <el-switch
+              v-model="editingField.showInDirectPhd"
+              active-text="直博显示"
+            />
           </div>
+        </el-form-item>
+        <el-form-item label="表单区域">
+          <el-select
+            v-model="editingField.regionInForm"
+            placeholder="请选择表单区域"
+          >
+            <el-option
+              v-for="option in regionOptions"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>

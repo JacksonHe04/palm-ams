@@ -9,6 +9,11 @@ export interface FieldItem {
   showInTable: boolean
   showInFilter: boolean
   showInApply: boolean
+  showInRecommendMaster: boolean
+  showInExamMaster: boolean
+  showInPhd: boolean
+  showInDirectPhd: boolean
+  regionInForm: string
 }
 
 // 获取字段列表
