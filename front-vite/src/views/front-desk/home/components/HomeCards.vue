@@ -19,7 +19,7 @@
     </div>
 
     <div class="small-cards-list">
-      <a href="https://palm.seu.edu.cn/palm_cn.html">
+      <a href="https://palm.seu.edu.cn">
         <div class="horizontal-card">
           <div class="flex gap-3">
             <div
@@ -76,8 +76,8 @@ const bubbleItems = ref([
 const smallCards = ref([
   {
     icon: "👥",
-    title: "实验室组织架构",
-    href: "https://palm.seu.edu.cn/palm_cn_arch.html",
+    title: "PALM 实验室简介",
+    href: "https://palm.seu.edu.cn/home.html",
   },
   {
     icon: "👩‍🎓",
@@ -92,7 +92,7 @@ const smallCards = ref([
   {
     icon: "📚️",
     title: "科研资源共享",
-    href: "https://palm.seu.edu.cn/projects.html",
+    href: "https://palm.seu.edu.cn/resource.html",
   },
 ]);
 </script>

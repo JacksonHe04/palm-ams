@@ -6,6 +6,7 @@ from Api.percent.models import Percent
 from Api.files.models import File
 from django.forms.models import model_to_dict
 
+# 论文和奖项可以破格的筛选
 def filter_talent(student):
     # 检查论文条件
     if student.paper1_isFirst and student.paper1_ccfLevel in ['A', 'B']:
@@ -37,25 +38,19 @@ def filter_talent(student):
 
     return student.isPaperCondition or student.isAwardCondition
 
+# 检查专业
 def filter_major(student):
     # 检查本科专业
     major_exists = Major.objects.filter(
         name=student.major,
-        category='限制专业'
+        category='可录取专业'
     ).exists()
     if major_exists:
         return True
 
-    # 检查硕士专业
-    master_major_exists = Major.objects.filter(
-        name=student.masterMajor,
-        category='限制专业'
-    ).exists()
-    if master_major_exists:
-        return True
-
     return False
 
+# 筛选学生
 @api_view(['GET'])
 def filter_students(request):
     try:
@@ -70,6 +65,10 @@ def filter_students(request):
         result = []
         failed_ids = []  # 新增：存储未通过筛选的学生ID
         students = Apply.objects.filter(year=curr_year)
+        # 打印所有学生的姓名和数量
+        student_names = [student.name for student in students]
+        print('所有学生数量：', len(student_names))
+        print('所有学生姓名：', student_names)
 
         for student in students:
             # 如果是博士或直博，直接通过筛选
@@ -126,7 +125,7 @@ def filter_students(request):
                     if p > percent.pOfB:
                         print(f'学生{student.name}未通过B类院校基本条件筛选：百分比{p}% > {percent.pOfB}%')
                     if not filter_major(student):
-                        print(f'学生{student.name}未通过B类院校基本条件筛选：专业{student.major}不在限制专业列表中')
+                        print(f'学生{student.name}未通过B类院校基本条件筛选：专业{student.major}不在可录取专业列表中')
                 if student.isTopClass and p <= percent.pOfBTop:
                     student.isFilterCondition = True
                     result.append(student)
@@ -157,7 +156,7 @@ def filter_students(request):
                     if p > percent.pOfC:
                         print(f'学生{student.name}未通过C类院校基本条件筛选：百分比{p}% > {percent.pOfC}%')
                     if not filter_major(student):
-                        print(f'学生{student.name}未通过C类院校基本条件筛选：专业{student.major}不在限制专业列表中')
+                        print(f'学生{student.name}未通过C类院校基本条件筛选：专业{student.major}不在可录取专业列表中')
                 if student.isTopClass and p <= percent.pOfCTop:
                     student.isFilterCondition = True
                     result.append(student)
@@ -206,6 +205,15 @@ def filter_students(request):
             response_data.append(student_dict)
 
         # 返回筛选通过的学生信息和未通过筛选的学生ID
+        # 在控制台打印通过的学生的姓名的数组
+        passed_students = [student.name for student in result]
+        print('通过的学生姓名：', passed_students)
+        # 打印未通过筛选的学生的姓名的数组
+        failed_students = Apply.objects.filter(id__in=failed_ids)
+        failed_students_names = [student.name for student in failed_students]
+        print('未通过筛选的学生姓名：', failed_students_names)
+
+
         return JsonResponse({
             'passed_students': response_data,
             'failed_student_ids': failed_ids
