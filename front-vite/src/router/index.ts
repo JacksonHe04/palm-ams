@@ -24,10 +24,36 @@ const router = createRouter({
           component: () => import("@/views/front-desk/join/index.vue"),
           meta: { title: "加入 PALM 实验室" },
         },
+        // apply
         {
           path: "/apply",
-          component: () => import("@/views/front-desk/new_apply/index.vue"),
-          meta: { title: "申请 PALM 实验室" },
+          component: () => import("@/views/front-desk/apply/index.vue"),
+          children: [
+            // remmmend-master
+            {
+              path: "recommend-master",
+              component: () => import("@/views/front-desk/apply/recommend-master/index.vue"),
+              meta: { title: "推免申请通道" },
+            },
+            // exam-master
+            {
+              path: "exam-master",
+              component: () => import("@/views/front-desk/apply/exam-master/index.vue"),
+              meta: { title: "考研申请通道" },
+            },
+            // phd
+            {
+              path: "phd",
+              component: () => import("@/views/front-desk/apply/phd/index.vue"),
+              meta: { title: "博士申请通道" },
+            },
+            // direct-phd
+            {
+              path: "direct-phd",
+              component: () => import("@/views/front-desk/apply/direct-phd/index.vue"),
+              meta: { title: "直博申请通道" },
+            },
+          ]
         },
         // /wait
         {

@@ -1,5 +1,5 @@
 <template>
-  <RouterLink to="/apply">
+  <RouterLink :to="path">
     <div class="recruitment-card">
       <div class="card-content">
         <div class="icon">
@@ -32,6 +32,7 @@ defineProps<{
   title: string;
   labelText?: string;
   description: string;
+  path: string;
 }>();
 </script>
 

@@ -22,25 +22,29 @@ const recruitmentCards = [
     iconSrc: BaoyanIcon,
     title: '硕士推免招生',
     labelText: '招收对象',
-    description: '获得推免资格的优秀本科应届生'
+    description: '获得推免资格的优秀本科应届生',
+    path: '/apply/recommend-master'
   },
   {
     iconSrc: ZhiboIcon,
     title: '直博招生',
     labelText: '招收对象',
-    description: '获得推免资格的优秀本科应届生'
+    description: '获得推免资格的优秀本科应届生',
+    path: '/apply/direct-phd'
   },
   {
     iconSrc: KaoyanIcon,
     title: '考研招生',
     labelText: '招收方向',
-    description: '全国硕士研究生统一招生考试招生'
+    description: '全国硕士研究生统一招生考试招生',
+    path: '/apply/exam-master'
   },
   {
     iconSrc: BoshiIcon,
     title: '博士招生',
     labelText: '招收对象',
-    description: '全年招收优秀博士研究生'
+    description: '全年招收优秀博士研究生',
+    path: '/apply/phd'
   }
 ];
 </script>
