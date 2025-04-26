@@ -2,7 +2,7 @@
   <div class="cards">
     <RouterLink to="/read">
       <div class="stats-card h-full">
-        <div class="stats-number">{{ currentYear }}<br />Join Us</div>
+        <div class="stats-number">{{ currentAdmissionYear }}<br />Join Us</div>
         <div>请阅读PALM实验室招生说明</div>
         <div class="mt-2 read">点击阅读</div>
       </div>
@@ -54,15 +54,20 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted } from "vue";
+import { useSettingStore } from "@/stores/settingStore";
 
-const currentYear = computed(() => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1; // getMonth() 返回 0-11，需要加1
-  return month < 9 ? year : year + 1;
+// 获取设置store实例
+const settingStore = useSettingStore();
+
+// 当前招生年份
+const currentAdmissionYear = ref("");
+
+// 初始化时获取年份数据
+onMounted(async () => {
+  await settingStore.fetchYear();
+  currentAdmissionYear.value = settingStore.year.year;
 });
-
 
 const bubbleItems = ref([
   "🤖 Machine Learning",

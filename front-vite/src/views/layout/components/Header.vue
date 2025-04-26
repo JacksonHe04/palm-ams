@@ -40,24 +40,40 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useSettingStore } from '@/stores/settingStore';
 
 const route = useRoute();
 const isMenuOpen = ref(false);
+
+// 获取设置store实例
+const settingStore = useSettingStore();
+// 当前招生年份
+const currentAdmissionYear = ref('');
+
+// 初始化时获取年份数据
+onMounted(async () => {
+  await settingStore.fetchYear();
+  currentAdmissionYear.value = settingStore.year.year;
+  console.log(currentAdmissionYear.value);
+});
 
 const navStyle = computed(() => {
   return route.path.startsWith('/admin')
     ? { backgroundColor: 'white' }
     : { backgroundImage: "url('/home-bg-m.png')" };
 });
-const navItems = [
+
+// 将navItems改为计算属性，使其响应式更新
+const navItems = computed(() => [
   { name: 'Introduction', to: '/introduction' },
   { name: 'News', to: '/news' },
   { name: 'Members', to: '/members' },
   { name: 'Academics', to: '/academics' },
-  { name: '2025 Join Us', to: '/read' },
-];
+  // 动态获取年份
+  { name: `${currentAdmissionYear.value} Join Us`, to: '/read' },
+]);
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;

@@ -29,12 +29,8 @@ export const useSettingStore = defineStore("setting", () => {
   const universities = ref<University[]>([]);
   const majors = ref<Major[]>([]);
   const personnel = ref<Personnel[]>([]);
-  const admissionPeriod = ref<AdmissionPeriod>({
-    startDate: "",
-    endDate: "",
-  });
   const awards = ref<Award[]>([]);
-  const year = ref<Year[]>([]);
+  const year = ref<number>(0); // 修改为数字类型
 
   // 添加状态标记
   const isInitializing = ref(true);
@@ -56,7 +52,6 @@ export const useSettingStore = defineStore("setting", () => {
       fetchUniversities(),
       fetchMajors(),
       fetchPersonnel(),
-      fetchAdmissionPeriod(),
       fetchAwards(),
       fetchYear()
     ]);
@@ -129,7 +124,7 @@ export const useSettingStore = defineStore("setting", () => {
     }
   };
 
-  // 年份相关操作
+  // 年份相关操作 - 简化fetch方法
   const fetchYear = async () => {
     try {
       const response = await getYear();
@@ -139,10 +134,10 @@ export const useSettingStore = defineStore("setting", () => {
     }
   };
 
-  const saveYear = async (years: { year: number }[]) => {
+  // 简化save方法
+  const saveYear = async (yearValue: number) => {
     try {
-      // 假设 updateYear 函数可以处理年份数组
-      await updateYear(years);
+      await updateYear(yearValue);
     } catch (error) {
       console.error("保存年份配置失败:", error);
       throw error;
@@ -199,7 +194,6 @@ export const useSettingStore = defineStore("setting", () => {
     universities,
     majors,
     personnel,
-    admissionPeriod,
     awards,
     year,
     isInitializing,

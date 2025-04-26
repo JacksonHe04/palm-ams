@@ -212,42 +212,32 @@ class YearViewSet(viewsets.ModelViewSet):
     queryset = Year.objects.all()
     serializer_class = YearSerializer
 
+    def list(self, request, *args, **kwargs):
+        """
+        获取当前年份
+        返回格式: {"year": 2023}
+        """
+        year = Year.objects.first()
+        if year:
+            return Response({"year": year.year})
+        return Response({"year": None})
+
     def create(self, request, *args, **kwargs):
-        data = request.data
-        response_data = []
-        errors = []
+        """
+        更新年份配置
+        接收格式: {"year": 2023}
+        """
+        year_value = request.data.get("year")
+        if not year_value:
+            return Response(
+                {"error": "年份不能为空"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        existing_years = {year.year: year for year in Year.objects.all()}
-        new_years = {item.get('year') for item in data if item.get('year')}
-
-        for year_value, year in existing_years.items():
-            if year_value not in new_years:
-                year.delete()
-
-        for item in data:
-            try:
-                year_value = item.get('year')
-                if not year_value:
-                    errors.append({'error': '年份不能为空'})
-                    continue
-
-                existing_year = existing_years.get(year_value)
-
-                if existing_year:
-                    serializer = self.get_serializer(existing_year, data=item, partial=True)
-                    serializer.is_valid(raise_exception=True)
-                    serializer.save()
-                    response_data.append(serializer.data)
-                else:
-                    serializer = self.get_serializer(data=item)
-                    serializer.is_valid(raise_exception=True)
-                    serializer.save()
-                    response_data.append(serializer.data)
-
-            except Exception as e:
-                errors.append({'year': year_value, 'error': str(e)})
-
-        if errors:
-            return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response(response_data, status=status.HTTP_201_CREATED)
+        # 清空原有年份数据
+        Year.objects.all().delete()
+        
+        # 创建新年份记录
+        Year.objects.create(year=year_value)
+        
+        return Response({"year": year_value}, status=status.HTTP_201_CREATED)
