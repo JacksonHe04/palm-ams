@@ -76,7 +76,7 @@ def download_file(request, file_id):
             content_type=content_type or 'application/octet-stream'
         )
         
-        # 使用 original_name 作为下载文件名，并进行 URL 编码以支持中文
+        # 使用 name 作为下载文件名，并进行 URL 编码以支持中文
         filename = urllib.parse.quote(file_record.name)
         response['Content-Disposition'] = f'attachment; filename="{filename}"; filename*=UTF-8\'\'{filename}'
         return response

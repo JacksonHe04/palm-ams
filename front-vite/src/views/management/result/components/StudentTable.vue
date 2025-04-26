@@ -5,7 +5,9 @@
     style="width: 100%"
     border
     :table-layout="'auto'"
+    @selection-change="handleSelectionChange"
   >
+    <el-table-column type="selection" width="55" />
     <el-table-column type="index" label="#" width="50" />
     <el-table-column
       v-for="(value, key) in columnConfig"
@@ -85,9 +87,21 @@
 <script setup lang="ts">
 import { getFileDownloadUrl } from '@/apis/files';
 
-defineProps<{
+const props = defineProps<{
   data: any[];
   loading: boolean;
   columnConfig: Record<string, { label: string; width: string }>;
 }>();
+
+const emit = defineEmits<{
+  (e: 'selectionChange', selection: any[]): void;
+}>();
+
+/**
+ * 处理表格多选变化
+ * @param selection 当前选中的行数据数组
+ */
+const handleSelectionChange = (selection: any[]) => {
+  emit('selectionChange', selection);
+};
 </script>
