@@ -9,6 +9,7 @@ import uuid
 import mimetypes
 import zipfile
 import tempfile
+import urllib
 
 # 创建文件存储目录
 # 在文件顶部的导入语句后添加新的目录常量
@@ -74,7 +75,10 @@ def download_file(request, file_id):
             open(file_record.file_path, 'rb'),
             content_type=content_type or 'application/octet-stream'
         )
-        response['Content-Disposition'] = f'attachment; filename="{file_record.original_name}"'
+        
+        # 使用 original_name 作为下载文件名，并进行 URL 编码以支持中文
+        filename = urllib.parse.quote(file_record.name)
+        response['Content-Disposition'] = f'attachment; filename="{filename}"; filename*=UTF-8\'\'{filename}'
         return response
 
     except File.DoesNotExist:

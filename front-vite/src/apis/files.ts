@@ -24,7 +24,12 @@ export const deleteFile = (fileId: number) => {
 
 // 获取文件下载链接
 export const getFileDownloadUrl = (filePath: string) => {
-  return `${http.defaults.baseURL}${filePath}`
+  // 如果路径以 /api/files/download/ 开头，直接返回完整URL
+  if (filePath.startsWith('/api/files/download/')) {
+    return `${http.defaults.baseURL}${filePath}`
+  }
+  // 否则返回null
+  return null
 }
 
 // 上传文件的配置

@@ -1,30 +1,48 @@
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen">
-    <el-tabs type="border-card" class="bg-white rounded-lg shadow-lg" v-loading="store.isLoading" v-model="activeTab">
-      <el-tab-pane label="院校等级调整" name="university">
-        <component :is="currentComponent" v-if="activeTab === 'university'"/>
-      </el-tab-pane>
+  <div class="p-6">
+    <el-card>
+      <template #header>
+        <div class="flex justify-between items-center">
+          <div class="flex items-start flex-col">
+            <span class="text-xl font-bold">系统设置</span>
+            <div class="text-gray-500 text-sm mt-1">
+              管理系统的基础配置信息
+            </div>
+          </div>
+        </div>
+      </template>
 
-      <el-tab-pane label="专业分类调整" name="major">
-        <component :is="currentComponent" v-if="activeTab === 'major'"/>
-      </el-tab-pane>
+      <el-tabs v-model="activeTab" v-loading="store.isLoading">
+        <el-tab-pane label="院校等级调整" name="university">
+          <component :is="currentComponent" v-if="activeTab === 'university'"/>
+        </el-tab-pane>
 
-      <el-tab-pane label="奖项配置" name="award">
-        <component :is="currentComponent" v-if="activeTab === 'award'"/>
-      </el-tab-pane>
+        <el-tab-pane label="专业分类调整" name="major">
+          <component :is="currentComponent" v-if="activeTab === 'major'"/>
+        </el-tab-pane>
 
-      <el-tab-pane label="导师信息调整" name="personnel">
-        <component :is="currentComponent" v-if="activeTab === 'personnel'"/>
-      </el-tab-pane>
+        <el-tab-pane label="奖项配置" name="award">
+          <component :is="currentComponent" v-if="activeTab === 'award'"/>
+        </el-tab-pane>
 
-      <el-tab-pane label="招生年份和时间调整" name="admission">
-        <component :is="currentComponent" v-if="activeTab === 'admission'"/>
-      </el-tab-pane>
+        <el-tab-pane label="导师信息调整" name="personnel">
+          <component :is="currentComponent" v-if="activeTab === 'personnel'"/>
+        </el-tab-pane>
 
-      <el-tab-pane label="年份配置" name="year">
-        <component :is="currentComponent" v-if="activeTab === 'year'"/>
-      </el-tab-pane>
-    </el-tabs>
+        <el-tab-pane label="招生年份和时间调整" name="admission">
+          <component :is="currentComponent" v-if="activeTab === 'admission'"/>
+        </el-tab-pane>
+
+        <el-tab-pane label="年份配置" name="year">
+          <component :is="currentComponent" v-if="activeTab === 'year'"/>
+        </el-tab-pane>
+      </el-tabs>
+
+      <!-- 错误提示 -->
+      <div v-if="store.error" class="error-message">
+        {{ store.error }}
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -48,24 +66,26 @@ const components = shallowRef({
 const currentComponent = computed(() => components.value[activeTab.value]);
 </script>
 
-<style scoped>
-.el-tabs {
-  @apply shadow-md rounded-lg;
-}
-
-.el-tab-pane {
-  @apply p-6;
-}
-
-.el-button {
-  @apply transition-colors duration-200;
-}
-
-.el-button:hover {
-  @apply opacity-80;
-}
-
+<style lang="scss" scoped>
 .el-table {
-  @apply rounded-lg overflow-hidden;
+  --el-table-border-color: #dcdfe6;
+  --el-table-header-bg-color: #f5f7fa;
+
+  :deep(th) {
+    font-weight: 600;
+    color: #606266;
+  }
+}
+
+.error-message {
+  color: #f56c6c;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.el-tabs {
+  :deep(.el-tabs__header) {
+    margin-bottom: 16px;
+  }
 }
 </style>
