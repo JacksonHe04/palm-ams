@@ -29,25 +29,14 @@
       </template>
 
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="硕士申请" name="master">
+        <el-tab-pane
+          v-for="type in applicationTypes"
+          :key="type"
+          :label="type || '其他'"
+          :name="type"
+        >
           <student-table
-            :data="masterStudents"
-            :loading="store.loading"
-            :column-config="columnConfig"
-          />
-        </el-tab-pane>
-
-        <el-tab-pane label="博士申请" name="doctor">
-          <student-table
-            :data="doctorStudents"
-            :loading="store.loading"
-            :column-config="columnConfig"
-          />
-        </el-tab-pane>
-
-        <el-tab-pane label="直博申请" name="directDoctor">
-          <student-table
-            :data="directDoctorStudents"
+            :data="getStudentsByType(type)"
             :loading="store.loading"
             :column-config="columnConfig"
           />
@@ -63,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, computed } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import { useResultStore } from '@/stores/resultStore';
 import { useFieldStore } from '@/stores/fieldStore';
 import * as XLSX from 'xlsx';
@@ -185,20 +174,26 @@ async function exportToExcel() {
 }
 
 // 添加计算属性来分类学生
-const masterStudents = computed(() => {
-  return store.filteredStudents.filter(student => student.applicationType === '硕士');
+// 获取所有申请类型
+const applicationTypes = computed(() => {
+  const types = new Set(store.filteredStudents.map(student => student.applicationType));
+  return Array.from(types);
 });
 
-const doctorStudents = computed(() => {
-  return store.filteredStudents.filter(student => student.applicationType === '博士');
-});
-
-const directDoctorStudents = computed(() => {
-  return store.filteredStudents.filter(student => student.applicationType === '直博');
-});
+// 根据申请类型获取学生列表
+const getStudentsByType = (type: string) => {
+  return store.filteredStudents.filter(student => student.applicationType === type);
+};
 
 // 添加当前激活的标签页
-const activeTab = ref('master');
+const activeTab = ref('');
+
+// 监听 applicationTypes 的变化，自动设置第一个标签页
+watch(applicationTypes, (types) => {
+  if (types.length && !activeTab.value) {
+    activeTab.value = types[0];
+  }
+}, { immediate: true });
 </script>
 
 <style lang="scss" scoped>

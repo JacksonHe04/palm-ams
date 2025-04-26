@@ -74,13 +74,13 @@ import {
   ccfLevel,
   awardLevel,
   awardRanking,
-  applicationType,
+  // applicationType,
   gender,
 } from "./composables/formConfig";
 
 // 选项配置对象
 const selectOptions = computed(() => ({
-  报名类型: applicationType,
+  // 报名类型: applicationType,
   性别: gender,
   论文一CCF等级: ccfLevel,
   论文二CCF等级: ccfLevel,

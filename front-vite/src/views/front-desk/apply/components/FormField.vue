@@ -26,6 +26,17 @@
       disabled
     />
 
+    <!-- 申请类型 -->
+    <input
+      v-else-if="field.variableName === 'applicationType'"
+      type="text"
+      :id="field.variableName"
+      :value="getApplicationType"
+      :name="field.variableName"
+      class="form-input"
+      disabled
+    />
+
     <!-- 文本域 -->
     <textarea
       v-else-if="field.type === 'textarea'"
@@ -125,6 +136,9 @@
 import { computed, ref, watch } from 'vue'
 import { ElSwitch } from 'element-plus'
 import AutoCompleteInput from './AutoCompleteInput.vue'
+import { useApplicationType } from '../composables/useApplicationType'
+
+import { useRoute } from 'vue-router'
 
 interface Props {
   field: {
@@ -227,6 +241,11 @@ watch(
   },
   { deep: true }
 )
+
+/**
+ * 根据当前路由获取申请类型
+ */
+const { getApplicationType } = useApplicationType()
 </script>
 
 <style lang="scss" scoped>
