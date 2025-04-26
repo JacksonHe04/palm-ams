@@ -54,7 +54,7 @@ const components = shallowRef({
   university: defineAsyncComponent(() => import('./components/UniversityLevel.vue')),
   major: defineAsyncComponent(() => import('./components/MajorCategory.vue')),
   personnel: defineAsyncComponent(() => import('./components/PersonnelManagement.vue')),
-  admission: defineAsyncComponent(() => import('./components/Date.vue')),
+  admission: defineAsyncComponent(() => import('./components/DateSetting.vue')),
   award: defineAsyncComponent(() => import('./components/AwardSetting.vue')),
   year: defineAsyncComponent(() => import('./components/YearSetting.vue'))
 });

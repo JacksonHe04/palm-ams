@@ -1,8 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import University, Major, Personnel, AdmissionPeriod, Award, Year
+from .models import University, Major, Personnel, Award, Year
 from .serializers import UniversitySerializer, MajorSerializer, PersonnelSerializer, AdmissionPeriodSerializer, AwardSerializer, YearSerializer
 
+# 大学
 class UniversityViewSet(viewsets.ModelViewSet):
     queryset = University.objects.all()
     serializer_class = UniversitySerializer
@@ -55,6 +56,7 @@ class UniversityViewSet(viewsets.ModelViewSet):
 
         return Response(response_data, status=status.HTTP_201_CREATED)
 
+# 专业
 class MajorViewSet(viewsets.ModelViewSet):
     queryset = Major.objects.all()
     serializer_class = MajorSerializer
@@ -107,6 +109,7 @@ class MajorViewSet(viewsets.ModelViewSet):
 
         return Response(response_data, status=status.HTTP_201_CREATED)
 
+# 人员
 class PersonnelViewSet(viewsets.ModelViewSet):
     queryset = Personnel.objects.all()
     serializer_class = PersonnelSerializer
@@ -159,16 +162,7 @@ class PersonnelViewSet(viewsets.ModelViewSet):
 
         return Response(response_data, status=status.HTTP_201_CREATED)
 
-class AdmissionPeriodViewSet(viewsets.ModelViewSet):
-    queryset = AdmissionPeriod.objects.all()
-    serializer_class = AdmissionPeriodSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+# 奖项
 class AwardViewSet(viewsets.ModelViewSet):
     queryset = Award.objects.all()
     serializer_class = AwardSerializer
@@ -213,6 +207,7 @@ class AwardViewSet(viewsets.ModelViewSet):
 
         return Response(response_data, status=status.HTTP_201_CREATED)
 
+# 年份
 class YearViewSet(viewsets.ModelViewSet):
     queryset = Year.objects.all()
     serializer_class = YearSerializer

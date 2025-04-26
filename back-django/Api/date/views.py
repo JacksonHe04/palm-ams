@@ -72,8 +72,8 @@ class AdmissionDateViewSet(viewsets.ModelViewSet):
                     processed_date = {
                         'year': year,
                         'type': date['type'],
-                        'start_time': date.get('startTime'),  # 从 startTime 获取值
-                        'end_time': date.get('endTime')       # 从 endTime 获取值
+                        'start_time': date.get('start_time'),  # 从 startTime 获取值
+                        'end_time': date.get('end_time')       # 从 endTime 获取值
                     }
                     processed_dates.append(processed_date)
     

@@ -17,11 +17,6 @@ export interface Personnel {
   research_direction: string;
 }
 
-export interface AdmissionPeriod {
-  startDate: string;
-  endDate: string;
-}
-
 export interface Award {
   name: string;
   level: string;
@@ -63,20 +58,6 @@ export const updatePersonnel = (personnel: Personnel[]) => {
   return http.post('/api/settings/personnel/', personnel);
 };
 
-// 获取招生时间配置
-export const getAdmissionPeriod = () => {
-  return http.get<AdmissionPeriod>('/api/settings/admission-period/');
-};
-
-// 更新招生时间配置
-export const updateAdmissionPeriod = (period: AdmissionPeriod) => {
-  const transformedData = {
-    start_date: period.startDate,
-    end_date: period.endDate
-  };
-  return http.post('/api/settings/admission-period/', transformedData);
-};
-
 // 获取所有奖项配置
 export const getAwards = () => {
   return http.get<Award[]>('/api/settings/awards/');
@@ -88,11 +69,11 @@ export const updateAwards = (awards: Award[]) => {
 };
 
 // 获取所有年份配置
-export const getYears = () => {
-  return http.get<Year[]>('/api/settings/years/');
+export const getYear = () => {
+  return http.get<Year[]>('/api/settings/year/');
 };
 
 // 更新年份配置
-export const updateYears = (years: Year[]) => {
-  return http.post('/api/settings/years/', years);
+export const updateYear = (year: Year[]) => {
+  return http.post('/api/settings/year/', year);
 };

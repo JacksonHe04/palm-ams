@@ -2,8 +2,8 @@ import http from '@/utils/http';
 
 export interface AdmissionDate {
   type: string;
-  start_time: string;  // 改为 start_time
-  end_time: string;    // 改为 end_time
+  start_time: string;
+  end_time: string;
 }
 
 /**
