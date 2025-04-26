@@ -138,8 +138,6 @@ import { ElSwitch } from 'element-plus'
 import AutoCompleteInput from './AutoCompleteInput.vue'
 import { useApplicationType } from '../composables/useApplicationType'
 
-import { useRoute } from 'vue-router'
-
 interface Props {
   field: {
     id: string
@@ -186,7 +184,15 @@ const isBasicInput = computed(() => {
 const isAutoCompleteField = computed(() => {
   return (
     props.field.type === 'select' &&
-    ['本科学校', '硕士学校', '本科专业', '硕士专业'].includes(props.field.name)
+    ['本科学校', '硕士学校'].includes(props.field.name)
+  )
+})
+
+// 新增计算属性：判断是否为专业选择字段
+const isMajorSelectField = computed(() => {
+  return (
+    props.field.type === 'select' &&
+    ['本科专业', '硕士专业'].includes(props.field.name)
   )
 })
 

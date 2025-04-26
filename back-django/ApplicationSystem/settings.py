@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Api.percent',
     'Api.files',
     'Api.interview',
+    'Api.date',
 ]
 
 MIDDLEWARE = [

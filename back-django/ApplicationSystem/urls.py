@@ -19,5 +19,6 @@ urlpatterns = [
     path('api/result/', include('Api.result.urls',)),
     path('api/files/', include('Api.files.urls',)),
     path('api/interview/', include('Api.interview.urls',)),
+    path('api/date/', include('Api.date.urls')),  # 添加 date 应用的路由
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

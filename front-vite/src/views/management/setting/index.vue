@@ -32,10 +32,6 @@
         <el-tab-pane label="招生年份和时间调整" name="admission">
           <component :is="currentComponent" v-if="activeTab === 'admission'"/>
         </el-tab-pane>
-
-        <el-tab-pane label="年份配置" name="year">
-          <component :is="currentComponent" v-if="activeTab === 'year'"/>
-        </el-tab-pane>
       </el-tabs>
 
       <!-- 错误提示 -->
@@ -58,7 +54,7 @@ const components = shallowRef({
   university: defineAsyncComponent(() => import('./components/UniversityLevel.vue')),
   major: defineAsyncComponent(() => import('./components/MajorCategory.vue')),
   personnel: defineAsyncComponent(() => import('./components/PersonnelManagement.vue')),
-  admission: defineAsyncComponent(() => import('./components/AdmissionPeriod.vue')),
+  admission: defineAsyncComponent(() => import('./components/Date.vue')),
   award: defineAsyncComponent(() => import('./components/AwardSetting.vue')),
   year: defineAsyncComponent(() => import('./components/YearSetting.vue'))
 });
