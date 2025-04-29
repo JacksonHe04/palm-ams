@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 export const useApplyStore = defineStore('apply', () => {
   // 表单数据
   const formData = ref<Record<string, any>>({
-    id: uuidv4() // 初始化时就生成id
+    id: uuidv4(), // 初始化时就生成id
   })
   
   // 提交状态
@@ -18,7 +18,7 @@ export const useApplyStore = defineStore('apply', () => {
     // 保留现有id或使用新的
     const dataWithId = {
       ...data,
-      id: formData.value.id || uuidv4()
+      id: formData.value.id || uuidv4(),
     }
     formData.value = dataWithId
   }

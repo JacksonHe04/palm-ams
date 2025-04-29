@@ -15,6 +15,17 @@
       @input="handleInput"
     />
 
+    <!-- 年份输入框 -->
+    <input
+      v-else-if="field.variableName === 'year'"
+      type="number"
+      :id="field.variableName"
+      :value="settingStore.year.year"
+      :name="field.variableName"
+      class="form-input"
+      disabled
+    />
+
     <!-- 百分比 -->
     <input
       v-else-if="field.variableName === 'percentage'"
@@ -137,6 +148,7 @@ import { computed, ref, watch } from 'vue'
 import { ElSwitch } from 'element-plus'
 import AutoCompleteInput from './AutoCompleteInput.vue'
 import { useApplicationType } from '../composables/useApplicationType'
+import { useSettingStore } from '@/stores/settingStore'
 
 interface Props {
   field: {
@@ -177,7 +189,8 @@ const isBasicInput = computed(() => {
     (props.field.type === 'text' ||
       props.field.type === 'number' ||
       props.field.type === 'email') &&
-    props.field.variableName !== 'percentage'
+    props.field.variableName !== 'percentage' &&
+    props.field.variableName!== 'year'
   )
 })
 
@@ -189,12 +202,12 @@ const isAutoCompleteField = computed(() => {
 })
 
 // 新增计算属性：判断是否为专业选择字段
-const isMajorSelectField = computed(() => {
-  return (
-    props.field.type === 'select' &&
-    ['本科专业', '硕士专业'].includes(props.field.name)
-  )
-})
+// const isMajorSelectField = computed(() => {
+//   return (
+//     props.field.type === 'select' &&
+//     ['本科专业', '硕士专业'].includes(props.field.name)
+//   )
+// })
 
 const isContributionField = computed(() => {
   return [
@@ -252,6 +265,7 @@ watch(
  * 根据当前路由获取申请类型
  */
 const { getApplicationType } = useApplicationType()
+const settingStore = useSettingStore()
 </script>
 
 <style lang="scss" scoped>

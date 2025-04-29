@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useApplyStore } from '@/stores/applyStore'
+import { useSettingStore } from '@/stores/settingStore'
 
 /**
  * 处理申请类型的 composable
@@ -9,6 +10,7 @@ import { useApplyStore } from '@/stores/applyStore'
 export const useApplicationType = () => {
   const route = useRoute()
   const applyStore = useApplyStore()
+  const settingStore = useSettingStore()
 
   // 根据路由计算申请类型
   const getApplicationType = computed(() => {
@@ -34,6 +36,8 @@ export const useApplicationType = () => {
 
     // 更新 store 中的值
     applyStore.updateField('applicationType', applicationType)
+    // 同时更新 year 字段
+    applyStore.updateField('year', settingStore.year.year)
     return applicationType
   })
 
