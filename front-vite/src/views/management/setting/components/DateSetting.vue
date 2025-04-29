@@ -93,11 +93,30 @@ const settingStore = useSettingStore()
 
 // 当前招生年份选择
 const currentAdmissionYear = ref(new Date().getFullYear())
+// console.log('当前年份1:', currentAdmissionYear.value)
+
+// 获取当前招生年份
+onMounted(async () => {
+  try {
+    // 获取当前招生年份
+    await settingStore.fetchYear()
+    // console.log('当前年份2:', settingStore.year.year)
+    if (settingStore.year.year > 0) {
+      currentAdmissionYear.value = settingStore.year.year
+      selectedYear.value = currentAdmissionYear.value
+      // console.log('当前招生年份:', currentAdmissionYear.value)
+      // 确保初始化时加载数据
+      await dateStore.fetchAdmissionDatesByYear(selectedYear.value)
+    }
+  } catch (error) {
+    console.error('初始化数据失败:', error)
+  }
+})
 
 // 处理当前招生年份变化
 const handleCurrentAdmissionYearChange = async (year: number) => {
   try {
-    await settingStore.saveYear([{ year }])
+    await settingStore.saveYear(year)
     // 同步更新选中年份
     selectedYear.value = year
     // 加载新年份的数据
@@ -108,22 +127,6 @@ const handleCurrentAdmissionYearChange = async (year: number) => {
     ElMessage.error('保存当前招生年份失败')
   }
 }
-
-// 获取当前招生年份
-onMounted(async () => {
-  try {
-    // 获取当前招生年份
-    await settingStore.fetchYear()
-    if (settingStore.year.length > 0) {
-      currentAdmissionYear.value = settingStore.year[0].year
-      selectedYear.value = currentAdmissionYear.value
-      // 确保初始化时加载数据
-      await dateStore.fetchAdmissionDatesByYear(selectedYear.value)
-    }
-  } catch (error) {
-    console.error('初始化数据失败:', error)
-  }
-})
 
 // 年份选择
 const selectedYear = ref(currentAdmissionYear.value)

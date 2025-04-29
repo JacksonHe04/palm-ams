@@ -23,12 +23,6 @@ export interface Award {
   category: string;
 }
 
-// 删除Year接口定义
-// export interface Year {
-//   year: string;
-//   status: string;
-// }
-
 // 获取所有院校配置
 export const getUniversities = () => {
   return http.get<University[]>('/api/settings/universities/');
@@ -69,12 +63,12 @@ export const updateAwards = (awards: Award[]) => {
   return http.post('/api/settings/awards/', awards);
 };
 
-// 获取年份 - 修改为返回数字类型
+// 获取年份 - 返回数字类型
 export const getYear = () => {
   return http.get<number>('/api/settings/year/');
 };
 
-// 更新年份 - 修改为接收数字参数
+// 更新年份 - 接收数字参数
 export const updateYear = (year: number) => {
   return http.post('/api/settings/year/', { year });
 };

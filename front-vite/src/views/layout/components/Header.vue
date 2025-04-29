@@ -56,7 +56,7 @@ const currentAdmissionYear = ref('');
 onMounted(async () => {
   await settingStore.fetchYear();
   currentAdmissionYear.value = settingStore.year.year;
-  console.log(currentAdmissionYear.value);
+  // console.log(currentAdmissionYear.value);
 });
 
 const navStyle = computed(() => {

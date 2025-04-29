@@ -4,8 +4,7 @@ import type {
   University,
   Major,
   Personnel,
-  Award,
-  Year
+  Award
 } from "@/apis/setting";
 import {
   getUniversities,

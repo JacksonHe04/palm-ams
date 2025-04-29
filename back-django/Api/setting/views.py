@@ -225,19 +225,52 @@ class YearViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """
         更新年份配置
-        接收格式: {"year": 2023}
+        接收格式:
+        1. 直接数字: 2023
+        2. 对象格式: {"year": 2023}
+        3. 嵌套对象格式: {"year": [{"year": 2023}]}
         """
-        year_value = request.data.get("year")
+        data = request.data
+        
+        # 处理直接传递数字的情况
+        if isinstance(data, (int, float)):
+            year_value = int(data)
+        # 处理对象格式的情况
+        elif isinstance(data, dict):
+            if 'year' in data:
+                # 处理嵌套列表的情况
+                if isinstance(data['year'], list) and len(data['year']) > 0:
+                    if isinstance(data['year'][0], dict) and 'year' in data['year'][0]:
+                        year_value = int(data['year'][0]['year'])
+                    else:
+                        return Response(
+                            {"error": "无效的年份格式"}, 
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                # 处理直接年份值的情况
+                else:
+                    year_value = int(data['year'])
+            else:
+                return Response(
+                    {"error": "无效的年份格式"}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            return Response(
+                {"error": "无效的年份格式"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
         if not year_value:
             return Response(
                 {"error": "年份不能为空"}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
-
+    
         # 清空原有年份数据
         Year.objects.all().delete()
         
         # 创建新年份记录
         Year.objects.create(year=year_value)
         
-        return Response({"year": year_value}, status=status.HTTP_201_CREATED)
+        return Response({"year": year_value})
