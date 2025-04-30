@@ -43,7 +43,7 @@ const fieldTypes = [
 const regionOptions = [
   { value: '个人信息', label: '个人信息' },
   { value: '学历信息', label: '学历信息' },
-  { value: '申请信息', label: '申请信息' },
+  { value: '申请志愿', label: '申请志愿' },
   { value: '论文', label: '论文' },
   { value: '奖项', label: '奖项' },
   { value: '其他', label: '其他' },

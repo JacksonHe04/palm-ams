@@ -39,10 +39,11 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSettingStore } from '@/stores/settingStore';
+import { createNavItems } from '@/config/navConfig';
 
 const route = useRoute();
 const isMenuOpen = ref(false);
@@ -50,31 +51,28 @@ const isMenuOpen = ref(false);
 // 获取设置store实例
 const settingStore = useSettingStore();
 // 当前招生年份
-const currentAdmissionYear = ref('');
+const currentAdmissionYear = ref(new Date().getFullYear()); // Initialize with current year as fallback
+// 将 navItems 改为 computed 属性
+const navItems = computed(() => createNavItems(currentAdmissionYear.value));
 
 // 初始化时获取年份数据
 onMounted(async () => {
-  await settingStore.fetchYear();
-  currentAdmissionYear.value = settingStore.year.year;
-  // console.log(currentAdmissionYear.value);
+  try {
+    await settingStore.fetchYear();
+    currentAdmissionYear.value = settingStore.year.year;
+  } catch (error) {
+    console.error('Failed to fetch year:', error);
+  }
 });
 
+// 根据路由路径设置导航栏背景颜色
 const navStyle = computed(() => {
   return route.path.startsWith('/admin')
     ? { backgroundColor: 'white' }
     : { backgroundImage: "url('/home-bg-m.png')" };
 });
 
-// 将navItems改为计算属性，使其响应式更新
-const navItems = computed(() => [
-  { name: 'Introduction', to: '/introduction' },
-  { name: 'News', to: '/news' },
-  { name: 'Members', to: '/members' },
-  { name: 'Academics', to: '/academics' },
-  // 动态获取年份
-  { name: `${currentAdmissionYear.value} Join Us`, to: '/read' },
-]);
-
+// 切换菜单
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };

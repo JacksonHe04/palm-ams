@@ -24,6 +24,7 @@
 import { ref } from "vue";
 import { defineProps, defineEmits } from "vue";
 import feather from "feather-icons";
+import { menuItems } from '@/config/menuConfig'
 
 const props = defineProps({
   isCollapsed: Boolean,
@@ -31,87 +32,7 @@ const props = defineProps({
 
 const emit = defineEmits(["toggle"]);
 
-const menuItems = ref([
-  {
-    category: "招生自定义",
-    items: [
-      {
-        name: "percent",
-        label: "筛选方案",
-        path: "percent",
-        icon: "🔍",
-      },
-      // result
-      {
-        name: "result",
-        label: "筛选结果",
-        path: "result",
-        icon: "📇",
-      },
-      {
-        name: "setting",
-        label: "规则设置",
-        path: "setting",
-        icon: "⚙️",
-      },
-    ],
-  },
-
-  {
-    category: "表格总览",
-    items: [
-      {
-        name: "users",
-        label: "学生表格",
-        path: "students",
-        icon: "👤",
-      },
-      {
-        name: "interview",
-        label: "面试打分",
-        path: "interview",
-        icon: "📋",
-      },
-    ],
-  },
-
-  {
-    category: "可视化",
-    items: [
-      {
-        name: "dashboard",
-        label: "仪表盘",
-        path: "dashboard",
-        icon: "📊",
-      },
-      {
-        name: "analytics",
-        label: "数据分析",
-        path: "analysis",
-        icon: "📈",
-      },
-    ],
-  },
-
-  {
-    category: "系统设置",
-    items: [
-      {
-        name: "field",
-        label: "字段配置",
-        path: "field",
-        icon: "📝",
-      },
-      {
-        name: "account",
-        label: "账号设置",
-        path: "account",
-        icon: "👩🏻‍💻️",
-      },
-    ],
-  },
-]);
-
+// 移除原来的 menuItems 定义
 const toggleSidebar = () => {
   emit("toggle");
   // 更新Feather图标
