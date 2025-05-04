@@ -21,6 +21,7 @@ export const menuItems = ref<MenuCategory[]>([
       {
         name: "users",
         label: "学生表格",
+        // path: "table",
         path: "students",
         icon: "👤",
       },

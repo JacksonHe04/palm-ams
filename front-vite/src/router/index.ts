@@ -79,9 +79,15 @@ const router = createRouter({
               meta: { title: "仪表盘" },
             },
             {
-              path: "students",
-              name: "students",
+              path: "table",
+              name: "table",
               component: () => import("@/views/management/table/index.vue"),
+              meta: { title: "学生表格（旧）" },
+            },
+            // students
+            {
+              path: "students",
+              component: () => import("@/views/management/students/index.vue"),
               meta: { title: "学生表格" },
             },
             {

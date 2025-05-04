@@ -70,14 +70,18 @@ def filter_students(request):
         print('所有学生数量：', len(student_names))
         print('所有学生姓名：', student_names)
 
+        # 新增：用于存储直接通过筛选的学生姓名
+        direct_pass_students = []
+
         for student in students:
-            # 如果是博士或直博，直接通过筛选
-            if student.applicationType in ['博士', '直博']:
+            # 如果是博士 直博 考研硕士，直接通过筛选
+            if student.applicationType in ['博士', '直博', '考研硕士']:
                 student.isFilterCondition = True
                 result.append(student)
+                direct_pass_students.append(student.name)  # 新增：添加到直接通过名单
                 continue
-
-            # 对硕士进行筛选
+        
+        # 对硕士进行筛选
             # 转换百分比为数字
             try:
                 p = float(student.percentage.rstrip('%'))
@@ -206,6 +210,8 @@ def filter_students(request):
 
         # 返回筛选通过的学生信息和未通过筛选的学生ID
         # 在控制台打印通过的学生的姓名的数组
+        # 新增：打印直接通过筛选的学生姓名
+        print('直接通过筛选的学生姓名（博士、直博、考研硕士）：', direct_pass_students)
         passed_students = [student.name for student in result]
         print('通过的学生姓名：', passed_students)
         # 打印未通过筛选的学生的姓名的数组

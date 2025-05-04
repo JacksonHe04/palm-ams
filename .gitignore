@@ -6,5 +6,5 @@ __pycache__/
 .DS_Store
 **/.DS_Store
 /back-django/static_root
-/resourses/lab
+/resourses
 /node_modules

@@ -4,9 +4,9 @@
       <template #header>
         <div class="flex justify-between items-center">
           <div class="flex items-start flex-col">
-            <span class="text-xl font-bold">筛选结果</span>
+            <span class="text-xl font-bold">学生列表</span>
             <div class="text-gray-500 text-sm mt-1">
-              查看和导出通过筛选的学生的申请信息
+              查看和导出所有学生的申请信息
             </div>
           </div>
           <div class="flex gap-2">
@@ -50,15 +50,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue';
-import { useResultStore } from '@/stores/resultStore';
+import { useStudentsStore } from '@/stores/studentsStore';
 import { useFieldStore } from '@/stores/fieldStore';
-// import { ElMessage } from 'element-plus';
-import StudentTable from './components/StudentTable.vue';
-import DownloadFiles from './components/DownloadFiles.vue';
-import ExportExcel from './components/ExportExcel.vue';
+import StudentTable from '@/views/management/result/components/StudentTable.vue';
+import DownloadFiles from '@/views/management/result/components/DownloadFiles.vue';
+import ExportExcel from '@/views/management/result/components/ExportExcel.vue';
 
 // 初始化 store
-const store = useResultStore();
+const store = useStudentsStore();
 
 // 使用 fieldStore
 const fieldStore = useFieldStore();
@@ -79,19 +78,19 @@ const columnConfig = computed(() => {
 // 在组件挂载时获取字段列表
 onMounted(async () => {
   await fieldStore.fetchFields();
-  await store.fetchFilteredStudents();
+  await store.fetchStudents();
 });
 
 // 添加计算属性来分类学生
 // 获取所有申请类型
 const applicationTypes = computed(() => {
-  const types = new Set(store.filteredStudents.map(student => student.applicationType));
+  const types = new Set(store.students.map(student => student.applicationType));
   return Array.from(types);
 });
 
 // 根据申请类型获取学生列表
 const getStudentsByType = (type: string) => {
-  return store.filteredStudents.filter(student => student.applicationType === type);
+  return store.students.filter(student => student.applicationType === type);
 };
 
 // 添加当前激活的标签页
