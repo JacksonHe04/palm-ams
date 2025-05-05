@@ -27,6 +27,10 @@ export default defineConfig({
     },
   },
   build: {
+    // 添加base配置，指定静态资源的基础路径
+    assetsDir: '',
+    // 设置生成的静态资源的存放路径前缀
+    outDir: '../back-django/static',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {

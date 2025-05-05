@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    server_name 139.155.248.15;
+
+    location /static/ {
+        alias /home/ubuntu/back-django/static/;
+        add_header Cache-Control "public, max-age=31536000";
+        
+        types {
+            text/css css;
+            application/javascript js;
+        }
+    }
+
+    add_header Cross-Origin-Opener-Policy "same-origin";
+    add_header Cross-Origin-Embedder-Policy "require-corp";
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass 127.0.0.1:8001;
+    }
+}

@@ -61,6 +61,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
+ROOT_URLCONF = "ApplicationSystem.urls"
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
@@ -86,30 +88,19 @@ CORS_ALLOW_HEADERS = [
     'x-applicant-id',
 ]
 
-ROOT_URLCONF = 'ApplicationSystem.urls'
-
-# 前端构建的 dist 目录路径
-FRONTEND_BUILD_DIR = os.path.join(BASE_DIR)
-
 # 静态文件 URL 前缀
 STATIC_URL = '/static/'
 
 # 设置静态文件的目录，设置为列表形式
 STATICFILES_DIRS = [
-    os.path.join(FRONTEND_BUILD_DIR),
-    os.path.join(BASE_DIR, 'static')
+    BASE_DIR / 'static',
 ]
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 多写几个模板目录，比如palm_front目录
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'static')
-            , os.path.join(FRONTEND_BUILD_DIR)
+            BASE_DIR / 'templates',  # 添加模板目录路径
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -124,9 +115,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ApplicationSystem.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -158,9 +146,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -170,9 +155,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # 设置默认的主键字段类型
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
