@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus';
 const instance: AxiosInstance = axios.create({
   // baseURL: 'http://localhost:8000', // 开发环境
   // baseURL: 'http://139.155.248.15', // 生产环境
-  baseURL: 'https:/palm.inon.space', // 生产环境
+  baseURL: 'https://palm.inon.space', // 生产环境
   timeout: 10000,
 });
 
