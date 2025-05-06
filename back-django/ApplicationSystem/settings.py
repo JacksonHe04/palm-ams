@@ -66,7 +66,8 @@ ROOT_URLCONF = "ApplicationSystem.urls"
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ['https://palm.inon.space', 'http://localhost:5173', 'http://joinpalm.inon.space', 'http://palm.inon.space']
-CORS_ALLOWED_ORIGINS = ['https://palm.inon.space', 'http://localhost:5173', 'http://joinpalm.inon.space', 'http://palm.inon.space']
+# CORS_ALLOWED_ORIGINS = ['https://palm.inon.space', 'http://localhost:5173', 'http://joinpalm.inon.space', 'http://palm.inon.space']
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
