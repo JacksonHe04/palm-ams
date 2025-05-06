@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name 139.155.248.15;
+    server_name 139.155.248.15 palm.inon.space joinpalm.inon.space;
 
     location /static/ {
         alias /home/ubuntu/palm-ams/back-django/static/;
