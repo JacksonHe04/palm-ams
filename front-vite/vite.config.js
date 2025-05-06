@@ -31,8 +31,11 @@ export default defineConfig({
     assetsDir: '',
     // 设置生成的静态资源的存放路径前缀
     outDir: '../back-django/static',
-    chunkSizeWarningLimit: 1000,
+    // 将 index.html 输出到 template 目录
     rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL("./index.html", import.meta.url)),
+      },
       output: {
         // JS入口文件
         entryFileNames: "assets/js/[name].[hash].js",
@@ -50,6 +53,11 @@ export default defineConfig({
             extType = 'fonts'
           }
           return `assets/${extType}/[name].[hash][extname]`
+        },
+        // 将 index.html 输出到上级目录的 template 文件夹
+        dir: '../back-django/static',
+        paths: {
+          'index.html': '../template/index.html'
         },
         manualChunks: (id) => {
           if (id.includes('node_modules')) {

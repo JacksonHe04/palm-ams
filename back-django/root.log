@@ -1,0 +1,42 @@
+*** Starting uWSGI 2.0.29 (64bit) on [Tue May  6 11:10:04 2025] ***
+compiled with version: Apple LLVM 17.0.0 (clang-1700.0.13.3) on 06 May 2025 03:07:22
+os: Darwin-24.4.0 Darwin Kernel Version 24.4.0: Fri Apr 11 18:33:46 PDT 2025; root:xnu-11417.101.15~117/RELEASE_ARM64_T8112
+nodename: M2.local
+machine: arm64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /Users/jackson/WebstormProjects/palm-ams/back-django
+detected binary path: /opt/anaconda3/bin/uwsgi
+chdir() to /Users/jackson/WebstormProjects/palm-ams/back-django
+your processes number limit is 1333
+your memory page size is 16384 bytes
+detected max file descriptor number: 1048575
+lock engine: OSX spinlocks
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8001 fd 3
+Python version: 3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 10:11:37) [Clang 14.0.6 ]
+Python main interpreter initialized at 0x105775970
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416640 bytes (406 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /Users/jackson/WebstormProjects/palm-ams/back-django/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x105775970 pid: 28341 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 28341)
+spawned uWSGI worker 1 (pid: 28416, cores: 2)
+spawned uWSGI worker 2 (pid: 28417, cores: 2)
+spawned uWSGI worker 3 (pid: 28418, cores: 2)
+spawned uWSGI worker 4 (pid: 28419, cores: 2)
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip

@@ -20,7 +20,7 @@ SECRET_KEY = '39lpa05#hgfg0b01)b*xs-rlg8&6*x^w8&4wi8va%)=axo6h4m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.155.248.15']
+ALLOWED_HOSTS = ['139.155.248.15', 'palm.inon.space', 'localhost']
 # ALLOWED_HOSTS = []
 
 # Application definition
@@ -95,6 +95,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# 修改MIME类型配置
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# 在Django的settings中添加正确的MIME类型映射
+import mimetypes
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
 
 TEMPLATES = [
     {
