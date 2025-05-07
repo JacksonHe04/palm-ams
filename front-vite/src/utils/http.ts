@@ -36,6 +36,7 @@ instance.interceptors.request.use(
     if (token) {
       config.headers = {
         ...config.headers,
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       };
     }

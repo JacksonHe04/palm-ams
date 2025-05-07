@@ -1,4 +1,14 @@
 <template>
+  <div class="dev-notice ">
+      <el-alert
+        title="开发阶段提示"
+        type="warning"
+        description="当前页面的文件下载暂不可用，请前往“筛选结果”页面测试这一功能"
+        :closable="false"
+        show-icon
+        center
+      />
+    </div>
   <div class="p-6">
     <el-card>
       <template #header>
@@ -42,6 +52,17 @@
       </el-tabs>
     </el-card>
   </div>
+  <el-dialog
+    v-if="showDialog"
+    title="提示"
+    :visible.sync="showDialog"
+    width="30%"
+  >
+    <span>未通过初筛的文件还没映射到总表格里（但是在系统里），这个今晚再解决。</span>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="showDialog = false">关闭</el-button>
+    </span>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -58,6 +79,8 @@ interface Student {
   applicationType: string;
   [key: string]: any;
 }
+
+const showDialog = ref(true);
 
 // 状态管理
 const students = ref<Student[]>([]);
@@ -158,3 +181,4 @@ watch(activeTab, () => {
   }
 }
 </style>
+

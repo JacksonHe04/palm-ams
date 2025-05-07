@@ -28,10 +28,11 @@ ps -ef | grep uwsgi
 
 ## 更换 nginx 配置文件
 ``` bash
-sudo rm /etc/nginx/sites-available/palm
-sudo rm /etc/nginx/sites-enabled/palm
 sudo nano /etc/nginx/sites-available/palm
+sudo rm /etc/nginx/sites-enabled/palm
 sudo ln -s /etc/nginx/sites-available/palm /etc/nginx/sites-enabled/palm
+sudo nginx -t
+sudo nginx -s reload
 ```
 
 ## 测试 nginx

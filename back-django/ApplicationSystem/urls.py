@@ -27,6 +27,6 @@ urlpatterns = [
     path('api/database/', include('database.urls',)),
 
     # 所有非API的路由都交给前端处理
-    re_path(r'^.*$', views.index, name='index'),
+    re_path(r'^(?!api/).*$', views.index, name='index'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
