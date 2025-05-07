@@ -8,7 +8,7 @@
       </div>
     </a>
 
-    <div class="bubble-cards">
+    <!-- <div class="bubble-cards">
       <div
         class="bubble-item my-1"
         v-for="(item, index) in bubbleItems"
@@ -16,24 +16,23 @@
       >
         {{ item }}
       </div>
-    </div>
+    </div> -->
 
     <div class="small-cards-list">
       <a href="https://palm.seu.edu.cn">
         <div class="horizontal-card">
-          <div class="flex gap-3">
-            <div
+          <div class="flex justify-center items-center">
+            <!-- <div
               class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"
             >
               🤖
-            </div>
+            </div> -->
             <div>
               <div style="font-weight: 600">
-                计算机网络和信息集成教育部重点实验室
+                东南大学 PALM 实验室
               </div>
               <p style="font-size: 14px; color: #6b7280; margin-top: 4px">
-                模式分析与挖掘研究所<br />
-                （东南大学）
+                计算机科学与工程学院
               </p>
               <div style="margin-top: 8px">了解详情</div>
             </div>
@@ -69,14 +68,14 @@ onMounted(async () => {
   currentAdmissionYear.value = settingStore.year.year;
 });
 
-const bubbleItems = ref([
-  "🤖 Machine Learning",
-  "🔍 Pattern Recognition",
-  "🔨 Data Mining",
-  "👓 Computer Vision",
-  "✏️ Natural Language Processing",
-  "💻 ......",
-]);
+// const bubbleItems = ref([
+//   "🤖 Machine Learning",
+//   "🔍 Pattern Recognition",
+//   "🔨 Data Mining",
+//   "👓 Computer Vision",
+//   "✏️ Natural Language Processing",
+//   "💻 ......",
+// ]);
 
 const smallCards = ref([
   {
@@ -109,15 +108,14 @@ $text-color: #6b7280;
 $white-color: white;
 $hover-bg-color: wheat;
 
-/* Features Grid */
 .cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 64px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
 .stats-card {
+  width: 30rem;
   background: $secondary-color;
   color: $white-color;
   padding: 32px;
@@ -137,25 +135,25 @@ $hover-bg-color: wheat;
   margin-bottom: 16px;
 }
 
-.bubble-cards {
-  background: $primary-color;
-  padding: 32px;
-  border-radius: 16px;
-  color: $white-color;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
+// .bubble-cards {
+//   background: $primary-color;
+//   padding: 32px;
+//   border-radius: 16px;
+//   color: $white-color;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+// }
 
-.bubble-item {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 8px 16px;
-  border-radius: 20px;
-  // margin-bottom: 12px;
-  display: inline-block;
-  width: fit-content;
-}
+// .bubble-item {
+//   background: rgba(255, 255, 255, 0.2);
+//   padding: 8px 16px;
+//   border-radius: 20px;
+//   // margin-bottom: 12px;
+//   display: inline-block;
+//   width: fit-content;
+// }
 
 .small-cards-list {
   display: flex;

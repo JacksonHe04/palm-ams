@@ -1,42 +1,47 @@
 <template>
   <FrontMain>
     <div class="container">
-      <h1 class="title">PALM实验室招收 2025年秋季入学博士及硕士研究生</h1>
+      <h1 class="title">PALM实验室招收 2026 年秋季入学博士及硕士研究生</h1>
       <p class="welcome-message">
         欢迎报考计算机学院、软件学院、东-蒙联合研究生院的同学申请
       </p>
-      <div class="part-big">
+      <!-- <div class="part-big">
         <h3>重要日期</h3>
         <p>报名截止：暂无</p>
         <p>面试时间：7月5日~7月7日（第一批次）；7月17日~7月19日（第二批次）</p>
         <p>面试安排：具体见面试邮件通知</p>
-        <h3>注意事项</h3>
+        <h3>注意事项</h3> -->
 
-        <ul class="notice-list">
-          <li>申请前请首先阅读本页 “PALM实验室招生说明”。</li>
-          <li>
-            报名系统网址：<a href="http://139.155.248.15/apply/"
-              >http://139.155.248.15/apply/</a
-            >。
-          </li>
-          <li>
-            填写完报名系统后，请将申请材料发送至邮箱palmwebsite@163.com，邮件标题为“姓名+拟申请学院及专业+2025博士（或硕士）”，申请材料包括：个人简历，本科成绩单（申请硕士研究生），论文、专利、获奖等证明材料。请将申请材料打包后作为附件上传，使用
-            “学校-姓名.zip”格式命名。
-          </li>
-          <li>
-            有关PALM实验室具体情况，请访问实验室官方网站：<a
-              href="https://palm.seu.edu.cn/"
-              >https://palm.seu.edu.cn/</a
-            >。
-          </li>
-          <li>
+      <ul class="notice-list">
+        <li>
+          申请前请首先阅读 PALM 实验室招生说明
+          <a href="https://palm.seu.edu.cn/application.html"
+            >https://palm.seu.edu.cn/application.html</a
+          >。
+        </li>
+        <li>
+          报名系统网址：<a href="https://palm.inon.space"
+            >https://palm.inon.space</a
+          >。
+        </li>
+        <!-- <li>
+          填写完报名系统后，请将申请材料发送至邮箱palmwebsite@163.com，邮件标题为“姓名+拟申请学院及专业+2025博士（或硕士）”，申请材料包括：个人简历，本科成绩单（申请硕士研究生），论文、专利、获奖等证明材料。请将申请材料打包后作为附件上传，使用
+          “学校-姓名.zip”格式命名。
+        </li> -->
+        <li>
+          有关PALM实验室具体情况，请访问实验室官方网站：<a
+            href="https://palm.seu.edu.cn"
+            >https://palm.seu.edu.cn</a
+          >。
+        </li>
+        <!-- <li>
             <b
               >所有最终进入PALM的学生都需经过相同的考查过程，具体导师安排将在通过考查之后双选确定。</b
             >
           </li>
-        </ul>
+        </ul> -->
 
-        <h3>PALM实验室招生说明</h3>
+        <!-- <h3>PALM实验室招生说明</h3>
         <p class="indent">
           首先感谢您有兴趣选择东南大学模式学习与挖掘（PALM）实验室作为您攻读博士/硕士学位的地方，为帮助您更加确信您的选择是否明智，请耐心阅读如下说明：
         </p>
@@ -63,30 +68,30 @@
           </li>
           <li>
             如果您认识PALM实验室老师的亲友、同事或领导，建议您不要通过他们与我们联系，这样不但不会加分，反而会造成不好的影响。最好的方式就是您本人直接联系意向导师。
-          </li>
-        </ul>
+          </li> -->
+      </ul>
 
-        <h3>2024年PALM实验室拟招生导师名单</h3>
-        <table class="center-table">
-          <thead>
-            <tr>
-              <th>拟招生导师</th>
-              <th>拟招生对象</th>
-              <th>招生院系</th>
-              <th>研究方向</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(person, index) in personnel" :key="index">
-              <td>{{ person.name }}</td>
-              <td>{{ person.recruitment_type }}</td>
-              <td>{{ person.department }}</td>
-              <td>{{ person.research_direction }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <h3>2024年PALM实验室拟招生导师名单</h3>
+      <table class="center-table">
+        <thead>
+          <tr>
+            <th>拟招生导师</th>
+            <th>拟招生对象</th>
+            <th>招生院系</th>
+            <th>研究方向</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(person, index) in personnel" :key="index">
+            <td>{{ person.name }}</td>
+            <td>{{ person.recruitment_type }}</td>
+            <td>{{ person.department }}</td>
+            <td>{{ person.research_direction }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <!-- </div> -->
   </FrontMain>
 </template>
 
@@ -104,7 +109,13 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+a {
+  color: $secondary-color;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

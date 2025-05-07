@@ -11,9 +11,9 @@
           <el-button type="primary" size="large">申请加入我们</el-button>
         </RouterLink>
       </div>
-      <p class="trial-text">
+      <!-- <p class="trial-text">
         ✉️ We will send an email to notify you after your resume is approved.
-      </p>
+      </p> -->
     </div>
 
     <div class="hero-image">

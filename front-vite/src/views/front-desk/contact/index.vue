@@ -1,9 +1,9 @@
 <script setup>
-import About from "@/views/front-desk/about/About.vue";
+import Contact from "./components/Contact.vue";
 </script>
 
 <template>
-  <About />
+  <Contact />
 </template>
 
 <style scoped></style>

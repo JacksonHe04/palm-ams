@@ -13,10 +13,8 @@ interface NavItem {
  */
 export const createNavItems = (currentYear: number = new Date().getFullYear()) => {
     return [
-    { name: 'Introduction', to: '/introduction' },
-    { name: 'News', to: '/news' },
-    { name: 'Members', to: '/members' },
-    { name: 'Academics', to: '/academics' },
+    { name: 'Home', to: '/home' },
+    { name: 'Contact Us', to: '/contact' },
     { name: `${currentYear} Join Us`, to: '/read' },
   ]
 }

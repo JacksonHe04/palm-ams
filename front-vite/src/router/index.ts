@@ -141,9 +141,9 @@ const router = createRouter({
           ],
         },
         {
-          path: "/about",
-          component: () => import("@/views/front-desk/about/index.vue"),
-          meta: { title: "关于开发者" },
+          path: "/contact",
+          component: () => import("@/views/front-desk/contact/index.vue"),
+          meta: { title: "联系我们" },
         },
         {
           path: "/read",
