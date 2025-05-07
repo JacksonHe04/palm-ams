@@ -9,6 +9,11 @@
 
 东南大学 PALM 实验室研究生招生管理系统 PALM AMS (Pattern Learning and Mining Lab Admissions Management System) 是一个现代化的教育机构招生管理平台，采用前后端分离架构设计，提供完整的招生流程管理、学生信息管理、数据分析等功能。系统致力于提升招生工作效率，优化管理流程，为教育机构提供专业的招生解决方案。
 
+## 地址
+- 通用地址：https://palm.inon.space
+- 海外地址：https://palm-ams.vercel.app
+- IP地址：http://139.155.248.15
+
 ## 技术栈
 
 ### 前端
