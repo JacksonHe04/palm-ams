@@ -28,7 +28,6 @@
     <div class="mt-4 flex justify-between">
       <div class="flex gap-4">
         <el-button type="primary" @click="addMajor">新增专业</el-button>
-        <el-button type="warning" @click="handleInitializeMajors">初始化</el-button>
       </div>
       <el-button type="success" @click="handleSaveMajors">提交更改</el-button>
     </div>
@@ -38,7 +37,7 @@
 <script setup lang="ts">
 import { watch, onMounted } from 'vue';
 import { useSettingStore } from '@/stores/settingStore';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 
 const store = useSettingStore();
 
@@ -57,26 +56,6 @@ const addMajor = () => {
 const removeMajor = async (index: number) => {
   store.majors.splice(index, 1);
   await store.saveMajors();
-};
-
-const handleInitializeMajors = async () => {
-  try {
-    await ElMessageBox.confirm(
-      '确定要初始化专业数据吗？这将覆盖当前所有数据。',
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    );
-    await store.initializeMajors();
-    ElMessage.success('专业数据初始化成功');
-  } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('专业数据初始化失败');
-    }
-  }
 };
 
 const handleSaveMajors = async () => {

@@ -50,7 +50,6 @@
     <div class="mt-4 flex justify-between">
       <div class="flex gap-4">
         <el-button type="primary" @click="addPersonnel">新增人员</el-button>
-        <el-button type="warning" @click="handleInitializePersonnel">初始化</el-button>
       </div>
       <el-button type="success" @click="handleSavePersonnel">提交更改</el-button>
     </div>
@@ -87,26 +86,6 @@ const addPersonnel = () => {
 const removePersonnel = async (index: number) => {
   store.personnel.splice(index, 1);
   await store.savePersonnel();
-};
-
-const handleInitializePersonnel = async () => {
-  try {
-    await ElMessageBox.confirm(
-      '确定要初始化人员数据吗？这将覆盖当前所有数据。',
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    );
-    await store.initializePersonnel();
-    ElMessage.success('人员数据初始化成功');
-  } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('人员数据初始化失败');
-    }
-  }
 };
 
 const handleSavePersonnel = async () => {

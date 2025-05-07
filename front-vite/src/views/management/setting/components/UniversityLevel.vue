@@ -23,7 +23,6 @@
     <div class="mt-4 flex justify-between">
       <div class="flex gap-4">
         <el-button type="primary" @click="addUniversity">新增院校</el-button>
-        <el-button type="warning" @click="handleInitialize">初始化</el-button>
       </div>
       <el-button type="success" @click="handleSaveUniversities">提交更改</el-button>
     </div>
@@ -53,26 +52,6 @@ const addUniversity = () => {
 const removeUniversity = async (index: number) => {
   store.universities.splice(index, 1);
   await store.saveUniversities();
-};
-
-const handleInitialize = async () => {
-  try {
-    await ElMessageBox.confirm(
-      '确定要初始化院校数据吗？这将覆盖当前所有数据。',
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    );
-    await store.initializeUniversities();
-    ElMessage.success('院校数据初始化成功');
-  } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('院校数据初始化失败');
-    }
-  }
 };
 
 const handleSaveUniversities = async () => {

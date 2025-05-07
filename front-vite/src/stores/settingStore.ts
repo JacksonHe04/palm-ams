@@ -18,11 +18,6 @@ import {
   getYear,
   updateYear
 } from "@/apis/setting";
-import defaultUniversities from '@/scripts/importSettings/importUniversities/universities.json';
-// 在文件顶部添加导入
-import defaultMajors from '@/scripts/importSettings/importMajors/majors.json';
-// 在文件顶部添加导入
-import defaultPersons from '@/scripts/importSettings/importPersons/persons.json';
 
 export const useSettingStore = defineStore("setting", () => {
   const universities = ref<University[]>([]);
@@ -143,26 +138,6 @@ export const useSettingStore = defineStore("setting", () => {
     }
   };
 
-  const initializeUniversities = async () => {
-    try {
-      universities.value = defaultUniversities;
-      await saveUniversities();
-    } catch (error) {
-      console.error("初始化院校配置失败:", error);
-      throw error;
-    }
-  };
-
-  const initializeMajors = async () => {
-    try {
-      majors.value = defaultMajors;
-      await saveMajors();
-    } catch (error) {
-      console.error("初始化专业配置失败:", error);
-      throw error;
-    }
-  };
-
   // 人员相关操作
   const addPersonnel = () => {
     const maxOrder = personnel.value.length > 0 
@@ -175,23 +150,6 @@ export const useSettingStore = defineStore("setting", () => {
       research_direction: '',
       order: maxOrder + 1
     });
-  };
-  
-  const initializePersonnel = async () => {
-    try {
-      const formattedPersonnel = defaultPersons.map((person, index) => ({
-        name: person.name,
-        recruitment_type: person.recruitmentType,
-        department: person.department,
-        research_direction: person.researchDirection,
-        order: index
-      }));
-      personnel.value = formattedPersonnel;
-      await savePersonnel();
-    } catch (error) {
-      console.error("初始化人员配置失败:", error);
-      throw error;
-    }
   };
 
   return {
@@ -211,9 +169,6 @@ export const useSettingStore = defineStore("setting", () => {
     saveAwards,
     fetchYear,
     saveYear,
-    initializeUniversities,
-    initializeMajors,
     initializeData,
-    initializePersonnel,
   };
 });

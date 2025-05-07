@@ -11,12 +11,10 @@ import {
   ElInput,
   ElSelect,
   ElOption,
-  ElMessageBox,
 } from "element-plus";
 import { ElMessage } from "element-plus";
 import { useFieldStore } from "@/stores/fieldStore";
 import type { FieldItem } from "@/apis/field";
-import { importFields } from "@/scripts/importFields/importFields";
 
 const store = useFieldStore();
 
@@ -126,37 +124,6 @@ const handleSwitchChange = async (row: FieldItem) => {
   }
 };
 
-// 初始化字段
-const initializeFields = async () => {
-  try {
-    const result = await ElMessageBox.confirm(
-      '此操作将清除所有现有字段并导入预设字段，是否继续？',
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    );
-
-    if (result === 'confirm') {
-      // 删除所有现有字段，使用Promise.all等待所有删除操作完成
-      await Promise.all(store.fields.map(field => store.removeField(field.id)));
-      
-      // 导入预设字段
-      await importFields();
-      
-      // 刷新字段列表
-      await store.fetchFields();
-      
-      ElMessage.success('字段初始化完成');
-    }
-  } catch (error) {
-    // 用户取消操作，不做任何处理
-  }
-};
-
-
 // 计算不同区域的字段
 const groupedFields = computed(() => {
   const groups: Record<string, FieldItem[]> = {};
@@ -182,7 +149,6 @@ const activeTab = ref('个人信息');
             </div>
           </div>
           <div class="flex gap-2">
-            <el-button type="warning" @click="initializeFields">初始化</el-button>
             <el-button type="primary" @click="openAddDialog">新增字段</el-button>
           </div>
         </div>
