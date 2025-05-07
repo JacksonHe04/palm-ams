@@ -19,12 +19,12 @@ export const menuItems = ref<MenuCategory[]>([
     category: "申请阶段",
     items: [
       {
-        name: "database",
-        label: "数据库  ",
-        // path: "table",
-        path: "database",
-        icon: "🗄️",
+        name: "students",
+        label: "学生表格",
+        path: "students",
+        icon: "🪪",
       },
+
       {
         name: "percent",
         label: "筛选方案",
@@ -87,6 +87,13 @@ export const menuItems = ref<MenuCategory[]>([
         label: "账号设置",
         path: "account",
         icon: "👩🏻‍💻️",
+      },
+      {
+        name: "database",
+        label: "数据库  ",
+        // path: "table",
+        path: "database",
+        icon: "🗄️",
       },
     ],
   },

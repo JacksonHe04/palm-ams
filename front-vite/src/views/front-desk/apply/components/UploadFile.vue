@@ -12,7 +12,7 @@
       <el-button type="primary">上传证明材料</el-button>
       <template #tip>
         <div class="el-upload__tip">
-          请上传ZIP格式的压缩文件，文件大小不超过100MB
+          请上传ZIP格式的压缩文件，文件大小不超过20MB
         </div>
       </template>
     </el-upload>
@@ -62,9 +62,9 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     ElMessage.error('只能上传ZIP格式的文件！')
     return false
   }
-  const isLt100M = file.size / 1024 / 1024 < 100
+  const isLt100M = file.size / 1024 / 1024 < 20
   if (!isLt100M) {
-    ElMessage.error('文件大小不能超过100MB！')
+    ElMessage.error('文件大小不能超过20MB！')
     return false
   }
   return true

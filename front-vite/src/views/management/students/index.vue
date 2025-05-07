@@ -33,67 +33,86 @@
         >
           <student-table
             :data="getStudentsByType(type)"
-            :loading="store.loading"
+            :loading="loading"
+            :error="error"
             :column-config="columnConfig"
             @selection-change="handleSelectionChange"
           />
         </el-tab-pane>
       </el-tabs>
-
-      <!-- 错误提示 -->
-      <div v-if="store.error" class="error-message">
-        {{ store.error }}
-      </div>
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue';
-import { useStudentsStore } from '@/stores/studentsStore';
 import { useFieldStore } from '@/stores/fieldStore';
+import { useFieldsSort } from '@/views/front-desk/apply/composables/useFieldsSort';
 import StudentTable from '@/views/management/result/components/StudentTable.vue';
 import DownloadFiles from '@/views/management/result/components/DownloadFiles.vue';
 import ExportExcel from '@/views/management/result/components/ExportExcel.vue';
+import { getStudents } from '@/apis/students';
 
-// 初始化 store
-const store = useStudentsStore();
+interface Student {
+  id: number;
+  applicationType: string;
+  [key: string]: any;
+}
+
+// 状态管理
+const students = ref<Student[]>([]);
+const loading = ref(false);
+const error = ref('');
 
 // 使用 fieldStore
 const fieldStore = useFieldStore();
 
 // 获取可展示的字段配置
 const columnConfig = computed(() => {
-  return fieldStore.fields
-    .filter(field => field.showInTable)
-    .reduce((acc, field) => {
-      acc[field.variableName] = {
-        label: field.name,
-        width: '150'
-      };
-      return acc;
-    }, {} as Record<string, { label: string; width: string }>);
+  const showFields = fieldStore.fields.filter(field => field.showInTable);
+  const { sortedFields } = useFieldsSort(showFields);
+  
+  return sortedFields.value.reduce((acc, field) => {
+    acc[field.variableName] = {
+      label: field.name,
+      width: '150'
+    };
+    return acc;
+  }, {} as Record<string, { label: string; width: string }>);
 });
 
-// 在组件挂载时获取字段列表
+// 获取学生数据
+const fetchStudents = async () => {
+  loading.value = true;
+  error.value = '';
+  try {
+    const data = await getStudents();
+    students.value = data;
+  } catch (err: any) {
+    error.value = err.message || '获取学生数据失败';
+  } finally {
+    loading.value = false;
+  }
+};
+
+// 在组件挂载时获取数据
 onMounted(async () => {
   await fieldStore.fetchFields();
-  await store.fetchStudents();
+  await fetchStudents();
 });
 
-// 添加计算属性来分类学生
 // 获取所有申请类型
 const applicationTypes = computed(() => {
-  const types = new Set(store.students.map(student => student.applicationType));
-  return Array.from(types);
+  const types = new Set(students.value.map(student => student.applicationType));
+  return Array.from(types) as string[];
 });
 
 // 根据申请类型获取学生列表
 const getStudentsByType = (type: string) => {
-  return store.students.filter(student => student.applicationType === type);
+  return students.value.filter(student => student.applicationType === type);
 };
 
-// 添加当前激活的标签页
+// 当前激活的标签页
 const activeTab = ref('');
 
 // 监听 applicationTypes 的变化，自动设置第一个标签页
@@ -104,13 +123,9 @@ watch(applicationTypes, (types) => {
 }, { immediate: true });
 
 // 选中的学生列表
-const selectedStudents = ref<any[]>([]);
+const selectedStudents = ref<Student[]>([]);
 
-/**
- * 处理表格选择变化
- * @param selection 当前选中的行数据数组
- */
-const handleSelectionChange = (selection: any[]) => {
+const handleSelectionChange = (selection: Student[]) => {
   selectedStudents.value = selection;
 };
 
