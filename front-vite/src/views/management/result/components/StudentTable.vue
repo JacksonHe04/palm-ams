@@ -25,28 +25,6 @@
         </template>
       </template>
     </el-table-column>
-    
-    <el-table-column
-      label="论文"
-      min-width="80"
-    >
-      <template #default="scope">
-        {{ [scope.row.paper1_journalConference, scope.row.paper2_journalConference, scope.row.paper3_journalConference]
-            .filter(journal => journal && journal.trim() !== '')
-            .join(';') || '无' }}
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="奖项"
-      min-width="80"
-    >
-      <template #default="scope">
-        {{ [scope.row.award1_awardName, scope.row.award2_awardName, scope.row.award3_awardName]
-            .filter(award => award && award.trim() !== '')
-            .join(';') || '无' }}
-      </template>
-    </el-table-column>
 
     <el-table-column
       label="证明文件"

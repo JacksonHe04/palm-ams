@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'Api.files',
     'Api.interview',
     'Api.date',
+    'database',
 ]
 
 MIDDLEWARE = [

@@ -78,6 +78,14 @@ const router = createRouter({
           component: () => import("@/views/management/index.vue"),
           meta: { title: "PALM实验室后台管理" },
           children: [
+            // database
+            {
+              path: "database",
+              name: "database",
+              component: () => import("@/views/management/database/index.vue"),
+              meta: { title: "数据库" },
+            },
+            // dashboard
             {
               path: "dashboard",
               name: "dashboard",

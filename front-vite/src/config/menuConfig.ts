@@ -19,11 +19,11 @@ export const menuItems = ref<MenuCategory[]>([
     category: "申请阶段",
     items: [
       {
-        name: "users",
-        label: "学生表格",
+        name: "database",
+        label: "数据库  ",
         // path: "table",
-        path: "students",
-        icon: "👤",
+        path: "database",
+        icon: "🗄️",
       },
       {
         name: "percent",

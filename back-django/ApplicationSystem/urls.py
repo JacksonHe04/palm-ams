@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/files/', include('Api.files.urls',)),
     path('api/interview/', include('Api.interview.urls',)),
     path('api/date/', include('Api.date.urls')),
+    path('api/database/', include('database.urls',)),
 
     # 所有非API的路由都交给前端处理
     re_path(r'^.*$', views.index, name='index'),
