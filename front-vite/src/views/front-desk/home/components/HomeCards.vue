@@ -1,12 +1,12 @@
 <template>
   <div class="cards">
-    <RouterLink to="/read">
+    <a href="https://palm.seu.edu.cn/application.html">
       <div class="stats-card h-full">
         <div class="stats-number">{{ currentAdmissionYear }}<br />Join Us</div>
         <div>请阅读PALM实验室招生说明</div>
         <div class="mt-2 read">点击阅读</div>
       </div>
-    </RouterLink>
+    </a>
 
     <div class="bubble-cards">
       <div

@@ -1,5 +1,15 @@
 <template>
   <div class="new-apply-container">
+    <!-- 开发阶段提示信息 -->
+    <div class="dev-notice">
+      <el-alert
+        title="开发阶段提示"
+        type="warning"
+        description="本网站目前处于开发阶段，可能存在一些问题。如遇到任何问题，请发送邮件至 palmapplication@163.com，我们会尽快处理。"
+        :closable="false"
+        show-icon
+      />
+    </div>
     <form @submit.prevent="handleSubmit" class="apply-form">
       <template
         v-for="region in [
@@ -236,6 +246,10 @@ const isContributionField = (variableName: string) => {
 
 <style lang="scss" scoped>
 @use "./index.scss";
+
+.dev-notice {
+  @apply mb-6;
+}
 
 .form-region {
   @apply mb-8 p-6 bg-white rounded-lg shadow;
