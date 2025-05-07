@@ -165,21 +165,26 @@ export const useSettingStore = defineStore("setting", () => {
 
   // 人员相关操作
   const addPersonnel = () => {
+    const maxOrder = personnel.value.length > 0 
+      ? Math.max(...personnel.value.map(p => p.order || 0)) 
+      : -1;
     personnel.value.push({
       name: '',
       recruitment_type: '',
       department: '',
-      research_direction: ''
+      research_direction: '',
+      order: maxOrder + 1
     });
   };
   
   const initializePersonnel = async () => {
     try {
-      const formattedPersonnel = defaultPersons.map(person => ({
+      const formattedPersonnel = defaultPersons.map((person, index) => ({
         name: person.name,
         recruitment_type: person.recruitmentType,
         department: person.department,
-        research_direction: person.researchDirection
+        research_direction: person.researchDirection,
+        order: index
       }));
       personnel.value = formattedPersonnel;
       await savePersonnel();

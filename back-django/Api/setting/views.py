@@ -111,7 +111,7 @@ class MajorViewSet(viewsets.ModelViewSet):
 
 # 人员
 class PersonnelViewSet(viewsets.ModelViewSet):
-    queryset = Personnel.objects.all()
+    queryset = Personnel.objects.all().order_by('order')
     serializer_class = PersonnelSerializer
 
     def create(self, request, *args, **kwargs):
@@ -137,8 +137,9 @@ class PersonnelViewSet(viewsets.ModelViewSet):
                 processed_item = {
                     'name': item.get('name'),
                     'recruitment_type': item.get('recruitment_type'),
-                    'department': item.get('department'),  # 添加部门字段
-                    'research_direction': item.get('research_direction')  # 添加研究方向字段
+                    'department': item.get('department'),
+                    'research_direction': item.get('research_direction'),
+                    'order': item.get('order', 0)  # 确保包含order字段
                 }
 
                 existing_person = existing_personnel.get(person_name)

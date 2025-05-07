@@ -15,6 +15,7 @@ export interface Personnel {
   recruitment_type: string;
   department: string;
   research_direction: string;
+  order: number;
 }
 
 export interface Award {

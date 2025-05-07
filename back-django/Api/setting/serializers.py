@@ -14,7 +14,8 @@ class MajorSerializer(serializers.ModelSerializer):
 class PersonnelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Personnel
-        fields = ['id', 'name', 'recruitment_type', 'department', 'research_direction', 'created_at', 'updated_at']
+        fields = ['id', 'name', 'recruitment_type', 'department', 'research_direction', 'order', 'created_at', 'updated_at']
+        ordering = ['order']
 
 class AdmissionPeriodSerializer(serializers.ModelSerializer):
     class Meta:
