@@ -39,9 +39,9 @@ export default defineConfig({
       },
       output: {
         // JS入口文件
-        entryFileNames: "assets/js/[name].[hash].js",
+        entryFileNames: "assets/js/[name].js",
         // 代码分割后的chunk文件
-        chunkFileNames: "assets/js/[name].[hash].js",
+        chunkFileNames: "assets/js/[name].js",
         // CSS、图片等资源文件
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.')
@@ -53,7 +53,7 @@ export default defineConfig({
           } else if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
             extType = 'fonts'
           }
-          return `assets/${extType}/[name].[hash][extname]`
+          return `assets/${extType}/[name][extname]`
         },
         // 将 index.html 输出到上级目录的 template 文件夹
         dir: '../back-django/static',

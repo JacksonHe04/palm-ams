@@ -90,46 +90,46 @@ import {
 
 // 选项配置对象
 const selectOptions = computed(() => ({
-  // 报名类型: applicationType,
+  '论文一 CCF等级': ccfLevel,
+  '论文二 CCF等级': ccfLevel,
+  '论文三 CCF等级': ccfLevel,
+  '奖项一 等级': awardLevel,
+  '奖项二 等级': awardLevel,
+  '奖项三 等级': awardLevel,
+  '奖项一 获奖情况': awardRanking,
+  '奖项二 获奖情况': awardRanking,
+  '奖项三 获奖情况': awardRanking,
   性别: gender,
-  论文一CCF等级: ccfLevel,
-  论文二CCF等级: ccfLevel,
-  论文三CCF等级: ccfLevel,
-  奖项一等级: awardLevel,
-  奖项二等级: awardLevel,
-  奖项三等级: awardLevel,
-  奖项一获奖等级: awardRanking,
-  奖项二获奖等级: awardRanking,
-  奖项三获奖等级: awardRanking,
   本科学校: settingStore.universities.map((uni) => ({
     value: uni.name,
-    label: uni.name,
+    label: uni.name
   })),
   硕士学校: settingStore.universities.map((uni) => ({
     value: uni.name,
-    label: uni.name,
-  })),
-  第一志愿: settingStore.personnel.map((person) => ({
-    value: person.name,
-    label: `${person.name} (${person.research_direction})`,
-  })),
-  第二志愿: settingStore.personnel.map((person) => ({
-    value: person.name,
-    label: `${person.name} (${person.research_direction})`,
-  })),
-  第三志愿: settingStore.personnel.map((person) => ({
-    value: person.name,
-    label: `${person.name} (${person.research_direction})`,
+    label: uni.name
   })),
   本科专业: settingStore.majors.map((major) => ({
     value: major.name,
-    label: major.name,
+    label: major.name
   })),
   硕士专业: settingStore.majors.map((major) => ({
     value: major.name,
-    label: major.name,
+    label: major.name
   })),
-}));
+  第一志愿: settingStore.personnel.map((person) => ({
+    value: person.name,
+    label: `${person.name} (${person.research_direction})`
+  })),
+  第二志愿: settingStore.personnel.map((person) => ({
+    value: person.name,
+    label: `${person.name} (${person.research_direction})`
+  })),
+  第三志愿: settingStore.personnel.map((person) => ({
+    value: person.name,
+    label: `${person.name} (${person.research_direction})`
+  })),
+  
+}))
 
 // 获取下拉选项
 const getSelectOptions = (fieldName: string) => {

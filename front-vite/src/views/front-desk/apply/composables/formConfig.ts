@@ -39,3 +39,16 @@ export const gender = [
   { value: '男', label: '男' },
   { value: '女', label: '女' }
 ]
+
+// 选项映射对象
+export const fieldOptionsMap = {
+  '论文一 CCF等级': ccfLevel,
+  '论文二 CCF等级': ccfLevel,
+  '论文三 CCF等级': ccfLevel,
+  '奖项一 等级': awardLevel,
+  '奖项二 等级': awardLevel,
+  '奖项三 等级': awardLevel,
+  '奖项一 获奖情况': awardRanking,
+  '奖项二 获奖情况': awardRanking,
+  '奖项三 获奖情况': awardRanking,
+}
