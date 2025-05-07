@@ -15,12 +15,12 @@
       <ul class="notice-list">
         <li>
           申请前请首先阅读 PALM 实验室招生说明
-          <a href="https://palm.seu.edu.cn/application.html"
+          <a href="https://palm.seu.edu.cn/application.html" target="_blank"
             >https://palm.seu.edu.cn/application.html</a
           >。
         </li>
         <li>
-          报名系统网址：<a href="https://palm.inon.space"
+          报名系统网址：<a href="https://palm.inon.space" target="_blank"
             >https://palm.inon.space</a
           >。
         </li>
@@ -29,8 +29,8 @@
           “学校-姓名.zip”格式命名。
         </li> -->
         <li>
-          有关PALM实验室具体情况，请访问实验室官方网站：<a
-            href="https://palm.seu.edu.cn"
+          有关 PALM 实验室具体情况，请访问实验室官方网站：<a
+            href="https://palm.seu.edu.cn" target="_blank"
             >https://palm.seu.edu.cn</a
           >。
         </li>
@@ -71,7 +71,7 @@
           </li> -->
       </ul>
 
-      <h3>2024年PALM实验室拟招生导师名单</h3>
+      <h3>2026 年PALM实验室拟招生导师名单</h3>
       <table class="center-table">
         <thead>
           <tr>

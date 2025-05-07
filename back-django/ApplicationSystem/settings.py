@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ['139.155.248.15', 'palm.inon.space', 'localhost', 'joinpalm.ino
 
 INSTALLED_APPS = [
     # 'django.contrib.management',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

@@ -18,6 +18,12 @@ const router = createRouter({
           component: () => import("@/views/front-desk/home/index.vue"),
           meta: { title: "欢迎申请 PALM 实验室！" },
         },
+        // home
+        {
+          path: "/home",
+          component: () => import("@/views/front-desk/home/index.vue"),
+          meta: { title: "欢迎申请 PALM 实验室！" },
+        },
         // join
         {
           path: "/join",

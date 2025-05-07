@@ -9,6 +9,8 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
+    # path('admin/', admin.site.urls), 
+
     # API路由
     path('api/apply/',include('Api.apply.urls',)),
     path('api/students/', include('Api.students.urls',)),

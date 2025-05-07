@@ -103,5 +103,8 @@ export default defineConfig({
     postcss: {
       plugins: [tailwindcss, autoprefixer],
     },
+    optimizeDeps: {
+      include: ['@element-plus/icons-vue']
+    },
   },
 });
