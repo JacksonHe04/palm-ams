@@ -24,30 +24,105 @@
       >
         <div v-if="getFieldsByRegion(region).length > 0" class="form-region">
           <h2 class="region-title">{{ region }}</h2>
-          <div class="form-item-container">
-            <FormField
-              v-for="field in getFieldsByRegion(region)"
-              :key="field.id"
-              :field="field"
-              v-model="formData[field.variableName]"
-              :required="isFieldRequired(field.variableName)"
-              :options="getSelectOptions(field.name)"
-              :contribution-data="
-                isContributionField(field.variableName)
-                  ? contributionData[field.variableName]
-                  : undefined
-              "
-              @input="
-                field.variableName === 'rank' ||
-                field.variableName === 'majorCount'
-                  ? calculatePercentage()
-                  : null
-              "
-              @contribution-change="
-                (data) => updateContribution(field.variableName, data)
-              "
-            />
-          </div>
+
+          <!-- 论文情况的特殊处理 -->
+          <template v-if="region === '论文情况'">
+            <div class="sub-sections-wrapper">
+              <div
+                v-for="index in paperCount"
+                :key="`paper${index}`"
+                class="sub-section"
+              >
+                <div class="sub-section-header">
+                  <h3 class="sub-section-title">论文 {{ index }}</h3>
+                  <div class="button-group">
+                    <el-button
+                      v-if="paperCount > 1"
+                      type="danger"
+                      link
+                      @click="removePaper(index)"
+                    >
+                      <el-icon><Delete /></el-icon>删除
+                    </el-button>
+                    <el-button
+                      v-if="index === paperCount && paperCount < 3"
+                      type="primary"
+                      link
+                      @click="paperCount++"
+                    >
+                      <el-icon><Plus /></el-icon>添加论文
+                    </el-button>
+                  </div>
+                </div>
+                <div class="form-item-container">
+                  <FormField
+                    v-for="field in getPaperFields(index)"
+                    :key="field.id"
+                    :field="field"
+                    v-model="formData[field.variableName]"
+                    :required="isFieldRequired(field.variableName)"
+                    :options="getSelectOptions(field.name)"
+                  />
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <!-- 奖项的特殊处理 -->
+          <template v-else-if="region === '奖项'">
+            <div class="sub-sections-wrapper">
+              <div
+                v-for="index in awardCount"
+                :key="`award${index}`"
+                class="sub-section"
+              >
+                <div class="sub-section-header">
+                  <h3 class="sub-section-title">奖项 {{ index }}</h3>
+                  <div class="button-group">
+                    <el-button
+                      v-if="awardCount > 1"
+                      type="danger"
+                      link
+                      @click="removeAward(index)"
+                    >
+                      <el-icon><Delete /></el-icon>删除
+                    </el-button>
+                    <el-button
+                      v-if="index === awardCount && awardCount < 3"
+                      type="primary"
+                      link
+                      @click="awardCount++"
+                    >
+                      <el-icon><Plus /></el-icon>添加奖项
+                    </el-button>
+                  </div>
+                </div>
+                <div class="form-item-container">
+                  <FormField
+                    v-for="field in getAwardFields(index)"
+                    :key="field.id"
+                    :field="field"
+                    v-model="formData[field.variableName]"
+                    :required="isFieldRequired(field.variableName)"
+                    :options="getSelectOptions(field.name)"
+                  />
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <template v-else>
+            <div class="form-item-container">
+              <FormField
+                v-for="field in getFieldsByRegion(region)"
+                :key="field.id"
+                :field="field"
+                v-model="formData[field.variableName]"
+                :required="isFieldRequired(field.variableName)"
+                :options="getSelectOptions(field.name)"
+              />
+            </div>
+          </template>
         </div>
       </template>
 
@@ -63,7 +138,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { v4 as uuidv4 } from "uuid";
@@ -84,52 +159,50 @@ import {
   ccfLevel,
   awardLevel,
   awardRanking,
-  // applicationType,
   gender,
 } from "./composables/formConfig";
 
 // 选项配置对象
 const selectOptions = computed(() => ({
-  '论文一 CCF等级': ccfLevel,
-  '论文二 CCF等级': ccfLevel,
-  '论文三 CCF等级': ccfLevel,
-  '奖项一 等级': awardLevel,
-  '奖项二 等级': awardLevel,
-  '奖项三 等级': awardLevel,
-  '奖项一 获奖情况': awardRanking,
-  '奖项二 获奖情况': awardRanking,
-  '奖项三 获奖情况': awardRanking,
+  "论文一 CCF等级": ccfLevel,
+  "论文二 CCF等级": ccfLevel,
+  "论文三 CCF等级": ccfLevel,
+  "奖项一 等级": awardLevel,
+  "奖项二 等级": awardLevel,
+  "奖项三 等级": awardLevel,
+  "奖项一 获奖情况": awardRanking,
+  "奖项二 获奖情况": awardRanking,
+  "奖项三 获奖情况": awardRanking,
   性别: gender,
   本科学校: settingStore.universities.map((uni) => ({
     value: uni.name,
-    label: uni.name
+    label: uni.name,
   })),
   硕士学校: settingStore.universities.map((uni) => ({
     value: uni.name,
-    label: uni.name
+    label: uni.name,
   })),
   本科专业: settingStore.majors.map((major) => ({
     value: major.name,
-    label: major.name
+    label: major.name,
   })),
   硕士专业: settingStore.majors.map((major) => ({
     value: major.name,
-    label: major.name
+    label: major.name,
   })),
   第一志愿: settingStore.personnel.map((person) => ({
     value: person.name,
-    label: `${person.name} (${person.research_direction})`
+    label: `${person.name} (${person.research_direction})`,
   })),
   第二志愿: settingStore.personnel.map((person) => ({
     value: person.name,
-    label: `${person.name} (${person.research_direction})`
+    label: `${person.name} (${person.research_direction})`,
   })),
   第三志愿: settingStore.personnel.map((person) => ({
     value: person.name,
-    label: `${person.name} (${person.research_direction})`
+    label: `${person.name} (${person.research_direction})`,
   })),
-  
-}))
+}));
 
 // 获取下拉选项
 const getSelectOptions = (fieldName: string) => {
@@ -188,31 +261,25 @@ const applyStore = useApplyStore();
 const formData = computed(() => applyStore.formData);
 
 // 导入百分比计算组合式函数
-const { calculatePercentage, contributionData, updateContribution } =
-  usePercentageCalculation(formData);
+const { calculatePercentage } = usePercentageCalculation(formData);
+
+// 添加监听器来处理百分比的计算
+watch(
+  () => [formData.value.rank, formData.value.majorCount],
+  () => {
+    calculatePercentage();
+  },
+  { immediate: true }
+);
 
 // 初始化表单数据
 const initFormData = () => {
   const initialData = {
     id: uuidv4(),
   };
-  // 先初始化贡献度数据
-  contributionData.value = {
-    award1_contribution: { rank: "", total: "" },
-    award2_contribution: { rank: "", total: "" },
-    award3_contribution: { rank: "", total: "" },
-  };
 
   applyFields.value.forEach((field) => {
-    if (
-      [
-        "award1_contribution",
-        "award2_contribution",
-        "award3_contribution",
-      ].includes(field.variableName)
-    ) {
-      initialData[field.variableName] = "";
-    } else if (field.variableName === "isAdjustable") {
+    if (field.variableName === "isAdjustable") {
       initialData[field.variableName] = true;
     } else {
       initialData[field.variableName] = field.type === "boolean" ? false : "";
@@ -232,15 +299,94 @@ onMounted(async () => {
   initFormData();
 });
 
-import FormField from './components/FormField.vue'
+import FormField from "./components/FormField.vue";
 
-// 新增辅助函数
-const isContributionField = (variableName: string) => {
-  return [
-    'award1_contribution',
-    'award2_contribution',
-    'award3_contribution'
-  ].includes(variableName)
+// 获取特定论文序号的相关字段
+const getPaperFields = (paperIndex: number) => {
+  return applyFields.value.filter((field) => {
+    return (
+      field.regionInForm === "论文情况" &&
+      field.variableName.startsWith(`paper${paperIndex}`)
+    );
+  });
+};
+
+// 获取特定奖项序号的相关字段
+const getAwardFields = (awardIndex: number) => {
+  return applyFields.value.filter((field) => {
+    return (
+      field.regionInForm === "奖项" &&
+      field.variableName.startsWith(`award${awardIndex}`)
+    );
+  });
+};
+
+// 添加论文和奖项计数器
+const paperCount = ref(1)
+const awardCount = ref(1)
+
+/**
+ * 删除指定序号的论文
+ * @param index 要删除的论文序号
+ */
+const removePaper = (index: number) => {
+  // 获取所有论文相关字段
+  const allPaperFields = applyFields.value.filter(
+    field => field.regionInForm === '论文情况'
+  )
+
+  // 将要删除的论文之后的论文数据前移
+  for (let i = index; i < paperCount.value; i++) {
+    allPaperFields.forEach(field => {
+      const currentKey = `paper${i}`
+      const nextKey = `paper${i + 1}`
+      if (field.variableName.startsWith(currentKey)) {
+        const nextField = field.variableName.replace(currentKey, nextKey)
+        formData.value[field.variableName] = formData.value[nextField]
+      }
+    })
+  }
+
+  // 清空最后一个论文的数据
+  allPaperFields.forEach(field => {
+    if (field.variableName.startsWith(`paper${paperCount.value}`)) {
+      formData.value[field.variableName] = ''
+    }
+  })
+
+  paperCount.value--
+}
+
+/**
+ * 删除指定序号的奖项
+ * @param index 要删除的奖项序号
+ */
+const removeAward = (index: number) => {
+  // 获取所有奖项相关字段
+  const allAwardFields = applyFields.value.filter(
+    field => field.regionInForm === '奖项'
+  )
+
+  // 将要删除的奖项之后的奖项数据前移
+  for (let i = index; i < awardCount.value; i++) {
+    allAwardFields.forEach(field => {
+      const currentKey = `award${i}`
+      const nextKey = `award${i + 1}`
+      if (field.variableName.startsWith(currentKey)) {
+        const nextField = field.variableName.replace(currentKey, nextKey)
+        formData.value[field.variableName] = formData.value[nextField]
+      }
+    })
+  }
+
+  // 清空最后一个奖项的数据
+  allAwardFields.forEach(field => {
+    if (field.variableName.startsWith(`award${awardCount.value}`)) {
+      formData.value[field.variableName] = ''
+    }
+  })
+
+  awardCount.value--
 }
 </script>
 
@@ -260,6 +406,22 @@ const isContributionField = (variableName: string) => {
 
   .form-item {
     @apply mb-4;
+  }
+}
+
+.sub-sections-wrapper {
+  @apply flex flex-col gap-6;
+}
+
+.sub-section {
+  @apply mb-0 p-4 bg-gray-50 rounded-lg;
+
+  .sub-section-header {
+    @apply flex justify-between items-center mb-4;
+  }
+
+  .sub-section-title {
+    @apply text-lg font-semibold text-gray-700;
   }
 }
 </style>

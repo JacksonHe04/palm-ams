@@ -100,7 +100,7 @@
     />
 
     <!-- 奖项贡献字段 -->
-    <div
+    <!-- <div
       v-else-if="isContributionField"
       class="flex gap-4 items-center"
     >
@@ -127,7 +127,7 @@
           @input="handleContributionChange"
         />
       </div>
-    </div>
+    </div> -->
 
     <!-- 其他类型 -->
     <input
@@ -144,62 +144,62 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { ElSwitch } from 'element-plus'
-import AutoCompleteInput from './AutoCompleteInput.vue'
-import { useApplicationType } from '../composables/useApplicationType'
-import { useSettingStore } from '@/stores/settingStore'
+import { computed, ref, watch } from "vue";
+import { ElSwitch } from "element-plus";
+import AutoCompleteInput from "./AutoCompleteInput.vue";
+import { useApplicationType } from "../composables/useApplicationType";
+import { useSettingStore } from "@/stores/settingStore";
 
 interface Props {
   field: {
-    id: string
-    name: string
-    type: string
-    variableName: string
-    description?: string
-  }
-  modelValue: any
-  required?: boolean
-  options?: Array<{ value: string; label: string }>
+    id: string;
+    name: string;
+    type: string;
+    variableName: string;
+    description?: string;
+  };
+  modelValue: any;
+  required?: boolean;
+  options?: Array<{ value: string; label: string }>;
   contributionData?: {
-    rank: string | number
-    total: string | number
-  }
+    rank: string | number;
+    total: string | number;
+  };
 }
 
 const props = withDefaults(defineProps<Props>(), {
   required: false,
   options: () => [],
-  contributionData: () => ({ rank: '', total: '' })
-})
+  contributionData: () => ({ rank: "", total: "" }),
+});
 
-const emit = defineEmits(['update:modelValue', 'input', 'contribution-change'])
+const emit = defineEmits(["update:modelValue", "input", "contribution-change"]);
 
 /**
  * 计算属性：用于处理输入值的双向绑定
  */
 const inputValue = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
-})
+  set: (value) => emit("update:modelValue", value),
+});
 
 // 计算属性
 const isBasicInput = computed(() => {
   return (
-    (props.field.type === 'text' ||
-      props.field.type === 'number' ||
-      props.field.type === 'email') &&
-    props.field.variableName !== 'percentage' &&
-    props.field.variableName!== 'year'
-  )
-})
+    (props.field.type === "text" ||
+      props.field.type === "number" ||
+      props.field.type === "email") &&
+    props.field.variableName !== "percentage" &&
+    props.field.variableName !== "year"
+  );
+});
 
 const isAutoCompleteField = computed(() => {
   return (
-    props.field.type === 'select' &&
-    ['本科学校', '硕士学校'].includes(props.field.name)
-  )
-})
+    props.field.type === "select" &&
+    ["本科学校", "硕士学校"].includes(props.field.name)
+  );
+});
 
 // 新增计算属性：判断是否为专业选择字段
 // const isMajorSelectField = computed(() => {
@@ -209,70 +209,70 @@ const isAutoCompleteField = computed(() => {
 //   )
 // })
 
-const isContributionField = computed(() => {
-  return [
-    'award1_contribution',
-    'award2_contribution',
-    'award3_contribution'
-  ].includes(props.field.variableName)
-})
+// const isContributionField = computed(() => {
+//   return [
+//     'award1_contribution',
+//     'award2_contribution',
+//     'award3_contribution'
+//   ].includes(props.field.variableName)
+// })
 
 // 贡献度相关
-const contributionRank = ref(props.contributionData.rank)
-const contributionTotal = ref(props.contributionData.total)
+// const contributionRank = ref(props.contributionData.rank)
+// const contributionTotal = ref(props.contributionData.total)
 
 /**
  * 处理输入事件
  * @param e 输入事件或新值
  */
 const handleInput = (e: Event | any) => {
-  const value = e instanceof Event ? (e.target as HTMLInputElement).value : e
-  emit('update:modelValue', value)
+  const value = e instanceof Event ? (e.target as HTMLInputElement).value : e;
+  emit("update:modelValue", value);
   if (e instanceof Event) {
-    emit('input', e)
+    emit("input", e);
   }
-}
-
-/**
- * 处理贡献度变更
- */
-const handleContributionChange = () => {
-  // 先触发贡献度数据更新
-  emit('contribution-change', {
-    rank: contributionRank.value,
-    total: contributionTotal.value
-  })
-  
-  // 同时更新 v-model 绑定的值
-  if (contributionRank.value && contributionTotal.value) {
-    emit('update:modelValue', `${contributionRank.value}/${contributionTotal.value}`)
-  } else {
-    emit('update:modelValue', '')
-  }
-}
-
-// 监听贡献度数据变化
-watch(
-  () => props.contributionData,
-  (newVal) => {
-    contributionRank.value = newVal.rank
-    contributionTotal.value = newVal.total
-  },
-  { deep: true }
-)
+};
 
 /**
  * 根据当前路由获取申请类型
  */
-const { getApplicationType } = useApplicationType()
-const settingStore = useSettingStore()
+const { getApplicationType } = useApplicationType();
+const settingStore = useSettingStore();
+
+// /**
+//  * 处理贡献度变更
+//  */
+// const handleContributionChange = () => {
+//   // 先触发贡献度数据更新
+//   emit('contribution-change', {
+//     rank: contributionRank.value,
+//     total: contributionTotal.value
+//   })
+
+//   // 同时更新 v-model 绑定的值
+//   if (contributionRank.value && contributionTotal.value) {
+//     emit('update:modelValue', `${contributionRank.value}/${contributionTotal.value}`)
+//   } else {
+//     emit('update:modelValue', '')
+//   }
+// }
+
+// // 监听贡献度数据变化
+// watch(
+//   () => props.contributionData,
+//   (newVal) => {
+//     contributionRank.value = newVal.rank
+//     contributionTotal.value = newVal.total
+//   },
+//   { deep: true }
+// )
 </script>
 
 <style lang="scss" scoped>
 @use "../index.scss";
 .form-item {
   @apply mb-4;
-  
+
   label {
     @apply block text-sm font-medium text-gray-700 mb-1;
   }

@@ -5,6 +5,8 @@ export const ccfLevel = [
   { value: 'A', label: 'A' },
   { value: 'B', label: 'B' },
   { value: 'C', label: 'C' },
+  { value: '中科院一区', label: '中科院一区' },
+  { value: '中科院二区', label: '中科院二区' },
   { value: '其他', label: '其他' }
 ]
 
@@ -19,12 +21,9 @@ export const awardLevel = [
 // 获奖等级选项
 export const awardRanking = [
   { value: '特等奖', label: '特等奖' },
-  { value: '一等奖', label: '一等奖' },
-  { value: '二等奖', label: '二等奖' },
-  { value: '三等奖', label: '三等奖' },
-  { value: '金奖', label: '金奖' },
-  { value: '银奖', label: '银奖' },
-  { value: '铜奖', label: '铜奖' }
+  { value: '一等奖', label: '一等奖/金奖' },
+  { value: '二等奖', label: '二等奖/银奖' },
+  { value: '三等奖', label: '三等奖/铜奖' },
 ]
 
 // 报名类型选项
