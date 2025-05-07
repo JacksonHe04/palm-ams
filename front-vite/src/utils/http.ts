@@ -2,11 +2,23 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElMessage } from 'element-plus';
 
+// 获取当前环境的baseURL
+const getBaseURL = () => {
+  // 获取当前页面的主机名和端口
+  const { hostname, port } = window.location;
+  
+  // 判断是否在开发环境（Vite默认端口为5173）
+  if (port === '5173') {
+    return 'http://localhost:8000';
+  }
+  
+  // 生产环境使用实际域名
+  return 'https://palm.inon.space';
+};
+
 // 创建 axios 实例
 const instance: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:8000', // 开发环境
-  // baseURL: 'http://139.155.248.15', // 生产环境
-  // baseURL: 'https://palm.inon.space', // 生产环境
+  baseURL: getBaseURL(),
   timeout: 10000,
 });
 

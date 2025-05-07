@@ -11,6 +11,11 @@
           <el-icon class="move-icon cursor-move"><Rank /></el-icon>
         </template>
       </el-table-column>
+      <el-table-column prop="order" label="序号" width="60">
+        <template #default="{ row }">
+          {{ row.order + 1 }}
+        </template>
+      </el-table-column>
       <el-table-column prop="name" label="姓名">
         <template #default="{ row }">
           <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
