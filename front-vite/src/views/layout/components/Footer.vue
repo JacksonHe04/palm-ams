@@ -44,17 +44,17 @@ export default {
             {
               name: '个人项目',
               url: 'https://github.com/JacksonHe04',
-              icon: 'i iconfont icon-github'
+              // icon: 'i iconfont icon-github'
             },
             {
               name: 'Gitee 仓库',
               url: 'https://gitee.com/JacksonHe04/PalmAdmissionsSystem',
-              icon: 'i iconfont icon-github'
+              // icon: 'i iconfont icon-github'
             },
             {
               name: 'GitHub 仓库',
               url: 'https://github.com/JacksonHe04/PalmAdmissionsSystem',
-              icon: 'i iconfont icon-github'
+              // icon: 'i iconfont icon-github'
             }
           ]
         },
@@ -63,11 +63,11 @@ export default {
           links: [
             {
               name: '联系管理员',
-              url: ''
+              url: '/contact'
             },
             {
               name: '联系开发者',
-              url: ''
+              url: '/contact'
             }
           ]
         },

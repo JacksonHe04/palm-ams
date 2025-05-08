@@ -36,8 +36,8 @@ def apply_post(request):
                     university = University.objects.get(name=university_name)
                     field_values['universityLevel'] = university.level
                 except University.DoesNotExist:
-                    # 如果找不到对应的大学，保持原值不变
-                    pass
+                    # 如果找不到对应的大学，则设置为C
+                    field_values['universityLevel'] = 'C'
 
             # 获取硕士院校等级信息
             master_university_name = data.get('masterUniversity')

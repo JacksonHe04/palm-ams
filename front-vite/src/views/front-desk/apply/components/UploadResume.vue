@@ -13,7 +13,9 @@
       <el-button type="primary">上传简历</el-button>
       <template #tip>
         <div class="el-upload__tip">
-          请上传PDF格式的简历文件，文件大小不超过10MB
+          请上传PDF格式的简历文件，文件大小不超过10MB<br>
+          请将简历命名为：学校-姓名-简历.pdf<br>
+          示例：东南大学-小明-简历.pdf
         </div>
       </template>
     </el-upload>
@@ -47,6 +49,14 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     ElMessage.error('文件大小不能超过10MB！')
     return false
   }
+  
+  // 新增文件名验证逻辑
+  const fileName = file.name.split('.')[0] // 去掉后缀
+  if (!fileName.endsWith('-简历')) {
+    ElMessage.error('文件名格式不正确，请按照"学校-姓名-简历.pdf"格式命名')
+    return false
+  }
+  
   return true
 }
 
@@ -70,9 +80,9 @@ const handleUploadError = () => {
   border-radius: 4px;
 }
 
-.upload-area {
-  margin-bottom: 20px;
-}
+/* .upload-area {
+  /* margin-bottom: 20px; */
+/* } */
 
 .el-upload__tip {
   color: #666;

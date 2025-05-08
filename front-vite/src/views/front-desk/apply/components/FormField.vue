@@ -1,6 +1,9 @@
 <template>
   <div class="form-item">
-    <label :for="field.variableName">{{ field.name }}</label>
+    <label :for="field.variableName">
+      {{ field.name }}
+      <span v-if="required" class="required-asterisk">*</span>
+    </label>
     <div class="field-description">{{ field.description }}</div>
 
     <!-- 文本、数字、邮箱输入框 -->
@@ -275,6 +278,10 @@ const settingStore = useSettingStore();
 
   label {
     @apply block text-sm font-medium text-gray-700 mb-1;
+    
+    .required-asterisk {
+      @apply text-red-500 ml-1;
+    }
   }
 
   .field-description {

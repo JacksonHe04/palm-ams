@@ -12,7 +12,9 @@
       <el-button type="primary">上传证明材料</el-button>
       <template #tip>
         <div class="el-upload__tip">
-          请上传ZIP格式的压缩文件，文件大小不超过20MB
+          请上传ZIP格式的压缩文件，文件大小不超过20MB<br />
+          请将简历命名为：学校-姓名-证明.zip<br />
+          示例：东南大学-小明-证明.zip
         </div>
       </template>
     </el-upload>
@@ -40,68 +42,84 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { ElMessage } from 'element-plus'
-import type { UploadProps } from 'element-plus'
-import { useApplyStore } from '@/stores/applyStore'
-import { getFileList, deleteFile, uploadConfig, type FileItem } from '@/apis/files'
+import { ref, onMounted, computed } from "vue";
+import { ElMessage } from "element-plus";
+import type { UploadProps } from "element-plus";
+import { useApplyStore } from "@/stores/applyStore";
+import {
+  getFileList,
+  deleteFile,
+  uploadConfig,
+  type FileItem,
+} from "@/apis/files";
 
-const fileList = ref<FileItem[]>([])
-const applyStore = useApplyStore()
+const fileList = ref<FileItem[]>([]);
+const applyStore = useApplyStore();
 
 // 从pinia store获取applicantId
-const applicantId = computed(() => applyStore.formData.id)
+const applicantId = computed(() => applyStore.formData.id);
 
 // 计算上传请求头
-const headers = computed(() => uploadConfig.headers(applicantId.value))
+const headers = computed(() => uploadConfig.headers(applicantId.value));
 
 // 上传前的验证
-const beforeUpload: UploadProps['beforeUpload'] = (file) => {
-  const isValidType = ['application/zip', 'application/x-zip-compressed'].includes(file.type)
+const beforeUpload: UploadProps["beforeUpload"] = (file) => {
+  const isValidType = [
+    "application/zip",
+    "application/x-zip-compressed",
+  ].includes(file.type);
   if (!isValidType) {
-    ElMessage.error('只能上传ZIP格式的文件！')
-    return false
+    ElMessage.error("只能上传ZIP格式的文件！");
+    return false;
   }
-  const isLt100M = file.size / 1024 / 1024 < 20
+  const isLt100M = file.size / 1024 / 1024 < 20;
   if (!isLt100M) {
-    ElMessage.error('文件大小不能超过20MB！')
-    return false
+    ElMessage.error("文件大小不能超过20MB！");
+    return false;
   }
-  return true
-}
+
+  // 新增文件名验证逻辑
+  const fileName = file.name.split(".")[0]; // 去掉后缀
+  if (!fileName.endsWith("-证明")) {
+    ElMessage.error('文件名格式不正确，请按照"学校-姓名-证明.zip"格式命名');
+    return false;
+  }
+
+  return true;
+};
 
 // 上传成功的回调
 const handleUploadSuccess = (response: any) => {
-  ElMessage.success('文件上传成功')
-  fetchFileList()
-  applyStore.updateField('proofs', response.file_path)
-}
+  ElMessage.success("文件上传成功");
+  fetchFileList();
+  applyStore.updateField("proofs", response.file_path);
+};
 
 // 上传失败的回调
 const handleUploadError = () => {
-  ElMessage.error('文件上传失败，请重试')
-}
+  ElMessage.error("文件上传失败，请重试");
+};
 
 // 删除文件
 const handleDelete = async (file: FileItem) => {
   try {
-    await deleteFile(file.id)
-    ElMessage.success('文件删除成功')
-    fetchFileList()
+    await deleteFile(file.id);
+    ElMessage.success("文件删除成功");
+    fetchFileList();
   } catch (error) {
-    ElMessage.error('文件删除失败，请重试')
+    ElMessage.error("文件删除失败，请重试");
   }
-}
+};
 
 // 获取已上传的文件列表
 const fetchFileList = async () => {
   try {
-    const { data } = await getFileList(applicantId.value)
-    fileList.value = data
+    const { data } = await getFileList(applicantId.value);
+    fileList.value = data;
   } catch (error: any) {
-    console.error('获取文件列表失败：', error.message)
+    console.error("获取文件列表失败：", error.message);
   }
-}
+};
 
 // onMounted(() => {
 //   if (applicantId.value) {
@@ -118,9 +136,9 @@ const fetchFileList = async () => {
   border-radius: 4px;
 }
 
-.upload-area {
+/* .upload-area {
   margin-bottom: 20px;
-}
+} */
 
 .file-list {
   margin-top: 20px;

@@ -41,7 +41,6 @@ $text-color: #6b7280;
 $white-color: white;
 $hover-bg-color: wheat;
 
-/* Hero Section */
 .hero {
   padding: 60px 0;
   display: grid;
@@ -76,20 +75,16 @@ $hover-bg-color: wheat;
   gap: 16px;
   margin-bottom: 16px;
   max-width: 480px;
-
-  :deep(.el-button) {
-    transition: all 0.3s ease;
-  }
 }
 
 .trial-text {
   color: $text-color;
   font-size: 14px;
-  text-align: left;
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-/* Right Side Content */
 .hero-image {
   position: relative;
 }
@@ -122,7 +117,6 @@ $hover-bg-color: wheat;
   border-radius: 12px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
@@ -133,3 +127,4 @@ $hover-bg-color: wheat;
   }
 }
 </style>
+<script setup lang="ts"></script>

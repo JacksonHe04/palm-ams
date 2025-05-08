@@ -4,7 +4,14 @@ import type { Field } from '@/types/field'
 export const useFormValidation = () => {
   const requiredFields = ref([
     'name',
-    'applicationType'
+    'phone',
+    'email',
+    'applicationType',
+    'university',
+    'major',
+    'majorCount',
+    'rank',
+    'year',
   ])
 
   // 判断字段是否必填
