@@ -30,6 +30,13 @@
       v-loading="loading"
       border
     >
+      <el-table-column
+        type="index"
+        label="#"
+        width="70"
+        align="center"
+        fixed="left"
+      />
       <template v-for="field in fields" :key="field.name">
         <el-table-column
           v-if="selectedFields.includes(field.name)"
@@ -38,7 +45,8 @@
           sortable
           show-overflow-tooltip
           :min-width="200"
-          :width="field.name === 'id' ? 100 : null"        
+          :width="field.name === 'id' ? 100 : null"
+          :fixed="field.name === 'name' ? 'left' : null"
           >
           <template #default="scope">
             <template v-if="field.name === 'download_url' && currentDatabase === 'files'">

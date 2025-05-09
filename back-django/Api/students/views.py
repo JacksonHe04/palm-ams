@@ -1,92 +1,47 @@
 # views.py
 from django.shortcuts import render
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
 from Api.apply.models import Apply
+from Api.files.models import File
+from django.forms.models import model_to_dict
 
-# Create your views here.
-
-
-
+@api_view(['GET'])
 def get_students(request):
-    applies = Apply.objects.all()
-    students_data = []
+    """
+    获取所有学生信息的视图函数
+    返回所有学生的详细信息，包括其关联的文件信息
+    """
+    try:
+        # 获取所有学生记录
+        students = Apply.objects.all()
+        
+        # 序列化结果并添加文件信息
+        response_data = []
+        for student in students:
+            student_dict = model_to_dict(student)
+            # 查找该学生对应的所有文件
+            student_files = File.objects.filter(applicant_id=str(student.id), is_deleted=False)
+            
+            # 初始化简历和证明材料字段
+            student_dict['resume_file_name'] = None
+            student_dict['resume_file_path'] = None
+            student_dict['proof_file_name'] = None
+            student_dict['proof_file_path'] = None
+            
+            # 遍历所有文件，根据文件类型分别设置
+            for file in student_files:
+                if file.file_type == 'application/zip':
+                    student_dict['resume_file_name'] = file.name
+                    student_dict['resume_file_path'] = f'/api/files/download/{file.id}'
+                elif file.file_type == 'application/pdf':
+                    student_dict['proof_file_name'] = file.name
+                    student_dict['proof_file_path'] = f'/api/files/download/{file.id}'
+            
+            response_data.append(student_dict)
 
-    for apply in applies:
-        student_data = {
-            "id": apply.id,
-            "name": apply.name,
-            "graduationYear": apply.graduationYear,
-            "gender": apply.gender,
-            "birthDate": apply.birthDate,
-            "photo": apply.photo.url if apply.photo else None,
-            "university": apply.university,
-            "major": apply.major,
-            "majorCount": apply.majorCount,
-            "rank": apply.rank,
-            "percentage": apply.percentage,
-            "masterUniversity": apply.masterUniversity,
-            "masterMajor": apply.masterMajor,
-            "tutor": apply.tutor,
-            "phone": apply.phone,
-            "email": apply.email,
-            "applicationType": apply.applicationType,
-            "firstChoice": apply.firstChoice,
-            "secondChoice": apply.secondChoice,
-            "thirdChoice": apply.thirdChoice,
-            "isAdjustable": apply.isAdjustable,
-            "papers": [
-                {
-                    "publicationTime": apply.paper1_publicationTime,
-                    "journalConference": apply.paper1_journalConference,
-                    "paperName": apply.paper1_paperName,
-                    "ccfLevel": apply.paper1_ccfLevel,
-                    # "awardCategory": apply.paper1_awardCategory
-                },
-                {
-                    "publicationTime": apply.paper2_publicationTime,
-                    "journalConference": apply.paper2_journalConference,
-                    "paperName": apply.paper2_paperName,
-                    "ccfLevel": apply.paper2_ccfLevel,
-                    # "awardCategory": apply.paper2_awardCategory
-                },
-                {
-                    "publicationTime": apply.paper3_publicationTime,
-                    "journalConference": apply.paper3_journalConference,
-                    "paperName": apply.paper3_paperName,
-                    "ccfLevel": apply.paper3_ccfLevel,
-                    # "awardCategory": apply.paper3_awardCategory
-                }
-            ],
-            "awards": [
-                {
-                    "isLeader": apply.award1_isLeader,
-                    "awardTime": apply.award1_awardTime,
-                    "awardName": apply.award1_awardName,
-                    "levelRanking": apply.award1_levelRanking,
-                    "awardRanking": apply.award1_awardRanking
-                },
-                {
-                    "isLeader": apply.award2_isLeader,
-                    "awardTime": apply.award2_awardTime,
-                    "awardName": apply.award2_awardName,
-                    "levelRanking": apply.award2_levelRanking,
-                    "awardRanking": apply.award2_awardRanking
-                },
-                {
-                    "isLeader": apply.award3_isLeader,
-                    "awardTime": apply.award3_awardTime,
-                    "awardName": apply.award3_awardName,
-                    "levelRanking": apply.award3_levelRanking,
-                    "awardRanking": apply.award3_awardRanking
-                }
-            ],
+        return JsonResponse(response_data, safe=False)
 
-            "universityLevel": apply.universityLevel,
-            "masterUniversityLevel": apply.masterUniversityLevel,
-            "resume": None,  # 假设没有 resume 字段，如果有请添加
-            "proofs": apply.proofs,
-            "status": apply.status
-        }
-        students_data.append(student_data)
-
-    return JsonResponse(students_data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    

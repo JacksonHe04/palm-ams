@@ -33,9 +33,10 @@ def upload_file(request):
         if not file:
             return JsonResponse({'error': '未找到上传文件'}, status=400)
 
-        # 使用原始文件名
-        file_ext = os.path.splitext(file.name)[1]
-        new_filename = file.name
+        # 生成带时间戳的文件名
+        timestamp = timezone.localtime().strftime("%Y%m%d%H%M%S")
+        file_name, file_ext = os.path.splitext(file.name)
+        new_filename = f"{file_name}_{timestamp}{file_ext}"
         
         # 直接保存文件
         file_path = os.path.join(FILE_STORAGE_PATH, new_filename)
