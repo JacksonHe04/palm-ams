@@ -58,6 +58,7 @@ export const batchDownloadFiles = (fileIds: number[], applicationType: string) =
     file_ids: fileIds,
     application_type: applicationType
   }, {
-    responseType: 'blob'
+    responseType: 'blob',
+    timeout: 180000  // 设置180秒超时时间
   })
 }
