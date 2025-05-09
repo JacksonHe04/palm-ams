@@ -2,6 +2,10 @@
   <div class="database-management">
     <!-- 顶部操作栏 -->
     <div class="operation-bar">
+      <el-select v-model="currentDatabase" class="database-select" @change="handleDatabaseChange">
+        <el-option label="Apply数据库" value="apply" />
+        <el-option label="Files数据库" value="files" />
+      </el-select>
       <el-button type="primary" @click="handleAdd">新增申请</el-button>
       <el-popover placement="bottom" :width="300" trigger="click">
         <template #reference>
@@ -33,9 +37,11 @@
           :label="field.name"
           sortable
           show-overflow-tooltip
+          :min-width="200"
+          :width="field.name === 'id' ? 100 : null"
         >
           <template #default="scope">
-            <span>{{ scope.row[field.name] }}</span>
+            <span class="whitespace-normal break-words">{{ scope.row[field.name] }}</span>
           </template>
         </el-table-column>
       </template>
@@ -98,9 +104,17 @@ import {
   updateApplyRecord,
   deleteApplyRecord
 } from '@/apis/databaseApply'
+// 假设我们有一个新的API文件用于files数据库操作
+import {
+  getAllFilesData,
+  createFileRecord,
+  updateFileRecord,
+  deleteFileRecord
+} from '@/apis/databaseFiles'
 import type { ApplyField, ApplyRecord } from '@/apis/databaseApply'
 
 // 数据状态
+const currentDatabase = ref('apply') // 默认选择Apply数据库
 const records = ref<ApplyRecord[]>([])
 const fields = ref<ApplyField[]>([])
 const loading = ref(false)
@@ -117,15 +131,25 @@ const sortedRecords = computed(() => {
   return [...records.value]
 })
 
+// 处理数据库切换
+const handleDatabaseChange = async () => {
+  await initData()
+}
+
 // 初始化数据
 const initData = async () => {
   loading.value = true
   try {
-    const { data } = await getAllApplyData()
-    records.value = data.records
-    fields.value = data.fields
+    let response
+    if (currentDatabase.value === 'apply') {
+      response = await getAllApplyData()
+    } else {
+      response = await getAllFilesData()
+    }
+    records.value = response.data.records
+    fields.value = response.data.fields
     // 初始化选中所有字段
-    selectedFields.value = data.fields.map(field => field.name)
+    selectedFields.value = response.data.fields.map(field => field.name)
   } catch (error) {
     ElMessage.error('获取数据失败')
   } finally {
@@ -147,36 +171,48 @@ const handleEdit = (row: ApplyRecord) => {
   dialogVisible.value = true
 }
 
-// 删除按钮处理
-const handleDelete = async (row: ApplyRecord) => {
-  try {
-    await ElMessageBox.confirm('确定要删除这条记录吗？', '警告', {
-      type: 'warning'
-    })
-    await deleteApplyRecord(row.id)
-    ElMessage.success('删除成功')
-    initData()
-  } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('删除失败')
-    }
-  }
-}
-
 // 提交表单处理
 const handleSubmit = async () => {
   try {
     if (dialogType.value === 'add') {
-      await createApplyRecord(formData.value)
+      if (currentDatabase.value === 'apply') {
+        await createApplyRecord(formData.value)
+      } else {
+        await createFileRecord(formData.value)
+      }
       ElMessage.success('创建成功')
     } else {
-      await updateApplyRecord(formData.value.id!, formData.value)
+      if (currentDatabase.value === 'apply') {
+        await updateApplyRecord(formData.value.id!, formData.value)
+      } else {
+        await updateFileRecord(formData.value.id!, formData.value)
+      }
       ElMessage.success('更新成功')
     }
     dialogVisible.value = false
     initData()
   } catch (error) {
     ElMessage.error('操作失败')
+  }
+}
+
+// 删除按钮处理
+const handleDelete = async (row: ApplyRecord) => {
+  try {
+    await ElMessageBox.confirm('确定要删除这条记录吗？', '警告', {
+      type: 'warning'
+    })
+    if (currentDatabase.value === 'apply') {
+      await deleteApplyRecord(row.id)
+    } else {
+      await deleteFileRecord(row.id)
+    }
+    ElMessage.success('删除成功')
+    initData()
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('删除失败')
+    }
   }
 }
 
@@ -195,5 +231,9 @@ onMounted(() => {
   margin-bottom: 20px;
   display: flex;
   gap: 10px;
+}
+
+.database-select {
+  width: 160px;
 }
 </style>
