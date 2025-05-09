@@ -25,7 +25,7 @@ const exporting = ref(false);
 
 /**
  * 导出Excel文件
- * 将当前标签页的表格数据导出为Excel文件
+ * 将当前标签页的表格数据导出为Excel文件，包括证明文件和简历文件信息
  */
 async function exportToExcel() {
   if (!props.data.length) {
@@ -57,6 +57,12 @@ async function exportToExcel() {
       row['奖项'] = [student.award1_awardName, student.award2_awardName, student.award3_awardName]
         .filter(award => award && award.trim() !== '')
         .join(';') || '无';
+
+      // 添加证明文件信息
+      row['证明文件'] = student.resume_file_name || '无证明文件';
+
+      // 添加简历文件信息
+      row['简历文件'] = student.proof_file_name || '无简历';
 
       return row;
     });
