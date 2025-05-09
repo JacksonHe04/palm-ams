@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElMessage } from 'element-plus';
+import { useUserStore } from '@/stores/userStore';
 
 // 获取当前环境的baseURL
 const getBaseURL = () => {
@@ -82,9 +83,15 @@ instance.interceptors.response.use(
       switch (response.status) {
         case 401:
           ElMessage.error('未授权，请重新登录');
-          // 在这里处理登出逻辑
+          // 跳转到登录页面
+          // window.location.href = '/login';
+          // 清除本地存储的 token
           localStorage.removeItem('token');
-          window.location.href = '/login';
+          // userStore.isAuthenticated  设置为false
+          const userStore = useUserStore();
+          userStore.isAuthenticated = false;
+
+
           break;
         case 403:
           ElMessage.error('拒绝访问');

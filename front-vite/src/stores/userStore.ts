@@ -12,14 +12,15 @@ export const useUserStore = defineStore("user", {
     userInfo: {
       phone: '',
       email: '',
-    }
+    },
+    isInitialized: false, // 添加初始化标记
   }),
   getters: {
     isValidSession: (state) => {
       if (!state.isAuthenticated || !state.loginTime) return false;
       const now = new Date().getTime();
       const loginTime = new Date(state.loginTime).getTime();
-      const validPeriod = state.autoLoginDays * 24 * 60 * 60 * 1000; // 转换为毫秒
+      const validPeriod = state.autoLoginDays * 24 * 60 * 60 * 1000;
       return now - loginTime < validPeriod;
     },
   },
@@ -122,33 +123,33 @@ export const useUserStore = defineStore("user", {
     
       if (token && loginTime && user) {
         try {
-          // 先验证 token 有效性
-          const response = await getUserInfo();
-          if (response.data.success) {
-            // token 验证成功后才设置认证状态
-            this.isAuthenticated = true;
-            this.loginTime = loginTime;
-            this.user = JSON.parse(user);
-            
-            // 更新用户信息
-            const { phone, email, auto_login_days } = response.data.data;
-            this.userInfo.phone = phone || '';
-            this.userInfo.email = email || '';
-            this.autoLoginDays = auto_login_days;
-          } else {
-            // token 无效，清除所有状态
-            this.logout();
+          // 先设置基本状态
+          this.isAuthenticated = true;
+          this.loginTime = loginTime;
+          this.user = JSON.parse(user);
+          if (autoLoginDays) {
+            this.autoLoginDays = parseInt(autoLoginDays);
+          }
+          
+          // 验证 token 有效性并更新用户信息
+          try {
+            const response = await getUserInfo();
+            if (response.data.success) {
+              const { phone, email, auto_login_days } = response.data.data;
+              this.userInfo.phone = phone || '';
+              this.userInfo.email = email || '';
+              this.autoLoginDays = auto_login_days;
+            }
+          } catch (error) {
+            console.error("获取用户信息失败，但保持登录状态:", error);
+            // 这里不调用logout，保持用户状态
           }
         } catch (error) {
-          // API 调用失败，清除所有状态并重定向到登录页面
-          console.error("Token 验证失败:", error);
-          this.logout();
+          console.error("初始化用户状态失败:", error);
         }
       }
-    
-      if (autoLoginDays) {
-        this.autoLoginDays = parseInt(autoLoginDays);
-      }
-    },
-  },
+      
+      this.isInitialized = true; // 标记初始化完成
+    }
+  }
 });

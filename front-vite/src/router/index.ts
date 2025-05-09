@@ -203,29 +203,35 @@ const router = createRouter({
 // 添加全局路由守卫
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore();
-  const token = localStorage.getItem('token');
   
-  // 如果是登录页面，直接放行
-  if (to.path === '/login') {
-    if (token && userStore.isAuthenticated) {
+  // 如果是首次加载，尝试从localStorage恢复用户状态
+  if (!userStore.isInitialized) {
+    await userStore.initializeFromStorage();
+  }
+  
+  // 需要登录的路由
+  const requiresAuth = to.path.startsWith('/admin');
+  
+  if (requiresAuth) {
+    // 检查是否登录且会话有效
+    if (userStore.isAuthenticated && userStore.isValidSession) {
+      next();
+    } else {
+      // 防止无限重定向循环
+      if (to.path !== '/login') {
+        next('/login');
+      } else {
+        next();
+      }
+    }
+  } else {
+    // 如果已登录且会话有效，访问登录页时重定向到管理页面
+    if (to.path === '/login' && userStore.isAuthenticated && userStore.isValidSession) {
       next('/admin');
     } else {
       next();
     }
-    return;
   }
-  
-  // 如果是需要登录的页面
-  if (to.path.startsWith('/admin')) {
-    if (token && userStore.isAuthenticated) {
-      next();
-    } else {
-      next('/login');
-    }
-    return;
-  }
-  
-  next();
 });
 
 export default router;
