@@ -46,3 +46,18 @@ export const resumeUploadConfig = {
     'X-Applicant-ID': applicantId
   })
 }
+
+/**
+ * 批量下载文件
+ * @param fileIds 文件ID列表
+ * @param applicationType 申请类型
+ * @returns 文件流
+ */
+export const batchDownloadFiles = (fileIds: number[], applicationType: string) => {
+  return http.post('/api/files/batch-download/', {
+    file_ids: fileIds,
+    application_type: applicationType
+  }, {
+    responseType: 'blob'
+  })
+}

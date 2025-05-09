@@ -12,8 +12,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { ElMessage } from 'element-plus';
-import JSZip from 'jszip';
-import { getFileDownloadUrl } from '@/apis/files';
+import { batchDownloadFiles } from '@/apis/files';
 
 // 定义组件的 props
 const props = defineProps<{
@@ -50,47 +49,37 @@ async function downloadAllFiles() {
 
   downloading.value = true;
   try {
-    // 创建 JSZip 实例
-    const zip = new JSZip();
-    
-    // 创建文件夹
-    const resumeFolder = zip.folder('证明文件');
-    const proofFolder = zip.folder('简历文件');
-    
-    // 记录已处理的文件，避免重复
-    const processedFiles = new Set();
-    
-    // 处理每个学生的文件
+    // 收集所有文件ID
+    const fileIds = new Set<number>();
     for (const student of targetStudents) {
-      // 处理简历文件
-      if (student.resume_file_path && !processedFiles.has(student.resume_file_path)) {
-        const url = getFileDownloadUrl(student.resume_file_path);
-        if (url) {
-          const response = await fetch(url);
-          const blob = await response.blob();
-          const fileName = student.resume_file_name || `简历_${student.name}_${Date.now()}.pdf`;
-          resumeFolder.file(fileName, blob);
-          processedFiles.add(student.resume_file_path);
+      if (student.resume_file_path) {
+        // 从路径中提取ID，例如从 "/api/files/download/21" 提取 "21"
+        const resumeId = parseInt(student.resume_file_path.split('/').pop() || '');
+        if (!isNaN(resumeId)) {
+          fileIds.add(resumeId);
         }
       }
-      
-      // 处理证明文件
-      if (student.proof_file_path && !processedFiles.has(student.proof_file_path)) {
-        const url = getFileDownloadUrl(student.proof_file_path);
-        if (url) {
-          const response = await fetch(url);
-          const blob = await response.blob();
-          const fileName = student.proof_file_name || `证明_${student.name}_${Date.now()}.pdf`;
-          proofFolder.file(fileName, blob);
-          processedFiles.add(student.proof_file_path);
+      if (student.proof_file_path) {
+        const proofId = parseInt(student.proof_file_path.split('/').pop() || '');
+        if (!isNaN(proofId)) {
+          fileIds.add(proofId);
         }
       }
     }
+
+    // 检查是否有可下载的文件
+    if (fileIds.size === 0) {
+      ElMessage.warning('所选学生没有上传任何文件');
+      return;
+    }
+
+    // 调用后端批量下载接口
+    const response = await batchDownloadFiles(Array.from(fileIds), props.applicationType);
     
-    // 生成并下载 zip 文件
-    const content = await zip.generateAsync({ type: 'blob' });
+    // 创建下载链接
+    const blob = new Blob([response.data], { type: 'application/zip' });
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(content);
+    link.href = URL.createObjectURL(blob);
     link.download = `申请材料_${props.applicationType}_${new Date().toLocaleDateString()}.zip`;
     document.body.appendChild(link);
     link.click();
