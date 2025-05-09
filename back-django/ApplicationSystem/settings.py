@@ -25,6 +25,8 @@ ALLOWED_HOSTS = ['139.155.248.15', 'palm.inon.space', 'localhost', 'joinpalm.ino
 
 # Application definition
 
+TIME_ZONE = 'Asia/Shanghai'
+
 INSTALLED_APPS = [
     # 'django.contrib.management',
     'django.contrib.admin',

@@ -1,6 +1,6 @@
 <template>
   <div class="cards mt-0">
-    <a href="https://palm.seu.edu.cn/application.html">
+    <a href="https://palm.seu.edu.cn/application.html" target="_blank">
       <div class="stats-card h-full">
         <div class="stats-number">{{ currentAdmissionYear }}<br />Join Us</div>
         <div>请阅读PALM实验室招生说明</div>
@@ -9,7 +9,7 @@
     </a>
 
     <div class="small-cards-list">
-      <a href="https://palm.seu.edu.cn/palm_cn.html">
+      <a href="https://palm.seu.edu.cn" target="_blank">
         <div class="horizontal-card">
           <div class="flex justify-center">
             <!-- <div
@@ -31,7 +31,7 @@
       </a>
 
       <div class="small-cards">
-        <a v-for="(card, index) in smallCards" :key="index" :href="card.href">
+        <a v-for="(card, index) in smallCards" :key="index" :href="card.href " target="_blank">
           <div class="small-card">
             <span>{{ card.icon }}</span>
             <div>{{ card.title }}</div>

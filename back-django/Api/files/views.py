@@ -10,6 +10,7 @@ import mimetypes
 import zipfile
 import tempfile
 import urllib
+import time
 
 # 创建文件存储目录
 # 在文件顶部的导入语句后添加新的目录常量
@@ -166,11 +167,13 @@ def upload_resume(request):
             is_resume=True,
             is_deleted=False
         ).update(is_deleted=True)
-
-        # 使用原始文件名，但添加时间戳避免重名
-        timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
-        file_ext = os.path.splitext(file.name)[1]
-        new_filename = f"resume_{applicant_id}_{timestamp}{file_ext}"
+        
+        # 生成格式化的时间戳 (年月日时分秒)
+        # timestamp = timezone.now().strftime("%Y%m%d%H%M%S")
+        timestamp = timezone.localtime().strftime("%Y%m%d%H%M%S")
+        file_ext = os.path.splitext(file.name)[0]
+        new_filename = f"{file_ext}_{timestamp}"
+        print(new_filename)
         
         # 保存文件到简历目录
         file_path = os.path.join(RESUME_STORAGE_PATH, new_filename)  # 使用简历专用目录

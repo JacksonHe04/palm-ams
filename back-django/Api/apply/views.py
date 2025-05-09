@@ -9,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import json
 import uuid
 import os
+import time
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
@@ -61,7 +62,9 @@ def apply_post(request):
                 for file in files:
                     # 生成新的文件名
                     file_ext = os.path.splitext(file.original_name)[1]
-                    new_filename = f"{apply_obj.applicationType}_{apply_obj.university}_{apply_obj.name}{file_ext}"
+                    timestamp = str(int(time.time()))  # 获取当前时间戳
+                    # new_filename = f"{apply_obj.applicationType}_{apply_obj.university}_{apply_obj.name}-{timestamp}{file_ext}"
+                    new_filename = f"{apply_obj.university}-{apply_obj.name}-{timestamp}{file_ext}"
                     
                     # 获取文件的目录路径
                     dir_path = os.path.dirname(file.file_path)
