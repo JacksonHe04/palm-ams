@@ -13,6 +13,7 @@ class File(models.Model):
     uploader = models.CharField(max_length=100, null=True, blank=True, verbose_name='上传者')
     is_deleted = models.BooleanField(default=False, verbose_name='是否删除')
     is_resume = models.BooleanField(default=False, verbose_name='是否为简历文件')
+    download_url = models.CharField(max_length=500, null=True, blank=True, verbose_name='下载地址')
     
     class Meta:
         db_table = 'files'
@@ -32,3 +33,9 @@ class File(models.Model):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
         super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        """重写保存方法，自动生成下载地址"""
+        if not self.download_url and self.id:
+            self.download_url = f'/api/files/download/{self.id}/'
+        super().save(*args, **kwargs)

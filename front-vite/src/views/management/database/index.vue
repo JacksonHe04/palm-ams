@@ -38,10 +38,19 @@
           sortable
           show-overflow-tooltip
           :min-width="200"
-          :width="field.name === 'id' ? 100 : null"
-        >
+          :width="field.name === 'id' ? 100 : null"        
+          >
           <template #default="scope">
-            <span class="whitespace-normal break-words">{{ scope.row[field.name] }}</span>
+            <template v-if="field.name === 'download_url' && currentDatabase === 'files'">
+              <el-link 
+                type="primary" 
+                :href="getFileDownloadUrl(scope.row[field.name])"
+                target="_blank"
+              >
+                {{ scope.row[field.name] || '下载文件' }}
+              </el-link>
+            </template>
+            <span v-else>{{ scope.row[field.name] }}</span>
           </template>
         </el-table-column>
       </template>
@@ -98,12 +107,14 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import request from '@/utils/http'
 import {
   getAllApplyData,
   createApplyRecord,
   updateApplyRecord,
   deleteApplyRecord
 } from '@/apis/databaseApply'
+import { getFileDownloadUrl } from '@/apis/files';
 // 假设我们有一个新的API文件用于files数据库操作
 import {
   getAllFilesData,

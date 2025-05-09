@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from Api.apply.models import Apply
 from Api.files.models import File
 import json
+from django.forms.models import model_to_dict
 
 def get_model_fields(model):
     """
@@ -90,8 +91,16 @@ def files_data(request):
             # 获取所有字段信息
             fields = get_model_fields(File)
             
-            # 将查询集转换为列表
-            files_list = list(files.values())
+            # 将查询集转换为列表，并为每个文件生成下载地址
+            files_list = []
+            for file in files:
+                file_dict = model_to_dict(file)
+                # 如果文件没有下载地址，则生成并保存
+                if not file_dict.get('download_url'):
+                    file.download_url = f'/api/files/download/{file.id}/'
+                    file.save()
+                    file_dict['download_url'] = file.download_url
+                files_list.append(file_dict)
             
             return JsonResponse({
                 'records': files_list,

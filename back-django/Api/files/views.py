@@ -171,8 +171,8 @@ def upload_resume(request):
         # 生成格式化的时间戳 (年月日时分秒)
         # timestamp = timezone.now().strftime("%Y%m%d%H%M%S")
         timestamp = timezone.localtime().strftime("%Y%m%d%H%M%S")
-        file_ext = os.path.splitext(file.name)[0]
-        new_filename = f"{file_ext}_{timestamp}"
+        file_name, file_ext = os.path.splitext(file.name)  # 正确地解构文件名和扩展名
+        new_filename = f"{file_name}_{timestamp}{file_ext}"  # 加入扩展名
         print(new_filename)
         
         # 保存文件到简历目录

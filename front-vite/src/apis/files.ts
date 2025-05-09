@@ -28,7 +28,6 @@ export const getFileDownloadUrl = (filePath: string) => {
   if (filePath.startsWith('/api/files/download/')) {
     return `${http.defaults.baseURL}${filePath}`
   }
-  // 否则返回null
   return null
 }
 
