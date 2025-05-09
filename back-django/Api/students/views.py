@@ -31,7 +31,7 @@ def get_students(request):
             
             # 遍历所有文件，根据文件类型分别设置
             for file in student_files:
-                if file.file_type == 'application/zip':
+                if file.file_type in ['application/zip', 'application/x-zip-compressed']:
                     student_dict['resume_file_name'] = file.name
                     student_dict['resume_file_path'] = f'/api/files/download/{file.id}'
                 elif file.file_type == 'application/pdf':
