@@ -59,6 +59,10 @@ export const batchDownloadFiles = (fileIds: number[], applicationType: string) =
     application_type: applicationType
   }, {
     responseType: 'blob',
-    timeout: 180000  // 设置180秒超时时间
+    timeout: 180000,  // 设置180秒超时时间
+    onDownloadProgress: (progressEvent) => {
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / (progressEvent.total || progressEvent.loaded));
+      window.dispatchEvent(new CustomEvent('download-progress', { detail: percentCompleted }));
+    }
   })
 }
