@@ -8,14 +8,15 @@
       :table-layout="'auto'"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" />
-      <el-table-column type="index" label="#" width="50" />
+      <el-table-column type="selection" width="55" fixed="left" />
+      <el-table-column type="index" label="#" width="50" fixed="left" />
       <el-table-column
         v-for="(value, key) in columnConfig"
         :key="key"
         :prop="key"
         :label="value.label"
         :min-width="value.width"
+        :fixed="value.label === '姓名' ? 'left' : undefined"
       >
         <template #default="scope">
           <template v-if="scope.row[key] === true || scope.row[key] === false">
@@ -29,7 +30,8 @@
 
       <el-table-column
         label="证明文件"
-        min-width="80"
+        width="150"
+        fixed="right"
       >
         <template #default="scope">
           <el-link
@@ -46,7 +48,8 @@
 
       <el-table-column
         label="简历文件"
-        min-width="80"
+        width="150"
+        fixed="right"
       >
         <template #default="scope">
           <el-link
