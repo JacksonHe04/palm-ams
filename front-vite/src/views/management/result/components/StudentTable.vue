@@ -5,10 +5,10 @@
       :data="data"
       style="width: 100%"
       border
-      :table-layout="'auto'"
+      table-layout="fixed"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" fixed="left" />
+      <el-table-column type="selection" width="50" fixed="left" />
       <el-table-column type="index" label="#" width="50" fixed="left" />
       <el-table-column
         v-for="(value, key) in columnConfig"
@@ -30,7 +30,7 @@
 
       <el-table-column
         label="证明文件"
-        width="150"
+        min-width="150"
         fixed="right"
       >
         <template #default="scope">
@@ -48,7 +48,7 @@
 
       <el-table-column
         label="简历文件"
-        width="150"
+        min-width="150"
         fixed="right"
       >
         <template #default="scope">

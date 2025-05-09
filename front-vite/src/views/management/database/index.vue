@@ -1,4 +1,14 @@
 <template>
+    <div class="dev-notice">
+    <el-alert
+      title="开发阶段提示"
+      type="warning"
+      description="请勿对当前数据库中的数据进行修改，否则可能导致数据不一致。"
+      :closable="false"
+      show-icon
+      center
+    />
+  </div>
   <div class="database-management">
     <!-- 顶部操作栏 -->
     <div class="operation-bar">

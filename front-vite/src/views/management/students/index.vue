@@ -1,14 +1,14 @@
 <template>
-  <div class="dev-notice ">
-      <el-alert
-        title="开发阶段提示"
-        type="info"
-        description="快来使用吧"
-        :closable="false"
-        show-icon
-        center
-      />
-    </div>
+  <div class="dev-notice">
+    <el-alert
+      title="开发阶段提示"
+      type="info"
+      description="快来使用吧"
+      :closable="false"
+      show-icon
+      center
+    />
+  </div>
   <div class="p-6">
     <el-card>
       <template #header>
@@ -55,13 +55,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue';
-import { useFieldStore } from '@/stores/fieldStore';
-import { useFieldsSort } from '@/views/front-desk/apply/composables/useFieldsSort';
-import StudentTable from '@/views/management/result/components/StudentTable.vue';
-import DownloadFiles from '@/views/management/result/components/DownloadFiles.vue';
-import ExportExcel from '@/views/management/result/components/ExportExcel.vue';
-import { getStudents } from '@/apis/students';
+import { onMounted, ref, computed, watch } from "vue";
+import { useFieldStore } from "@/stores/fieldStore";
+import { useFieldsSort } from "@/views/front-desk/apply/composables/useFieldsSort";
+import StudentTable from "@/views/management/result/components/StudentTable.vue";
+import DownloadFiles from "@/views/management/result/components/DownloadFiles.vue";
+import ExportExcel from "@/views/management/result/components/ExportExcel.vue";
+import { getStudents } from "@/apis/students";
 
 interface Student {
   id: number;
@@ -72,20 +72,20 @@ interface Student {
 // 状态管理
 const students = ref<Student[]>([]);
 const loading = ref(false);
-const error = ref('');
+const error = ref("");
 
 // 使用 fieldStore
 const fieldStore = useFieldStore();
 
 // 获取可展示的字段配置
 const columnConfig = computed(() => {
-  const showFields = fieldStore.fields.filter(field => field.showInTable);
+  const showFields = fieldStore.fields.filter((field) => field.showInTable);
   const { sortedFields } = useFieldsSort(showFields);
-  
+
   return sortedFields.value.reduce((acc, field) => {
     acc[field.variableName] = {
       label: field.name,
-      width: '150'
+      width: "150",
     };
     return acc;
   }, {} as Record<string, { label: string; width: string }>);
@@ -94,12 +94,12 @@ const columnConfig = computed(() => {
 // 获取学生数据
 const fetchStudents = async () => {
   loading.value = true;
-  error.value = '';
+  error.value = "";
   try {
     const data = await getStudents();
     students.value = data;
   } catch (err: any) {
-    error.value = err.message || '获取学生数据失败';
+    error.value = err.message || "获取学生数据失败";
   } finally {
     loading.value = false;
   }
@@ -113,24 +113,30 @@ onMounted(async () => {
 
 // 获取所有申请类型
 const applicationTypes = computed(() => {
-  const types = new Set(students.value.map(student => student.applicationType));
+  const types = new Set(
+    students.value.map((student) => student.applicationType)
+  );
   return Array.from(types) as string[];
 });
 
 // 根据申请类型获取学生列表
 const getStudentsByType = (type: string) => {
-  return students.value.filter(student => student.applicationType === type);
+  return students.value.filter((student) => student.applicationType === type);
 };
 
 // 当前激活的标签页
-const activeTab = ref('');
+const activeTab = ref("");
 
 // 监听 applicationTypes 的变化，自动设置第一个标签页
-watch(applicationTypes, (types) => {
-  if (types.length && !activeTab.value) {
-    activeTab.value = types[0];
-  }
-}, { immediate: true });
+watch(
+  applicationTypes,
+  (types) => {
+    if (types.length && !activeTab.value) {
+      activeTab.value = types[0];
+    }
+  },
+  { immediate: true }
+);
 
 // 选中的学生列表
 const selectedStudents = ref<Student[]>([]);
@@ -168,4 +174,3 @@ watch(activeTab, () => {
   }
 }
 </style>
-
