@@ -14,7 +14,7 @@
       <template #tip>
         <div class="el-upload__tip">
           请上传PDF格式的简历文件，文件大小不超过10MB<br>
-          请将简历命名为：学校-姓名-简历.pdf<br>
+          请将简历命名为：你目前就读的学校-姓名-简历.pdf<br>
           示例：东南大学-小明-简历.pdf
         </div>
       </template>

@@ -9,16 +9,17 @@ export default {
   setup() {
     const username = ref("");
     const password = ref("");
+    const rememberMe = ref(false);
     const userStore = useUserStore();
     const router = useRouter();
 
     const handleLogin = async () => {
-      // console.log('开始登录，用户名:', username.value);
       const loginSuccess = await userStore.login(
         username.value,
         password.value,
+        rememberMe.value
       );
-      // console.log('登录请求返回结果:', loginSuccess);
+      
       if (loginSuccess) {
         ElMessage.success("登录成功");
         await router.push("/admin");
@@ -30,6 +31,7 @@ export default {
     return {
       username,
       password,
+      rememberMe,
       handleLogin,
     };
   },
@@ -68,7 +70,7 @@ export default {
 
         <div class="form-row">
           <label class="remember-me">
-            <input type="checkbox" />
+            <input type="checkbox" v-model="rememberMe" />
             <span>Remember for 7 days</span>
           </label>
         </div>

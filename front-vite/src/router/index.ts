@@ -200,26 +200,32 @@ const router = createRouter({
   },
 });
 
-// 全局前置守卫
-router.beforeEach((to, from, next) => {
+// 添加全局路由守卫
+router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore();
-  const isAdminRoute = to.path.startsWith('/admin');
-
-  // 初始化用户状态
-  userStore.initializeFromStorage();
-
-  if (isAdminRoute) {
-    // 检查是否是有效的登录会话
-    if (userStore.isValidSession) {
+  const token = localStorage.getItem('token');
+  
+  // 如果是登录页面，直接放行
+  if (to.path === '/login') {
+    if (token && userStore.isAuthenticated) {
+      next('/admin');
+    } else {
+      next();
+    }
+    return;
+  }
+  
+  // 如果是需要登录的页面
+  if (to.path.startsWith('/admin')) {
+    if (token && userStore.isAuthenticated) {
       next();
     } else {
-      // 未登录或会话过期，重定向到登录页
       next('/login');
     }
-  } else {
-    // 非管理员路由，直接放行
-    next();
+    return;
   }
+  
+  next();
 });
 
 export default router;

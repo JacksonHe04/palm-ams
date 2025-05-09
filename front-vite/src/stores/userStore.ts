@@ -28,37 +28,31 @@ export const useUserStore = defineStore("user", {
       this.autoLoginDays = days;
       localStorage.setItem("autoLoginDays", days.toString());
     },
-    async login(username, password) {
+    async login(username, password, remember = false) {
       try {
         const response = await login(username, password);
-        console.log('登录API响应:', response);
-        // 修改判断逻辑，检查 response.data.success
         if (response.data && response.data.success) {
           const token = response.data.token;
           const user = response.data.user;
-          // console.log('获取到的token:', token);
-          // console.log('获取到的用户信息:', user);
           
           // 存储登录信息
           localStorage.setItem("token", token);
           localStorage.setItem("loginTime", new Date().toISOString());
           localStorage.setItem("user", JSON.stringify(user));
           
+          // 如果选择记住登录，设置自动登录天数
+          if (remember) {
+            this.setAutoLoginDays(7);
+          }
+          
           // 更新状态
           this.isAuthenticated = true;
           this.user = user;
           this.loginTime = new Date().toISOString();
           
-          // console.log('状态更新完成，当前状态:', {
-          //   isAuthenticated: this.isAuthenticated,
-          //   user: this.user,
-          //   loginTime: this.loginTime
-          // });
-          
           // 获取用户详细信息
           await this.fetchUserInfo();
           
-          await nextTick();
           return true;
         }
         return false;
@@ -120,18 +114,38 @@ export const useUserStore = defineStore("user", {
       window.location.href = '/login';
     },
 
-    initializeFromStorage() {
+    async initializeFromStorage() {
       const token = localStorage.getItem("token");
       const loginTime = localStorage.getItem("loginTime");
       const user = localStorage.getItem("user");
       const autoLoginDays = localStorage.getItem("autoLoginDays");
-
+    
       if (token && loginTime && user) {
-        this.isAuthenticated = true;
-        this.loginTime = loginTime;
-        this.user = JSON.parse(user);
+        try {
+          // 先验证 token 有效性
+          const response = await getUserInfo();
+          if (response.data.success) {
+            // token 验证成功后才设置认证状态
+            this.isAuthenticated = true;
+            this.loginTime = loginTime;
+            this.user = JSON.parse(user);
+            
+            // 更新用户信息
+            const { phone, email, auto_login_days } = response.data.data;
+            this.userInfo.phone = phone || '';
+            this.userInfo.email = email || '';
+            this.autoLoginDays = auto_login_days;
+          } else {
+            // token 无效，清除所有状态
+            this.logout();
+          }
+        } catch (error) {
+          // API 调用失败，清除所有状态并重定向到登录页面
+          console.error("Token 验证失败:", error);
+          this.logout();
+        }
       }
-
+    
       if (autoLoginDays) {
         this.autoLoginDays = parseInt(autoLoginDays);
       }

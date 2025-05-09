@@ -13,7 +13,7 @@
       <template #tip>
         <div class="el-upload__tip">
           请上传ZIP格式的压缩文件，文件大小不超过20MB<br />
-          请将简历命名为：学校-姓名-证明.zip<br />
+          请将简历命名为：你目前就读的学校-姓名-证明.zip<br />
           示例：东南大学-小明-证明.zip
         </div>
       </template>
