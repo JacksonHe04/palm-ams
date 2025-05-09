@@ -16,7 +16,6 @@ urlpatterns = [
     path('api/students/', include('Api.students.urls',)),
     path('api/auth/', include('Api.auth.urls',)),
     path('api/settings/', include('Api.setting.urls')),
-    path('api/filter/', include('Api.filter.urls',)),
     path('api/test/', include('Api.testapp.urls',)),
     path('api/field/', include('Api.field.urls',)),
     path('api/percent/', include('Api.percent.urls',)),

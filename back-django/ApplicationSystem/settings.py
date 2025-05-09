@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'Api.apply',
     'Api.students',
     'Api.auth',
-    'Api.filter',
     'Api.setting',
     'Api.field',
     'Api.percent',
